@@ -24,7 +24,7 @@ A flash can be implemented, with a start and stop delay to adjust shadow effects
 ## PCB design
 
 
-## Nice to have features (NOT implmeneted):
+## Nice to have features (NOT implemented):
 
 * Photo timestamp (needs RTC?)
 * Wifi upload (if in range)
