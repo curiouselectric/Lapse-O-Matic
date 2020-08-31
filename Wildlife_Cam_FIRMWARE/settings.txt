@@ -1,0 +1,22 @@
+// Adjust these settings as required: //
+
+FLASH_FLAG = 0
+
+NUMBER_PHOTOS = 4
+
+TIME_TO_SLEEP = 8
+
+MODE = TRIGGER
+
+PHOTO_DELAY = 250
+
+FLASH_START_DELAY = 100
+
+FLASH_STOP_DELAY = 100
+ 
+DEBUG_FLAG = 1
+
+DEBUG_PHOTO = 1
+
+
+// END OF SETTINGS - LEAVE THIS LINE  //
