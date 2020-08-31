@@ -17,6 +17,13 @@ A flash can be implemented, with a start and stop delay to adjust shadow effects
 
 This code relies heaviliy on the following tutorials and information:
 
+*https://techtutorialsx.com/2020/06/27/esp32-connecting-to-sd-card/
+*https://randomnerdtutorials.com/esp32-cam-take-photo-save-microsd-card/
+*https://www.olimex.com/Products/IoT/ESP32/ESP32-CAM/
+*https://marksbench.com/electronics/esp32-cam-low-power-trail-camera/
+*https://hackaday.com/2020/05/18/esp32-trail-camera-goes-the-distance-on-aa-batteries/
+*https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/
+*https://dronebotworkshop.com/esp32-cam-intro/
 
 
 ## ESP32 Code
