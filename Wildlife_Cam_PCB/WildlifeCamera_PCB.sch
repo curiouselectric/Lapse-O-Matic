@@ -1,0 +1,943 @@
+EESchema Schematic File Version 4
+LIBS:WildlifeCamera_PCB-cache
+EELAYER 29 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L device:Battery_Cell BT1
+U 1 1 58B31232
+P 6650 1500
+F 0 "BT1" H 6750 1600 50  0000 L CNN
+F 1 "18650 LiIon Cell" H 6750 1500 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_LiIon_Holder" V 6650 1560 50  0001 C CNN
+F 3 "" V 6650 1560 50  0000 C CNN
+F 4 "~" H 6650 1500 60  0000 C CNN "Notes"
+F 5 "18650 PCB mount holder" H 6650 1500 60  0001 C CNN "Description"
+F 6 "~" H 6650 1500 60  0001 C CNN "Manufacturer"
+F 7 "~" H 6650 1500 60  0001 C CNN "Manufacturer Part No"
+F 8 "eBay" H 6650 1500 60  0001 C CNN "Supplier 1"
+F 9 "http://www.ebay.co.uk/itm/122466718109" H 6650 1500 60  0001 C CNN "Supplier 1 Part No"
+F 10 "0.50" H 6650 1500 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 6650 1500 60  0001 C CNN "Supplier 2"
+F 12 "~" H 6650 1500 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 6650 1500 60  0001 C CNN "Supplier 2 Cost"
+	1    6650 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:Solar_Cells SC1
+U 1 1 58B31275
+P 2100 1350
+F 0 "SC1" H 2200 1450 50  0000 L CNN
+F 1 "PV <2W 5.5V" H 2200 1350 50  0000 L CNN
+F 2 "REInnovationFootprint:PV_130mmx65mm_NoOutline" V 2100 1410 50  0001 C CNN
+F 3 "" V 2100 1410 50  0000 C CNN
+F 4 "~" H 2100 1350 60  0000 C CNN "Notes"
+F 5 "1-2W solar PV module" H 2100 1350 60  0001 C CNN "Description"
+F 6 "~" H 2100 1350 60  0001 C CNN "Manufacturer"
+F 7 "~" H 2100 1350 60  0001 C CNN "Manufacturer Part No"
+F 8 "Aliexpress" H 2100 1350 60  0001 C CNN "Supplier 1"
+F 9 "~" H 2100 1350 60  0001 C CNN "Supplier 1 Part No"
+F 10 "2.5" H 2100 1350 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 2100 1350 60  0001 C CNN "Supplier 2"
+F 12 "~" H 2100 1350 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 2100 1350 60  0001 C CNN "Supplier 2 Cost"
+	1    2100 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L SolarCharger2017-rescue:BQ24210-RESCUE-SolarCharger2017 U1
+U 1 1 58B3146F
+P 4150 1250
+F 0 "U1" H 4350 700 60  0000 C CNN
+F 1 "BQ24210" H 4200 1700 60  0000 C CNN
+F 2 "REInnovationFootprint:SM_WSON-10-2x3" H 4150 1250 60  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/bq24210.pdf" H 4150 1250 60  0001 C CNN
+F 4 "~" H 4150 1250 60  0001 C CNN "Notes"
+F 5 "LiIon Charger 800mA PV Input" H 4150 1250 60  0001 C CNN "Description"
+F 6 "Texas Instruments" H 4150 1250 60  0001 C CNN "Manufacturer"
+F 7 "BQ24210" H 4150 1250 60  0001 C CNN "Manufacturer Part No"
+F 8 "RS" H 4150 1250 60  0001 C CNN "Supplier 1"
+F 9 "742-2836" H 4150 1250 60  0001 C CNN "Supplier 1 Part No"
+F 10 "2.88" H 4150 1250 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 4150 1250 60  0001 C CNN "Supplier 2"
+F 12 "~" H 4150 1250 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 4150 1250 60  0001 C CNN "Supplier 2 Cost"
+F 14 "~" H 4150 1250 60  0001 C CNN "Cost"
+	1    4150 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L SolarCharger2017-rescue:LED-RESCUE-SolarCharger2017 D2
+U 1 1 58B3183D
+P 5200 1650
+F 0 "D2" H 5200 1750 50  0000 C CNN
+F 1 "CHG" H 5200 1550 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_LED-5MM_larg_pad" H 5200 1650 50  0001 C CNN
+F 3 "" H 5200 1650 50  0000 C CNN
+F 4 "~" H 5200 1650 60  0000 C CNN "Notes"
+F 5 "~" H 5200 1650 60  0001 C CNN "Description"
+F 6 "~" H 5200 1650 60  0001 C CNN "Manufacturer"
+F 7 "~" H 5200 1650 60  0001 C CNN "Manufacturer Part No"
+F 8 "~" H 5200 1650 60  0001 C CNN "Supplier 1"
+F 9 "~" H 5200 1650 60  0001 C CNN "Supplier 1 Part No"
+F 10 "0.05" H 5200 1650 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 5200 1650 60  0001 C CNN "Supplier 2"
+F 12 "~" H 5200 1650 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 5200 1650 60  0001 C CNN "Supplier 2 Cost"
+	1    5200 1650
+	0    -1   -1   0   
+$EndComp
+$Comp
+L SolarCharger2017-rescue:LED-RESCUE-SolarCharger2017 D3
+U 1 1 58B31888
+P 5500 1650
+F 0 "D3" H 5500 1750 50  0000 C CNN
+F 1 "PG" H 5500 1550 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_LED-5MM_larg_pad" H 5500 1650 50  0001 C CNN
+F 3 "" H 5500 1650 50  0000 C CNN
+F 4 "~" H 5500 1650 60  0000 C CNN "Notes"
+F 5 "~" H 5500 1650 60  0001 C CNN "Description"
+F 6 "~" H 5500 1650 60  0001 C CNN "Manufacturer"
+F 7 "~" H 5500 1650 60  0001 C CNN "Manufacturer Part No"
+F 8 "~" H 5500 1650 60  0001 C CNN "Supplier 1"
+F 9 "~" H 5500 1650 60  0001 C CNN "Supplier 1 Part No"
+F 10 "0.05" H 5500 1650 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 5500 1650 60  0001 C CNN "Supplier 2"
+F 12 "~" H 5500 1650 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 5500 1650 60  0001 C CNN "Supplier 2 Cost"
+	1    5500 1650
+	0    -1   -1   0   
+$EndComp
+$Comp
+L device:R R3
+U 1 1 58B318C0
+P 5200 1250
+F 0 "R3" V 5280 1250 50  0000 C CNN
+F 1 "2.2k" V 5200 1250 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 5130 1250 50  0001 C CNN
+F 3 "" H 5200 1250 50  0000 C CNN
+F 4 "~" H 5200 1250 60  0000 C CNN "Notes"
+F 5 "~" H 5200 1250 60  0001 C CNN "Description"
+F 6 "~" H 5200 1250 60  0001 C CNN "Manufacturer"
+F 7 "~" H 5200 1250 60  0001 C CNN "Manufacturer Part No"
+F 8 "~" H 5200 1250 60  0001 C CNN "Supplier 1"
+F 9 "~" H 5200 1250 60  0001 C CNN "Supplier 1 Part No"
+F 10 "0.01" H 5200 1250 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 5200 1250 60  0001 C CNN "Supplier 2"
+F 12 "~" H 5200 1250 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 5200 1250 60  0001 C CNN "Supplier 2 Cost"
+	1    5200 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:R R4
+U 1 1 58B31907
+P 5500 1250
+F 0 "R4" V 5580 1250 50  0000 C CNN
+F 1 "2.2k" V 5500 1250 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 5430 1250 50  0001 C CNN
+F 3 "" H 5500 1250 50  0000 C CNN
+F 4 "~" H 5500 1250 60  0000 C CNN "Notes"
+F 5 "~" H 5500 1250 60  0001 C CNN "Description"
+F 6 "~" H 5500 1250 60  0001 C CNN "Manufacturer"
+F 7 "~" H 5500 1250 60  0001 C CNN "Manufacturer Part No"
+F 8 "~" H 5500 1250 60  0001 C CNN "Supplier 1"
+F 9 "~" H 5500 1250 60  0001 C CNN "Supplier 1 Part No"
+F 10 "0.01" H 5500 1250 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 5500 1250 60  0001 C CNN "Supplier 2"
+F 12 "~" H 5500 1250 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 5500 1250 60  0001 C CNN "Supplier 2 Cost"
+	1    5500 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:CP C1
+U 1 1 58B319C0
+P 2900 1350
+F 0 "C1" H 2925 1450 50  0000 L CNN
+F 1 "1uF" H 2925 1250 50  0000 L CNN
+F 2 "REInnovationFootprint:C1_lg_pad" H 2938 1200 50  0001 C CNN
+F 3 "" H 2900 1350 50  0000 C CNN
+F 4 "~" H 2900 1350 60  0000 C CNN "Notes"
+F 5 "~" H 2900 1350 60  0001 C CNN "Description"
+F 6 "~" H 2900 1350 60  0001 C CNN "Manufacturer"
+F 7 "~" H 2900 1350 60  0001 C CNN "Manufacturer Part No"
+F 8 "~" H 2900 1350 60  0001 C CNN "Supplier 1"
+F 9 "~" H 2900 1350 60  0001 C CNN "Supplier 1 Part No"
+F 10 "0.1" H 2900 1350 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 2900 1350 60  0001 C CNN "Supplier 2"
+F 12 "~" H 2900 1350 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 2900 1350 60  0001 C CNN "Supplier 2 Cost"
+	1    2900 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:CP C2
+U 1 1 58B31A6D
+P 6050 1450
+F 0 "C2" H 6075 1550 50  0000 L CNN
+F 1 "1uF" H 6075 1350 50  0000 L CNN
+F 2 "REInnovationFootprint:C1_lg_pad" H 6088 1300 50  0001 C CNN
+F 3 "" H 6050 1450 50  0000 C CNN
+F 4 "~" H 6050 1450 60  0000 C CNN "Notes"
+F 5 "~" H 6050 1450 60  0001 C CNN "Description"
+F 6 "~" H 6050 1450 60  0001 C CNN "Manufacturer"
+F 7 "~" H 6050 1450 60  0001 C CNN "Manufacturer Part No"
+F 8 "~" H 6050 1450 60  0001 C CNN "Supplier 1"
+F 9 "~" H 6050 1450 60  0001 C CNN "Supplier 1 Part No"
+F 10 "0.10" H 6050 1450 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 6050 1450 60  0001 C CNN "Supplier 2"
+F 12 "~" H 6050 1450 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 6050 1450 60  0001 C CNN "Supplier 2 Cost"
+	1    6050 1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:R R1
+U 1 1 58B31BC6
+P 3150 2050
+F 0 "R1" V 3230 2050 50  0000 C CNN
+F 1 "1k" V 3150 2050 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 3080 2050 50  0001 C CNN
+F 3 "" H 3150 2050 50  0000 C CNN
+F 4 "~" H 3150 2050 60  0000 C CNN "Notes"
+F 5 "~" H 3150 2050 60  0001 C CNN "Description"
+F 6 "~" H 3150 2050 60  0001 C CNN "Manufacturer"
+F 7 "~" H 3150 2050 60  0001 C CNN "Manufacturer Part No"
+F 8 "~" H 3150 2050 60  0001 C CNN "Supplier 1"
+F 9 "~" H 3150 2050 60  0001 C CNN "Supplier 1 Part No"
+F 10 "0.01" H 3150 2050 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 3150 2050 60  0001 C CNN "Supplier 2"
+F 12 "~" H 3150 2050 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 3150 2050 60  0001 C CNN "Supplier 2 Cost"
+	1    3150 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4650 1050 5200 1050
+Wire Wire Line
+	5200 1100 5200 1050
+Connection ~ 5200 1050
+Wire Wire Line
+	5500 1100 5500 1050
+Connection ~ 5500 1050
+Wire Wire Line
+	5200 1450 5200 1400
+Wire Wire Line
+	5500 1450 5500 1400
+Wire Wire Line
+	5050 1350 5050 1950
+Wire Wire Line
+	5050 1350 4650 1350
+Wire Wire Line
+	4650 1650 4800 1650
+Wire Wire Line
+	5000 1650 5000 2050
+$Comp
+L power1:GND #PWR01
+U 1 1 58B32042
+P 3300 1400
+F 0 "#PWR01" H 3300 1150 50  0001 C CNN
+F 1 "GND" H 3300 1250 50  0000 C CNN
+F 2 "" H 3300 1400 50  0000 C CNN
+F 3 "" H 3300 1400 50  0000 C CNN
+	1    3300 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:PWR_FLAG #FLG02
+U 1 1 58B32070
+P 5900 1050
+F 0 "#FLG02" H 5900 1145 50  0001 C CNN
+F 1 "PWR_FLAG" H 5900 1230 50  0000 C CNN
+F 2 "" H 5900 1050 50  0000 C CNN
+F 3 "" H 5900 1050 50  0000 C CNN
+	1    5900 1050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:VCC #PWR03
+U 1 1 58B3209E
+P 6250 1050
+F 0 "#PWR03" H 6250 900 50  0001 C CNN
+F 1 "VCC" H 6250 1200 50  0000 C CNN
+F 2 "" H 6250 1050 50  0000 C CNN
+F 3 "" H 6250 1050 50  0000 C CNN
+	1    6250 1050
+	1    0    0    -1  
+$EndComp
+Connection ~ 5900 1050
+$Comp
+L power1:GND #PWR04
+U 1 1 58B32372
+P 3150 2350
+F 0 "#PWR04" H 3150 2100 50  0001 C CNN
+F 1 "GND" H 3150 2200 50  0000 C CNN
+F 2 "" H 3150 2350 50  0000 C CNN
+F 3 "" H 3150 2350 50  0000 C CNN
+	1    3150 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR05
+U 1 1 58B323A4
+P 4200 2050
+F 0 "#PWR05" H 4200 1800 50  0001 C CNN
+F 1 "GND" H 4200 1900 50  0000 C CNN
+F 2 "" H 4200 2050 50  0000 C CNN
+F 3 "" H 4200 2050 50  0000 C CNN
+	1    4200 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR06
+U 1 1 58B32581
+P 2900 1600
+F 0 "#PWR06" H 2900 1350 50  0001 C CNN
+F 1 "GND" H 2900 1450 50  0000 C CNN
+F 2 "" H 2900 1600 50  0000 C CNN
+F 3 "" H 2900 1600 50  0000 C CNN
+	1    2900 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR07
+U 1 1 58B325B3
+P 2100 1650
+F 0 "#PWR07" H 2100 1400 50  0001 C CNN
+F 1 "GND" H 2100 1500 50  0000 C CNN
+F 2 "" H 2100 1650 50  0000 C CNN
+F 3 "" H 2100 1650 50  0000 C CNN
+	1    2100 1650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR08
+U 1 1 58B325E5
+P 6050 1700
+F 0 "#PWR08" H 6050 1450 50  0001 C CNN
+F 1 "GND" H 6050 1550 50  0000 C CNN
+F 2 "" H 6050 1700 50  0000 C CNN
+F 3 "" H 6050 1700 50  0000 C CNN
+	1    6050 1700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR09
+U 1 1 58B32617
+P 6650 1700
+F 0 "#PWR09" H 6650 1450 50  0001 C CNN
+F 1 "GND" H 6650 1550 50  0000 C CNN
+F 2 "" H 6650 1700 50  0000 C CNN
+F 3 "" H 6650 1700 50  0000 C CNN
+	1    6650 1700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 1050 2100 1150
+Wire Wire Line
+	3300 1350 3750 1350
+Wire Wire Line
+	3300 1350 3300 1400
+Wire Wire Line
+	3150 1900 3150 1200
+Wire Wire Line
+	3150 1200 3750 1200
+Wire Wire Line
+	3150 2350 3150 2200
+Wire Wire Line
+	2900 1600 2900 1500
+Wire Wire Line
+	2900 1200 2900 1050
+Connection ~ 2900 1050
+Wire Wire Line
+	2100 1650 2100 1550
+Wire Wire Line
+	4200 2050 4200 1950
+Wire Wire Line
+	6650 1050 6650 1300
+Connection ~ 6250 1050
+Wire Wire Line
+	6050 1300 6050 1050
+Connection ~ 6050 1050
+Wire Wire Line
+	6050 1600 6050 1700
+Wire Wire Line
+	6650 1600 6650 1700
+Text Notes 1850 900  0    60   ~ 0
+Solar PV Input
+Text Notes 6850 1250 0    60   ~ 0
+LiIon Cell 18650
+Wire Wire Line
+	5050 1950 5200 1950
+Wire Wire Line
+	5200 1950 5200 1850
+Wire Wire Line
+	5000 2050 5500 2050
+Wire Wire Line
+	5500 2050 5500 1850
+$Comp
+L device:R R2
+U 1 1 58B6EAFF
+P 3600 1850
+F 0 "R2" V 3680 1850 50  0000 C CNN
+F 1 "100k" V 3600 1850 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 3530 1850 50  0001 C CNN
+F 3 "" H 3600 1850 50  0000 C CNN
+F 4 "~" H 3600 1850 60  0000 C CNN "Notes"
+F 5 "~" H 3600 1850 60  0001 C CNN "Description"
+F 6 "~" H 3600 1850 60  0001 C CNN "Manufacturer"
+F 7 "~" H 3600 1850 60  0001 C CNN "Manufacturer Part No"
+F 8 "~" H 3600 1850 60  0001 C CNN "Supplier 1"
+F 9 "~" H 3600 1850 60  0001 C CNN "Supplier 1 Part No"
+F 10 "0.01" H 3600 1850 60  0001 C CNN "Supplier 1 Cost"
+F 11 "~" H 3600 1850 60  0001 C CNN "Supplier 2"
+F 12 "~" H 3600 1850 60  0001 C CNN "Supplier 2 Part No"
+F 13 "~" H 3600 1850 60  0001 C CNN "Supplier 2 Cost"
+	1    3600 1850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 1650 3600 1650
+Wire Wire Line
+	3600 1650 3600 1700
+Wire Wire Line
+	3600 2000 3600 2100
+Wire Wire Line
+	3600 2100 3500 2100
+Wire Wire Line
+	3500 2100 3500 1500
+Wire Wire Line
+	3500 1500 3750 1500
+NoConn ~ 4650 1200
+Wire Wire Line
+	4650 1500 4800 1500
+Wire Wire Line
+	4800 1500 4800 1650
+Connection ~ 4800 1650
+Wire Wire Line
+	5200 1050 5500 1050
+Wire Wire Line
+	5500 1050 5900 1050
+Wire Wire Line
+	5900 1050 6050 1050
+Wire Wire Line
+	6250 1050 6650 1050
+Wire Wire Line
+	6050 1050 6250 1050
+Wire Wire Line
+	4800 1650 5000 1650
+Wire Wire Line
+	2900 1050 3750 1050
+Wire Wire Line
+	2100 1050 2900 1050
+Text Notes 8450 2300 0    60   ~ 0
+Ts pulled high for solar charing applications\nLimited current mode to ensure battery temperature OK\nPull high with 100k \n\nVDPM\nKept open for load tracking, such as solar PV \nVDPM to ground using\nRVDPM= (VBUS_DPM–VBUS_DPM_1)/KVBUS_DPM\n= (4.6 V - 3.5 V) / ( 0.15V/kΩ) \n= 7.333kΩ → 7.32kΩ closest 1% resistor\n\nIset\n2W of solar PV gives 400mA maximum\nRiset = Kiset/Iout Iout = 400mA. \nKiset = 395Aohm. Riset = 987.5. Close to 1k\n\nEN tied to PG as load mode never used
+$Comp
+L matts_components:ESP32_CAM U2
+U 1 1 5F431B0D
+P 9500 3800
+F 0 "U2" H 9425 3995 60  0000 C CNN
+F 1 "ESP32_CAM" H 9425 3885 60  0000 C CNN
+F 2 "" H 9500 3800 60  0001 C CNN
+F 3 "" H 9500 3800 60  0001 C CNN
+	1    9500 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Q_NPN_BCE Q1
+U 1 1 5F433637
+P 2850 6700
+F 0 "Q1" H 3040 6747 50  0000 L CNN
+F 1 "2N3904" H 3040 6654 50  0000 L CNN
+F 2 "REInnovationFootprint:TO220_BD135" H 3050 6800 50  0001 C CNN
+F 3 "~" H 2850 6700 50  0001 C CNN
+	1    2850 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R6
+U 1 1 5F433F45
+P 8100 5350
+F 0 "R6" H 8170 5397 50  0000 L CNN
+F 1 "10k" H 8170 5304 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 8030 5350 50  0001 C CNN
+F 3 "~" H 8100 5350 50  0001 C CNN
+	1    8100 5350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R5
+U 1 1 5F4345CF
+P 2000 6700
+F 0 "R5" V 1790 6700 50  0000 C CNN
+F 1 "1k" V 1883 6700 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 1930 6700 50  0001 C CNN
+F 3 "~" H 2000 6700 50  0001 C CNN
+	1    2000 6700
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J1
+U 1 1 5F434B25
+P 1300 6700
+F 0 "J1" V 1217 6370 50  0000 C CNN
+F 1 "PIR" H 1217 6463 50  0000 C CNN
+F 2 "REInnovationFootprint:SIL-3_lg_pad" H 1300 6700 50  0001 C CNN
+F 3 "~" H 1300 6700 50  0001 C CNN
+	1    1300 6700
+	-1   0    0    1   
+$EndComp
+$Comp
+L power1:GND #PWR0101
+U 1 1 5F43612D
+P 1750 7050
+F 0 "#PWR0101" H 1750 6800 50  0001 C CNN
+F 1 "GND" H 1750 6900 50  0000 C CNN
+F 2 "" H 1750 7050 50  0000 C CNN
+F 3 "" H 1750 7050 50  0000 C CNN
+	1    1750 7050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR0102
+U 1 1 5F4386F1
+P 10350 4650
+F 0 "#PWR0102" H 10350 4400 50  0001 C CNN
+F 1 "GND" H 10350 4500 50  0000 C CNN
+F 2 "" H 10350 4650 50  0000 C CNN
+F 3 "" H 10350 4650 50  0000 C CNN
+	1    10350 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0103
+U 1 1 5F4389FE
+P 1750 6300
+F 0 "#PWR0103" H 1750 6150 50  0001 C CNN
+F 1 "+3.3V" H 1765 6476 50  0000 C CNN
+F 2 "" H 1750 6300 50  0001 C CNN
+F 3 "" H 1750 6300 50  0001 C CNN
+	1    1750 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR0104
+U 1 1 5F439209
+P 2950 7050
+F 0 "#PWR0104" H 2950 6800 50  0001 C CNN
+F 1 "GND" H 2950 6900 50  0000 C CNN
+F 2 "" H 2950 7050 50  0000 C CNN
+F 3 "" H 2950 7050 50  0000 C CNN
+	1    2950 7050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR0105
+U 1 1 5F43E1BA
+P 7900 4050
+F 0 "#PWR0105" H 7900 3800 50  0001 C CNN
+F 1 "GND" H 7900 3900 50  0000 C CNN
+F 2 "" H 7900 4050 50  0000 C CNN
+F 3 "" H 7900 4050 50  0000 C CNN
+	1    7900 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR0106
+U 1 1 5F43E4F8
+P 10500 4200
+F 0 "#PWR0106" H 10500 3950 50  0001 C CNN
+F 1 "GND" H 10500 4050 50  0000 C CNN
+F 2 "" H 10500 4200 50  0000 C CNN
+F 3 "" H 10500 4200 50  0000 C CNN
+	1    10500 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0107
+U 1 1 5F43E8AB
+P 10350 3850
+F 0 "#PWR0107" H 10350 3700 50  0001 C CNN
+F 1 "+3.3V" H 10365 4026 50  0000 C CNN
+F 2 "" H 10350 3850 50  0001 C CNN
+F 3 "" H 10350 3850 50  0001 C CNN
+	1    10350 3850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10150 3900 10350 3900
+Wire Wire Line
+	10350 3900 10350 3850
+Wire Wire Line
+	10150 4200 10500 4200
+Wire Wire Line
+	10150 4600 10350 4600
+Wire Wire Line
+	10350 4600 10350 4650
+Wire Wire Line
+	7900 4000 7900 4050
+Wire Wire Line
+	7900 4000 8700 4000
+Wire Wire Line
+	8100 5500 8100 5600
+Wire Wire Line
+	2950 6900 2950 7050
+Wire Wire Line
+	1500 6600 1750 6600
+Wire Wire Line
+	1750 6600 1750 6300
+Wire Wire Line
+	1500 6700 1850 6700
+Wire Wire Line
+	1500 6800 1750 6800
+Wire Wire Line
+	1750 6800 1750 7050
+$Comp
+L Connector_Generic:Conn_01x03 J2
+U 1 1 5F455A97
+P 4350 6750
+F 0 "J2" V 4267 6420 50  0000 C CNN
+F 1 "TRIG" H 4267 6513 50  0000 C CNN
+F 2 "REInnovationFootprint:SIL-3_screw_terminal" H 4350 6750 50  0001 C CNN
+F 3 "~" H 4350 6750 50  0001 C CNN
+	1    4350 6750
+	-1   0    0    1   
+$EndComp
+$Comp
+L matts_components:SPST SW1
+U 1 1 5F462D31
+P 1850 4450
+F 0 "SW1" H 1850 4720 50  0000 C CNN
+F 1 "ON/OFF" H 1850 4627 50  0000 C CNN
+F 2 "REInnovationFootprint:SW_SPDT_R_Angle_ALIEX" H 1850 4450 50  0001 C CNN
+F 3 "" H 1850 4450 50  0000 C CNN
+	1    1850 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:VCC #PWR0108
+U 1 1 5F463920
+P 1050 4350
+F 0 "#PWR0108" H 1050 4200 50  0001 C CNN
+F 1 "VCC" H 1050 4500 50  0000 C CNN
+F 2 "" H 1050 4350 50  0000 C CNN
+F 3 "" H 1050 4350 50  0000 C CNN
+	1    1050 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR0109
+U 1 1 5F463CF4
+P 3300 5250
+F 0 "#PWR0109" H 3300 5000 50  0001 C CNN
+F 1 "GND" H 3300 5100 50  0000 C CNN
+F 2 "" H 3300 5250 50  0000 C CNN
+F 3 "" H 3300 5250 50  0000 C CNN
+	1    3300 5250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1050 4350 1050 4450
+Wire Wire Line
+	1050 4450 1350 4450
+$Comp
+L matts_components:MCP1703-Matt U3
+U 1 1 5F466537
+P 3300 4500
+F 0 "U3" H 3300 4845 60  0000 C CNN
+F 1 "MCP1703" H 3300 4735 60  0000 C CNN
+F 2 "REInnovationFootprint:TH_TO92_MCP1703" H 3300 4500 60  0001 C CNN
+F 3 "" H 3300 4500 60  0000 C CNN
+	1    3300 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0110
+U 1 1 5F467366
+P 4250 4400
+F 0 "#PWR0110" H 4250 4250 50  0001 C CNN
+F 1 "+3.3V" H 4265 4576 50  0000 C CNN
+F 2 "" H 4250 4400 50  0001 C CNN
+F 3 "" H 4250 4400 50  0001 C CNN
+	1    4250 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:CP C3
+U 1 1 5F46966A
+P 2650 4750
+F 0 "C3" H 2770 4797 50  0000 L CNN
+F 1 "1u" H 2770 4704 50  0000 L CNN
+F 2 "REInnovationFootprint:C1_lg_pad" H 2688 4600 50  0001 C CNN
+F 3 "~" H 2650 4750 50  0001 C CNN
+	1    2650 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:CP C4
+U 1 1 5F469C49
+P 4000 4750
+F 0 "C4" H 4120 4797 50  0000 L CNN
+F 1 "1u" H 4120 4704 50  0000 L CNN
+F 2 "REInnovationFootprint:C1_lg_pad" H 4038 4600 50  0001 C CNN
+F 3 "~" H 4000 4750 50  0001 C CNN
+	1    4000 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3700 4450 4000 4450
+Wire Wire Line
+	4250 4450 4250 4400
+Wire Wire Line
+	4000 4600 4000 4450
+Connection ~ 4000 4450
+Wire Wire Line
+	4000 4450 4250 4450
+Wire Wire Line
+	2350 4450 2650 4450
+Wire Wire Line
+	2650 4450 2650 4600
+Wire Wire Line
+	2650 4900 2650 5050
+Wire Wire Line
+	2650 5050 3300 5050
+Wire Wire Line
+	4000 5050 4000 4900
+Wire Wire Line
+	3300 4750 3300 5050
+Connection ~ 3300 5050
+Wire Wire Line
+	3300 5050 4000 5050
+Wire Wire Line
+	3300 5050 3300 5250
+Wire Wire Line
+	2650 4450 2900 4450
+Connection ~ 2650 4450
+$Comp
+L device:LED D?
+U 1 1 5F4D026C
+P 7650 4900
+F 0 "D?" V 7690 4780 50  0000 R CNN
+F 1 "TRIG?" V 7597 4780 50  0000 R CNN
+F 2 "" H 7650 4900 50  0001 C CNN
+F 3 "~" H 7650 4900 50  0001 C CNN
+	1    7650 4900
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2150 6700 2400 6700
+$Comp
+L Switch:SW_Push SW?
+U 1 1 5F4DA4DE
+P 5000 6500
+F 0 "SW?" V 5047 6450 50  0000 R CNN
+F 1 "SW_Push" V 4954 6450 50  0000 R CNN
+F 2 "" H 5000 6700 50  0001 C CNN
+F 3 "~" H 5000 6700 50  0001 C CNN
+	1    5000 6500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5F4DF1E6
+P 5550 6750
+F 0 "R?" V 5340 6750 50  0000 C CNN
+F 1 "1k" V 5433 6750 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 5480 6750 50  0001 C CNN
+F 3 "~" H 5550 6750 50  0001 C CNN
+	1    5550 6750
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Q_NPN_BCE Q?
+U 1 1 5F4DF59B
+P 6150 6750
+F 0 "Q?" H 6340 6797 50  0000 L CNN
+F 1 "2N3904" H 6340 6704 50  0000 L CNN
+F 2 "REInnovationFootprint:TO220_BD135" H 6350 6850 50  0001 C CNN
+F 3 "~" H 6150 6750 50  0001 C CNN
+	1    6150 6750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5F4DFB70
+P 7650 5350
+F 0 "R?" H 7720 5397 50  0000 L CNN
+F 1 "330" H 7720 5304 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 7580 5350 50  0001 C CNN
+F 3 "~" H 7650 5350 50  0001 C CNN
+	1    7650 5350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5F4E0074
+P 7650 4550
+F 0 "#PWR?" H 7650 4400 50  0001 C CNN
+F 1 "+3.3V" H 7665 4726 50  0000 C CNN
+F 2 "" H 7650 4550 50  0001 C CNN
+F 3 "" H 7650 4550 50  0001 C CNN
+	1    7650 4550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7650 4550 7650 4750
+Wire Wire Line
+	7650 5050 7650 5200
+Wire Wire Line
+	7650 5500 7650 5600
+Wire Wire Line
+	7650 5600 8100 5600
+Connection ~ 8100 5600
+$Comp
+L power1:GND #PWR?
+U 1 1 5F4E6DB4
+P 6150 7350
+F 0 "#PWR?" H 6150 7100 50  0001 C CNN
+F 1 "GND" H 6150 7200 50  0000 C CNN
+F 2 "" H 6150 7350 50  0000 C CNN
+F 3 "" H 6150 7350 50  0000 C CNN
+	1    6150 7350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR?
+U 1 1 5F4E713C
+P 4750 6950
+F 0 "#PWR?" H 4750 6700 50  0001 C CNN
+F 1 "GND" H 4750 6800 50  0000 C CNN
+F 2 "" H 4750 6950 50  0000 C CNN
+F 3 "" H 4750 6950 50  0000 C CNN
+	1    4750 6950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5F4E76B0
+P 4750 6200
+F 0 "#PWR?" H 4750 6050 50  0001 C CNN
+F 1 "+3.3V" H 4765 6376 50  0000 C CNN
+F 2 "" H 4750 6200 50  0001 C CNN
+F 3 "" H 4750 6200 50  0001 C CNN
+	1    4750 6200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5F4E7ABA
+P 2400 6950
+F 0 "R?" H 2470 6997 50  0000 L CNN
+F 1 "10k" H 2470 6904 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 2330 6950 50  0001 C CNN
+F 3 "~" H 2400 6950 50  0001 C CNN
+	1    2400 6950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR?
+U 1 1 5F4E7F19
+P 2400 7200
+F 0 "#PWR?" H 2400 6950 50  0001 C CNN
+F 1 "GND" H 2400 7050 50  0000 C CNN
+F 2 "" H 2400 7200 50  0000 C CNN
+F 3 "" H 2400 7200 50  0000 C CNN
+	1    2400 7200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5F4E826D
+P 5850 7000
+F 0 "R?" H 5920 7047 50  0000 L CNN
+F 1 "10k" H 5920 6954 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 5780 7000 50  0001 C CNN
+F 3 "~" H 5850 7000 50  0001 C CNN
+	1    5850 7000
+	1    0    0    -1  
+$EndComp
+Text Label 8350 5600 0    60   ~ 0
+TRIG
+Wire Wire Line
+	8100 5600 8350 5600
+Text Label 6250 6250 0    60   ~ 0
+TRIG
+Wire Wire Line
+	6250 6550 6250 6250
+Wire Wire Line
+	4550 6650 4750 6650
+Wire Wire Line
+	4750 6650 4750 6250
+Wire Wire Line
+	5000 6300 5000 6250
+Wire Wire Line
+	5000 6250 4750 6250
+Connection ~ 4750 6250
+Wire Wire Line
+	4750 6250 4750 6200
+Wire Wire Line
+	4550 6750 5000 6750
+Wire Wire Line
+	5000 6750 5000 6700
+Wire Wire Line
+	5000 6750 5400 6750
+Connection ~ 5000 6750
+Wire Wire Line
+	5700 6750 5850 6750
+Wire Wire Line
+	5850 7150 5850 7250
+Wire Wire Line
+	5850 7250 6150 7250
+Wire Wire Line
+	6250 7250 6250 6950
+Wire Wire Line
+	6150 7350 6150 7250
+Connection ~ 6150 7250
+Wire Wire Line
+	6150 7250 6250 7250
+Wire Wire Line
+	5850 6850 5850 6750
+Connection ~ 5850 6750
+Wire Wire Line
+	5850 6750 5950 6750
+Wire Wire Line
+	4550 6850 4750 6850
+Wire Wire Line
+	4750 6850 4750 6950
+Wire Wire Line
+	2400 6800 2400 6700
+Connection ~ 2400 6700
+Wire Wire Line
+	2400 6700 2650 6700
+Wire Wire Line
+	2400 7100 2400 7200
+Text Label 2950 6350 0    60   ~ 0
+TRIG
+Wire Wire Line
+	2950 6500 2950 6350
+Wire Wire Line
+	8100 4200 8100 5200
+Wire Wire Line
+	8100 4200 8700 4200
+Text Notes 2200 6000 0    60   ~ 0
+PIR Trigger
+Text Notes 5300 6050 0    60   ~ 0
+EXTERNAL Trigger
+Text Notes 9100 3400 0    60   ~ 0
+ESP32_CAM Pinout
+Text Notes 2650 4050 0    60   ~ 0
+Power Supply 3.3V
+$EndSCHEMATC

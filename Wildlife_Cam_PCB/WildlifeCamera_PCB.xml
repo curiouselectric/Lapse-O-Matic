@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>E:/Google Drive/Work - Kits/PRODUCTS/Production/Solar Charger/Solar_Charger/Solar Charger 2017 PCB/SolarCharger2017.sch</source>
+    <date>09/08/2017 13:38:27</date>
+    <tool>Eeschema 4.0.4-stable</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>SolarCharger2017.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="BT1">
+      <value>18650 LiIon Cell</value>
+      <footprint>REInnovationFootprint:TH_LiIon_Holder</footprint>
+      <fields>
+        <field name="Description">18650 PCB mount holder</field>
+        <field name="Supplier 1">eBay</field>
+        <field name="Supplier 1 Part No">http://www.ebay.co.uk/itm/122466718109</field>
+        <field name="Supplier 1 Cost">0.50</field>
+      </fields>
+      <libsource lib="matts_components" part="Battery_Cell"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B31232</tstamp>
+    </comp>
+    <comp ref="SC1">
+      <value>PV &lt;2W 5.5V</value>
+      <footprint>REInnovationFootprint:PV_130mmx65mm_NoOutline</footprint>
+      <fields>
+        <field name="Description">1-2W solar PV module</field>
+        <field name="Supplier 1">Aliexpress</field>
+        <field name="Supplier 1 Cost">2.5</field>
+      </fields>
+      <libsource lib="matts_components" part="Solar_Cells"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B31275</tstamp>
+    </comp>
+    <comp ref="DCDC1">
+      <value>DC-DC</value>
+      <footprint>REInnovationFootprint:TH_DCDC_Converter_USB</footprint>
+      <fields>
+        <field name="Supplier 1">Aliexpress</field>
+        <field name="Supplier 1 Cost">1.5</field>
+      </fields>
+      <libsource lib="matts_components" part="DC-DC_GENERIC"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B3136F</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>BQ24210</value>
+      <footprint>REInnovationFootprint:SM_WSON-10-2x3</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/bq24210.pdf</datasheet>
+      <fields>
+        <field name="Description">LiIon Charger 800mA PV Input</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="Manufacturer Part No">BQ24210</field>
+        <field name="Supplier 1">RS</field>
+        <field name="Supplier 1 Part No">742-2836</field>
+        <field name="Supplier 1 Cost">2.88</field>
+      </fields>
+      <libsource lib="SolarCharger2017-rescue" part="BQ24210-RESCUE-SolarCharger2017"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B3146F</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>CHG</value>
+      <footprint>REInnovationFootprint:TH_LED-5MM_larg_pad</footprint>
+      <fields>
+        <field name="Supplier 1 Cost">0.05</field>
+      </fields>
+      <libsource lib="SolarCharger2017-rescue" part="LED-RESCUE-SolarCharger2017"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B3183D</tstamp>
+    </comp>
+    <comp ref="D3">
+      <value>PG</value>
+      <footprint>REInnovationFootprint:TH_LED-5MM_larg_pad</footprint>
+      <fields>
+        <field name="Supplier 1 Cost">0.05</field>
+      </fields>
+      <libsource lib="SolarCharger2017-rescue" part="LED-RESCUE-SolarCharger2017"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B31888</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>2.2k</value>
+      <footprint>REInnovationFootprint:TH_Resistor_1</footprint>
+      <fields>
+        <field name="Supplier 1 Cost">0.01</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B318C0</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>2.2k</value>
+      <footprint>REInnovationFootprint:TH_Resistor_1</footprint>
+      <fields>
+        <field name="Supplier 1 Cost">0.01</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B31907</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>1uF</value>
+      <footprint>matts_components:C1V7_lg_pad_lg_hole</footprint>
+      <fields>
+        <field name="Supplier 1 Cost">0.1</field>
+      </fields>
+      <libsource lib="device" part="CP"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B319C0</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>1uF</value>
+      <footprint>matts_components:C1V7_lg_pad_lg_hole</footprint>
+      <fields>
+        <field name="Supplier 1 Cost">0.10</field>
+      </fields>
+      <libsource lib="device" part="CP"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B31A6D</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>1k</value>
+      <footprint>REInnovationFootprint:TH_Resistor_1</footprint>
+      <fields>
+        <field name="Supplier 1 Cost">0.01</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B31BC6</tstamp>
+    </comp>
+    <comp ref="P2">
+      <value>LiIon Cell V</value>
+      <footprint>REInnovationFootprint:SIL_2_screw_+_JST_2mm</footprint>
+      <libsource lib="conn" part="CONN_01X02"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B33011</tstamp>
+    </comp>
+    <comp ref="SW1">
+      <value>5V ON</value>
+      <footprint>REInnovationFootprint:SW_SPDT_R_Angle_ALIEX</footprint>
+      <fields>
+        <field name="Supplier 1">Aliexpress</field>
+        <field name="Supplier 1 Cost">0.2</field>
+      </fields>
+      <libsource lib="device" part="SPST"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B33CC6</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>100k</value>
+      <footprint>REInnovationFootprint:TH_Resistor_1</footprint>
+      <fields>
+        <field name="Supplier 1 Cost">0.01</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B6EAFF</tstamp>
+    </comp>
+    <comp ref="LG1">
+      <value>LOGO1</value>
+      <footprint>CuriousElectric3:CEC_Globe_10mm_FCU</footprint>
+      <libsource lib="conn" part="CONN_01X01"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B70530</tstamp>
+    </comp>
+    <comp ref="LG2">
+      <value>LOGO2</value>
+      <footprint>CuriousElectric3:TCEC_Words_13mm</footprint>
+      <libsource lib="conn" part="CONN_01X01"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58B705E9</tstamp>
+    </comp>
+    <comp ref="P1">
+      <value>5V OUT</value>
+      <footprint>REInnovationFootprint:SIL-2_screw_terminal</footprint>
+      <libsource lib="conn" part="CONN_01X02"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58C13EEE</tstamp>
+    </comp>
+    <comp ref="P3">
+      <value>PV IN 1</value>
+      <footprint>REInnovationFootprint:SIL_2_screw_+_JST_2mm</footprint>
+      <libsource lib="conn" part="CONN_01X02"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58C1454D</tstamp>
+    </comp>
+    <comp ref="P4">
+      <value>PV IN 2</value>
+      <footprint>REInnovationFootprint:SIL_2_screw_+_JST_2mm</footprint>
+      <libsource lib="conn" part="CONN_01X02"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58C14612</tstamp>
+    </comp>
+    <comp ref="PCB1">
+      <value>PCB</value>
+      <footprint>REInnovationFootprint:PCB_65x90mm</footprint>
+      <libsource lib="conn" part="CONN_01X01"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58C14FC1</tstamp>
+    </comp>
+    <comp ref="DCDC2">
+      <value>DC-DC</value>
+      <footprint>REInnovationFootprint:TH_DCDC_Converter_NoUSB</footprint>
+      <fields>
+        <field name="Supplier 1">Aliexpress</field>
+        <field name="Supplier 1 Cost">1</field>
+      </fields>
+      <libsource lib="matts_components" part="DC-DC_GENERIC"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>593E8BD7</tstamp>
+    </comp>
+    <comp ref="P6">
+      <value>5V OUT</value>
+      <footprint>REInnovationFootprint:SIL-2_screw_terminal</footprint>
+      <libsource lib="conn" part="CONN_01X02"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>593EA27A</tstamp>
+    </comp>
+    <comp ref="P5">
+      <value>LiIon Cell V</value>
+      <footprint>REInnovationFootprint:SIL_2_screw_+_JST_2mm</footprint>
+      <libsource lib="conn" part="CONN_01X02"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>593EA2E6</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="SolarCharger2017-rescue" part="BQ24210-RESCUE-SolarCharger2017">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">BQ24210-RESCUE-SolarCharger2017</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Vbus" type="power_out"/>
+        <pin num="2" name="Iset" type="input"/>
+        <pin num="3" name="Vss" type="input"/>
+        <pin num="4" name="VTSB" type="input"/>
+        <pin num="5" name="TS" type="input"/>
+        <pin num="6" name="~PG" type="input"/>
+        <pin num="7" name="~EN" type="input"/>
+        <pin num="8" name="~CHG" type="input"/>
+        <pin num="9" name="VDPM" type="input"/>
+        <pin num="10" name="BAT" type="input"/>
+        <pin num="PAD" name="SHIELD" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="matts_components" part="Battery_Cell">
+      <fields>
+        <field name="Reference">BT</field>
+        <field name="Value">Battery_Cell</field>
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="passive"/>
+        <pin num="2" name="-" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="conn" part="CONN_01X01">
+      <description>Connector, single row, 01x01</description>
+      <footprints>
+        <fp>Pin_Header_Straight_1X01</fp>
+        <fp>Pin_Header_Angled_1X01</fp>
+        <fp>Socket_Strip_Straight_1X01</fp>
+        <fp>Socket_Strip_Angled_1X01</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">P</field>
+        <field name="Value">CONN_01X01</field>
+      </fields>
+      <pins>
+        <pin num="1" name="P1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="conn" part="CONN_01X02">
+      <description>Connector, single row, 01x02</description>
+      <footprints>
+        <fp>Pin_Header_Straight_1X02</fp>
+        <fp>Pin_Header_Angled_1X02</fp>
+        <fp>Socket_Strip_Straight_1X02</fp>
+        <fp>Socket_Strip_Angled_1X02</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">P</field>
+        <field name="Value">CONN_01X02</field>
+      </fields>
+      <pins>
+        <pin num="1" name="P1" type="passive"/>
+        <pin num="2" name="P2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="CP">
+      <description>Polarised capacitor</description>
+      <footprints>
+        <fp>CP*</fp>
+        <fp>C_Axial*</fp>
+        <fp>C_Radial*</fp>
+        <fp>TantalC*</fp>
+        <fp>C*elec</fp>
+        <fp>c_elec*</fp>
+        <fp>SMD*_Pol</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">CP</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="matts_components" part="DC-DC_GENERIC">
+      <footprints>
+        <fp>LED-3MM</fp>
+        <fp>LED-5MM</fp>
+        <fp>LED-10MM</fp>
+        <fp>LED-0603</fp>
+        <fp>LED-0805</fp>
+        <fp>LED-1206</fp>
+        <fp>LEDV</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">DCDC</field>
+        <field name="Value">DC-DC_GENERIC</field>
+      </fields>
+      <pins>
+        <pin num="1" name="+Vin" type="passive"/>
+        <pin num="2" name="-Vin" type="passive"/>
+        <pin num="3" name="+Vout" type="input"/>
+        <pin num="4" name="-Vout" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="SolarCharger2017-rescue" part="LED-RESCUE-SolarCharger2017">
+      <footprints>
+        <fp>LED-*</fp>
+        <fp>LED_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED-RESCUE-SolarCharger2017</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+        <fp>Resistor_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="SPST">
+      <description>Interrupteur simple</description>
+      <fields>
+        <field name="Reference">SW</field>
+        <field name="Value">SPST</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="input"/>
+        <pin num="2" name="2" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="matts_components" part="Solar_Cells">
+      <fields>
+        <field name="Reference">SC</field>
+        <field name="Value">Solar_Cells</field>
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="passive"/>
+        <pin num="2" name="-" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="SolarCharger2017-rescue">
+      <uri>E:\Google Drive\Work - Kits\PRODUCTS\Production\Solar Charger\Solar_Charger\Solar Charger 2017 PCB\SolarCharger2017-rescue.lib</uri>
+    </library>
+    <library logical="device">
+      <uri>C:\Program Files\KiCad\share\kicad\library\device.lib</uri>
+    </library>
+    <library logical="conn">
+      <uri>C:\Program Files\KiCad\share\kicad\library\conn.lib</uri>
+    </library>
+    <library logical="matts_components">
+      <uri>E:\Google Drive\KiCAD\kicad_reinnovation\KiCad My Libraries\matts_components.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(D3-Pad1)">
+      <node ref="D3" pin="1"/>
+      <node ref="U1" pin="7"/>
+      <node ref="U1" pin="6"/>
+    </net>
+    <net code="2" name="Net-(LG1-Pad1)">
+      <node ref="LG1" pin="1"/>
+    </net>
+    <net code="3" name="Net-(LG2-Pad1)">
+      <node ref="LG2" pin="1"/>
+    </net>
+    <net code="4" name="Net-(U1-Pad9)">
+      <node ref="U1" pin="9"/>
+    </net>
+    <net code="5" name="Net-(D2-Pad1)">
+      <node ref="D2" pin="1"/>
+      <node ref="U1" pin="8"/>
+    </net>
+    <net code="6" name="Net-(R2-Pad2)">
+      <node ref="R2" pin="2"/>
+      <node ref="U1" pin="4"/>
+    </net>
+    <net code="7" name="Net-(R2-Pad1)">
+      <node ref="R2" pin="1"/>
+      <node ref="U1" pin="5"/>
+    </net>
+    <net code="8" name="VCC">
+      <node ref="BT1" pin="1"/>
+      <node ref="C2" pin="1"/>
+      <node ref="R4" pin="1"/>
+      <node ref="R3" pin="1"/>
+      <node ref="SW1" pin="1"/>
+      <node ref="P2" pin="1"/>
+      <node ref="U1" pin="10"/>
+      <node ref="P5" pin="1"/>
+    </net>
+    <net code="9" name="GND">
+      <node ref="C2" pin="2"/>
+      <node ref="DCDC1" pin="1"/>
+      <node ref="SC1" pin="2"/>
+      <node ref="BT1" pin="2"/>
+      <node ref="P5" pin="2"/>
+      <node ref="R1" pin="2"/>
+      <node ref="P2" pin="2"/>
+      <node ref="P4" pin="2"/>
+      <node ref="U1" pin="3"/>
+      <node ref="P3" pin="2"/>
+      <node ref="U1" pin="PAD"/>
+      <node ref="C1" pin="2"/>
+      <node ref="DCDC2" pin="1"/>
+    </net>
+    <net code="10" name="Net-(DCDC1-Pad2)">
+      <node ref="DCDC2" pin="2"/>
+      <node ref="SW1" pin="2"/>
+      <node ref="DCDC1" pin="2"/>
+    </net>
+    <net code="11" name="Net-(PCB1-Pad1)">
+      <node ref="PCB1" pin="1"/>
+    </net>
+    <net code="12" name="Net-(DCDC1-Pad3)">
+      <node ref="P6" pin="2"/>
+      <node ref="P1" pin="2"/>
+      <node ref="DCDC2" pin="3"/>
+      <node ref="DCDC1" pin="3"/>
+    </net>
+    <net code="13" name="Net-(DCDC1-Pad4)">
+      <node ref="P1" pin="1"/>
+      <node ref="DCDC2" pin="4"/>
+      <node ref="P6" pin="1"/>
+      <node ref="DCDC1" pin="4"/>
+    </net>
+    <net code="14" name="Net-(D2-Pad2)">
+      <node ref="D2" pin="2"/>
+      <node ref="R3" pin="2"/>
+    </net>
+    <net code="15" name="Net-(C1-Pad1)">
+      <node ref="C1" pin="1"/>
+      <node ref="SC1" pin="1"/>
+      <node ref="P4" pin="1"/>
+      <node ref="P3" pin="1"/>
+      <node ref="U1" pin="1"/>
+    </net>
+    <net code="16" name="Net-(D3-Pad2)">
+      <node ref="R4" pin="2"/>
+      <node ref="D3" pin="2"/>
+    </net>
+    <net code="17" name="Net-(R1-Pad1)">
+      <node ref="U1" pin="2"/>
+      <node ref="R1" pin="1"/>
+    </net>
+  </nets>
+</export>
