@@ -45,6 +45,9 @@
 #define   LED_FLASH_PIN       4           // GPIO pin for the flash LED
 #define   LED_ONBOARD         33          // GPIO pin for the on-board LED
 #define   GPIO_PIN_WAKEUP     GPIO_NUM_13
+#define   I2C_SDA             14
+#define   I2C_SCL             15
+
 
 #define   MODE                "SLEEP"     // SLEEP is for sleep mode, with info below
 // PIR is for PIR mode

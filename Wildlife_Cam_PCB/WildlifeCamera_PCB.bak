@@ -457,7 +457,7 @@ F 3 "" H 7700 3600 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:Q_NPN_BCE Q1
+L WildlifeCamera_PCB-rescue:Q_NPN_BCE-Device Q1
 U 1 1 5F433637
 P 2850 6700
 F 0 "Q1" H 3040 6747 50  0000 L CNN
@@ -468,7 +468,7 @@ F 3 "~" H 2850 6700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R6
+L WildlifeCamera_PCB-rescue:R-Device R6
 U 1 1 5F433F45
 P 6300 5150
 F 0 "R6" H 6370 5197 50  0000 L CNN
@@ -479,7 +479,7 @@ F 3 "~" H 6300 5150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R5
+L WildlifeCamera_PCB-rescue:R-Device R5
 U 1 1 5F4345CF
 P 2000 6700
 F 0 "R5" V 1790 6700 50  0000 C CNN
@@ -490,7 +490,7 @@ F 3 "~" H 2000 6700 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x03 J1
+L WildlifeCamera_PCB-rescue:Conn_01x03-Connector_Generic J1
 U 1 1 5F434B25
 P 1300 6700
 F 0 "J1" V 1217 6370 50  0000 C CNN
@@ -523,7 +523,7 @@ F 3 "" H 8550 4450 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3.3V #PWR0103
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR0103
 U 1 1 5F4389FE
 P 1750 6300
 F 0 "#PWR0103" H 1750 6150 50  0001 C CNN
@@ -567,7 +567,7 @@ F 3 "" H 8700 4000 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3.3V #PWR0107
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR0107
 U 1 1 5F43E8AB
 P 8550 3650
 F 0 "#PWR0107" H 8550 3500 50  0001 C CNN
@@ -606,7 +606,7 @@ Wire Wire Line
 Wire Wire Line
 	1750 6800 1750 7050
 $Comp
-L Connector_Generic:Conn_01x03 J2
+L WildlifeCamera_PCB-rescue:Conn_01x03-Connector_Generic J2
 U 1 1 5F455A97
 P 4200 6650
 F 0 "J2" V 4117 6320 50  0000 C CNN
@@ -665,7 +665,7 @@ F 3 "" H 3300 4500 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3.3V #PWR0110
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR0110
 U 1 1 5F467366
 P 4250 4400
 F 0 "#PWR0110" H 4250 4250 50  0001 C CNN
@@ -727,7 +727,7 @@ Wire Wire Line
 	2650 4450 2900 4450
 Connection ~ 2650 4450
 $Comp
-L device:LED D?
+L WildlifeCamera_PCB-rescue:LED-device D?
 U 1 1 5F4D026C
 P 5850 4700
 F 0 "D?" V 5890 4580 50  0000 R CNN
@@ -740,7 +740,7 @@ $EndComp
 Wire Wire Line
 	2150 6700 2400 6700
 $Comp
-L Switch:SW_Push SW?
+L WildlifeCamera_PCB-rescue:SW_Push-Switch SW?
 U 1 1 5F4DA4DE
 P 4850 6400
 F 0 "SW?" V 4897 6350 50  0000 R CNN
@@ -751,7 +751,7 @@ F 3 "~" H 4850 6600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Device:R R?
+L WildlifeCamera_PCB-rescue:R-Device R?
 U 1 1 5F4DF1E6
 P 5400 6650
 F 0 "R?" V 5190 6650 50  0000 C CNN
@@ -762,7 +762,7 @@ F 3 "~" H 5400 6650 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:Q_NPN_BCE Q?
+L WildlifeCamera_PCB-rescue:Q_NPN_BCE-Device Q?
 U 1 1 5F4DF59B
 P 6000 6650
 F 0 "Q?" H 6190 6697 50  0000 L CNN
@@ -773,7 +773,7 @@ F 3 "~" H 6000 6650 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R?
+L WildlifeCamera_PCB-rescue:R-Device R?
 U 1 1 5F4DFB70
 P 5850 5150
 F 0 "R?" H 5920 5197 50  0000 L CNN
@@ -784,7 +784,7 @@ F 3 "~" H 5850 5150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3.3V #PWR?
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR?
 U 1 1 5F4E0074
 P 5850 4350
 F 0 "#PWR?" H 5850 4200 50  0001 C CNN
@@ -826,7 +826,7 @@ F 3 "" H 4600 6850 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3.3V #PWR?
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR?
 U 1 1 5F4E76B0
 P 4600 6100
 F 0 "#PWR?" H 4600 5950 50  0001 C CNN
@@ -837,7 +837,7 @@ F 3 "" H 4600 6100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R?
+L WildlifeCamera_PCB-rescue:R-Device R?
 U 1 1 5F4E7ABA
 P 2400 6950
 F 0 "R?" H 2470 6997 50  0000 L CNN
@@ -859,7 +859,7 @@ F 3 "" H 2400 7200 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R?
+L WildlifeCamera_PCB-rescue:R-Device R?
 U 1 1 5F4E826D
 P 5700 6900
 F 0 "R?" H 5770 6947 50  0000 L CNN
@@ -936,12 +936,12 @@ Text Notes 2200 6000 0    60   ~ 0
 PIR Trigger
 Text Notes 5150 5950 0    60   ~ 0
 EXTERNAL Trigger
-Text Notes 7300 3200 0    60   ~ 0
+Text Notes 7150 2700 0    60   ~ 0
 ESP32_CAM Pinout
 Text Notes 2650 4050 0    60   ~ 0
 Power Supply 3.3V
 $Comp
-L Connector_Generic:Conn_01x06 J?
+L WildlifeCamera_PCB-rescue:Conn_01x06-Connector_Generic J?
 U 1 1 5F50D962
 P 10350 3800
 F 0 "J?" H 10430 3792 50  0000 L CNN
@@ -952,7 +952,7 @@ F 3 "~" H 10350 3800 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x02 J?
+L WildlifeCamera_PCB-rescue:Conn_01x02-Connector_Generic J?
 U 1 1 5F50EC3E
 P 10350 4350
 F 0 "J?" H 10430 4342 50  0000 L CNN
@@ -1027,7 +1027,7 @@ Wire Wire Line
 Wire Wire Line
 	9700 3900 10150 3900
 $Comp
-L Connector_Generic:Conn_01x04 J?
+L WildlifeCamera_PCB-rescue:Conn_01x04-Connector_Generic J?
 U 1 1 5F579B35
 P 9650 5550
 F 0 "J?" H 9730 5542 50  0000 L CNN
@@ -1038,7 +1038,7 @@ F 3 "~" H 9650 5550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3.3V #PWR?
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR?
 U 1 1 5F57A570
 P 8800 5650
 F 0 "#PWR?" H 8800 5500 50  0001 C CNN
@@ -1061,10 +1061,8 @@ F 3 "" H 9400 5900 50  0000 C CNN
 $EndComp
 Text Label 6500 4400 0    60   ~ 0
 I2C_CLK
-Text Label 6500 3900 0    60   ~ 0
+Text Label 6500 4300 0    60   ~ 0
 I2C_DAT
-Wire Wire Line
-	6500 3900 6900 3900
 Wire Wire Line
 	6500 4400 6900 4400
 Wire Wire Line
@@ -1083,4 +1081,10 @@ Wire Wire Line
 	9000 5550 9450 5550
 Wire Wire Line
 	9450 5450 9000 5450
+Text Notes 9300 5250 0    60   ~ 0
+I2C Test
+Text Notes 6550 3300 0    60   ~ 0
+SD Card is changed from 4 bit write to 1 bit write.\nThis frees up 3 x GPIO.\n1 is for External Interrupt\n2 are form I2C - connect to RTC.\nTest this works!!!!
+Wire Wire Line
+	6900 4300 6500 4300
 $EndSCHEMATC

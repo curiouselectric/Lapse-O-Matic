@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name rescue-backup)(type KiCad)(uri ${KIPRJMOD}/rescue-backup)(options "")(descr ""))
+  (lib (name Wildlife_Cam_PCB)(type KiCad)(uri "G:/My Drive/Work - Kits/PRODUCTS/Prototype/Wildlife Camera/GITHUB/Wildlife_ESP_Cam/Wildlife_Cam_PCB")(options "")(descr ""))
+)

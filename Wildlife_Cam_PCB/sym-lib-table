@@ -2,4 +2,5 @@
   (lib (name SolarCharger2017-rescue)(type Legacy)(uri ${KIPRJMOD}/SolarCharger2017-rescue.lib)(options "")(descr ""))
   (lib (name power1)(type Legacy)(uri "C:/Program Files/KiCad/share/kicad/library/power.lib")(options "")(descr ""))
   (lib (name device)(type Legacy)(uri "C:/Program Files/KiCad/share/kicad/library/device.lib")(options "")(descr ""))
+  (lib (name WildlifeCamera_PCB-rescue)(type Legacy)(uri ${KIPRJMOD}/WildlifeCamera_PCB-rescue.lib)(options "")(descr ""))
 )

@@ -29,7 +29,7 @@
     Sort out flash LED - only works on first reprogram - This is solved.
     Sort out interrupt via PIR unit - This is solved.
     Flash on/off (boolean ) is not working? - Sorted
-    
+
     To do:
     Sort out running all at 3.3V?
     Sort out reprogramming with FTDI/USB
@@ -60,6 +60,11 @@
 #include <SD_MMC.h>
 #include <Preferences.h>
 
+// Date and time functions using a DS3231 RTC connected via I2C and Wire lib
+#include <Wire.h>
+#include "RTClib.h"
+RTC_DS3231 rtc;
+
 #include "soc/soc.h"           // Disable brownour problems
 #include "soc/rtc_cntl_reg.h"  // Disable brownour problems
 #include "driver/rtc_io.h"
@@ -67,27 +72,28 @@
 // The ESP32 EEPROM library is deprecated. Use the Preferences library instead.
 Preferences preferences;
 
-
 // ******* Global Variables ********
+bool        flash_flag      = FLASH_FLAG;
+int         flash_start_delay = FLASH_START_DELAY;
+int         flash_stop_delay = FLASH_STOP_DELAY;
+bool        debug_flag      = DEBUG_FLAG;
+bool        debug_photo     = DEBUG_PHOTO;
+unsigned int number_photos  = NUMBER_PHOTOS;
+unsigned int time_to_sleep  = TIME_TO_SLEEP;
+String      mode_type       = MODE;
+unsigned int photo_delay    = PHOTO_DELAY;
 
-bool flash_flag = FLASH_FLAG;
-int flash_start_delay = FLASH_START_DELAY;
-int flash_stop_delay = FLASH_STOP_DELAY;
-bool debug_flag = DEBUG_FLAG;
-bool debug_photo = DEBUG_PHOTO;
-unsigned int number_photos = NUMBER_PHOTOS;
-unsigned int  time_to_sleep = TIME_TO_SLEEP;
-String mode_type = MODE;
-unsigned int photo_delay = PHOTO_DELAY;
+// This is an array of all the names for the SD card settings.txt read
 
 char *name_array[] = { "FLASH_FLAG", "FLASH_START_DELAY", "FLASH_STOP_DELAY",
-                       "DEBUG_FLAG", "DEBUG_PHOTO", "NUMBER_PHOTOS", "TIME_TO_SLEEP"
-                       , "MODE", "PHOTO_DELAY"
+                       "DEBUG_FLAG", "DEBUG_PHOTO", "NUMBER_PHOTOS",
+                       "TIME_TO_SLEEP", "MODE", "PHOTO_DELAY"
                      };
 
 // Create a variable to hold the picture number. Since the SD card is formatted FAT32, the maximum number of files
 // there can be is 65534, so a 16-bit unsigned number will be fine.
 uint16_t PIC_COUNT = 0;
+String date = "NO RTC";
 
 void setup()
 {
@@ -99,15 +105,38 @@ void setup()
   DEBUGLN(debug_flag, "Starting");
   switch_off_flash_LED(); // Ensure LED is OFF to start.
 
+  // Lets try reading/writing to I2C
+  // Start the I2C interface
+  Wire.begin(I2C_SDA, I2C_SCL);
+  if (! rtc.begin()) {
+    // not wuite sure what to do here...
+    Serial.println("Couldn't find RTC");
+    Serial.flush();
+    abort();
+  }
+  if (rtc.lostPower()) {
+    Serial.println("RTC lost power, let's set the time!");
+    // When time needs to be set on a new device, or after a power loss, the
+    // following line sets the RTC to the date & time this sketch was compiled
+    // This is cool!!
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+    // This line sets the RTC with an explicit date & time, for example to set
+    // January 21, 2014 at 3am you would call:
+    // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
+  }
+  DateTime now = rtc.now();
+  // Set the date with date and time with the data, to use as filename later.  
+  date = "D" +(String)now.year() + "_" + (String)now.month() + "_" + 
+         (String)now.day()+ "T" + (String)now.hour()+ "_" + (String)now.minute();
+    
   // *************** SORT OUT THE SD CARD ****************************** //
   // Start up the SD card, using 1-bit xfers instead of 4-bit (set the "true" option).
   // Frees up GPIO13.
   if (!SD_MMC.begin("/sdcard", true)) {
     // If we're here, there's a problem with the SD card.
-    // Turn the ESP off and wait for the next trigger.
-    //digitalWrite(13, LOW);
     DEBUGLN(debug_flag, "SD Card Mount Fail");
-    flash_error(5);
+    // We flash the LED to show an SD card error
+    flash_error(5); // Flash 5 times for an SD card mount error
     // This checks the mode the unit is in and then goes to sleep accordingly
     check_mode();
   }
@@ -124,6 +153,7 @@ void setup()
     flash_error(10);
     // This checks the mode the unit is in and then goes to sleep accordingly
     check_mode();
+
   } else if (SD_CARD == CARD_MMC) {
     DEBUGLN(debug_flag, "MMC");
   } else if (SD_CARD == CARD_SD) {
@@ -232,9 +262,13 @@ void loop()
     }
 
     // Image captured: Save it here:
-    // Want to use the date for the file name
-    String path = "/pic" + String(PIC_COUNT) + "_" + String(COUNTUP) + "_of_" + String(number_photos) + ".jpg";
+    // Want to use the date & time for the file name - to log it.
 
+    // String path = "/pic" + String(PIC_COUNT) + "_" + String(COUNTUP) + "_of_" + String(number_photos) + ".jpg";
+    String path = "/" + date + "_" + String(COUNTUP) + "_of_" + String(number_photos) + ".jpg";
+    Serial.print("Path is:");
+    Serial.println(path);
+    
     fs::FS &fs = SD_MMC;
 
     // Now, create a new file using the path and name set above.
@@ -273,8 +307,6 @@ void loop()
     COUNTUP = COUNTUP + 1;  // We are done an image capture cycle. Increment the count.
   }
   DEBUGLN(debug_photo, ":END");
-
-
 
   // If we're here then we've taken the pictures and we are ready to shut down. Write the current file number to
   // the EEPROM, then set D13 low.
