@@ -17,20 +17,20 @@ A flash can be implemented, with a start and stop delay to adjust shadow effects
 
 This code relies heaviliy on the following tutorials and information:
 
-*https://techtutorialsx.com/2020/06/27/esp32-connecting-to-sd-card/
-*https://randomnerdtutorials.com/esp32-cam-take-photo-save-microsd-card/
-*https://www.olimex.com/Products/IoT/ESP32/ESP32-CAM/
-*https://marksbench.com/electronics/esp32-cam-low-power-trail-camera/
-*https://hackaday.com/2020/05/18/esp32-trail-camera-goes-the-distance-on-aa-batteries/
-*https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/
-*https://dronebotworkshop.com/esp32-cam-intro/
+* https://techtutorialsx.com/2020/06/27/esp32-connecting-to-sd-card/
+* https://randomnerdtutorials.com/esp32-cam-take-photo-save-microsd-card/
+* https://www.olimex.com/Products/IoT/ESP32/ESP32-CAM/
+* https://marksbench.com/electronics/esp32-cam-low-power-trail-camera/
+* https://hackaday.com/2020/05/18/esp32-trail-camera-goes-the-distance-on-aa-batteries/
+* https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/
+* https://dronebotworkshop.com/esp32-cam-intro/
 
 
 ## ESP32 Code
 
 Please follow these instructions for setting up your arduino IDE to upload code to the ESP32_CAM.
 
-There is no USB connection to the ESP32_CAM, so I used this nice programmer from Tindie (around £10 UK):
+There is no USB connection to the ESP32_CAM, so I used this nice programmer from Tindie (around Â£10 UK):
 https://www.tindie.com/products/bitluni/cam-prog/
 
 The code starts by reading the settings.txt file on the root directoy of the SD card. If the SD card fails to mount, then the unit will go to default settings, which will mean sleeping for 10 seconds then trying the SD card again.
@@ -68,7 +68,7 @@ Here is an example settings.txt file:
 * FLASH_FLAG - Use a flash with the photo? (0 (OFF) or 1 (ON))
 * NUMBER_PHOTOS - How many photos to take when waking up?
 * TIME_TO_SLEEP - How long (in seconds) between wake-ups (when in SLEEP mode)
-* MODE - The mode to use is either SLEEP (wake up every TOME_TO_SLEEP seconds) or TRIGGER (either wkae up on PIR trigger or external trigger)
+* MODE - The mode to use is either SLEEP (wake up every TOME_TO_SLEEP seconds) or TRIGGER (either wake up on PIR trigger or external trigger)
 * PHOTO_DELAY - delay (in milli Seconds) between taking the photos.
 * FLASH_START_DELAY - Flash will switch on then wait this time before taking photo (in milli Seconds)
 * FLASH_STOP_DELAY - Flash will be on and wait this time after taking photo (in milli Seconds)
