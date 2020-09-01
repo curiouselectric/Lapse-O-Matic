@@ -1,5 +1,6 @@
 
 /* ********* ESP32_CAM Wildlife Camera Unit **************************
+
     by Matt Little
     The Curious Electric Company (www.curiouselectric.co.uk)
     hello@curiouselectric.co.uk
@@ -29,13 +30,20 @@
     Sort out flash LED - only works on first reprogram - This is solved.
     Sort out interrupt via PIR unit - This is solved.
     Flash on/off (boolean ) is not working? - Sorted
+    Sort out RTC for file name - done. I2C shared pins.
+    Sort out file names.
+    Sort out reprogramming with FTDI/USB
+    Sort out running all at 3.3V. Works with low drop out regulator
 
     To do:
-    Sort out running all at 3.3V?
-    Sort out reprogramming with FTDI/USB
+
+    Setting RTC
+    What happens if no RTC connected?
+    Why getting camera errors?
+    Report Error to log file.
     Solar charger circuitry
-    Sort out file names.
-    Sort out RTC for file name? I2C on ESP32_CAM?
+
+
 
     Some Information that has been very useful
 
@@ -73,15 +81,15 @@ RTC_DS3231 rtc;
 Preferences preferences;
 
 // ******* Global Variables ********
-bool        flash_flag      = FLASH_FLAG;
-int         flash_start_delay = FLASH_START_DELAY;
-int         flash_stop_delay = FLASH_STOP_DELAY;
-bool        debug_flag      = DEBUG_FLAG;
-bool        debug_photo     = DEBUG_PHOTO;
-unsigned int number_photos  = NUMBER_PHOTOS;
-unsigned int time_to_sleep  = TIME_TO_SLEEP;
-String      mode_type       = MODE;
-unsigned int photo_delay    = PHOTO_DELAY;
+bool          flash_flag        = FLASH_FLAG;
+int           flash_start_delay = FLASH_START_DELAY;
+int           flash_stop_delay  = FLASH_STOP_DELAY;
+bool          debug_flag        = DEBUG_FLAG;
+bool          debug_photo       = DEBUG_PHOTO;
+unsigned int  number_photos     = NUMBER_PHOTOS;
+unsigned int  time_to_sleep     = TIME_TO_SLEEP;
+String        mode_type         = MODE;
+unsigned int  photo_delay       = PHOTO_DELAY;
 
 // This is an array of all the names for the SD card settings.txt read
 
@@ -93,42 +101,60 @@ char *name_array[] = { "FLASH_FLAG", "FLASH_START_DELAY", "FLASH_STOP_DELAY",
 // Create a variable to hold the picture number. Since the SD card is formatted FAT32, the maximum number of files
 // there can be is 65534, so a 16-bit unsigned number will be fine.
 uint16_t PIC_COUNT = 0;
-String date = "NO RTC";
+String date = "";       // This holds the date string for the filename.
 
 void setup()
 {
-  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //disable brownout detector
-  Serial.begin(115200); // Uncomment for troubleshooting
+  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);  //disable brownout detector
+  Serial.begin(115200);
   //Print the wakeup reason for ESP32
   print_wakeup_reason();
-
   DEBUGLN(debug_flag, "Starting");
   switch_off_flash_LED(); // Ensure LED is OFF to start.
 
+  bool rtc_flag = true;
   // Lets try reading/writing to I2C
   // Start the I2C interface
-  Wire.begin(I2C_SDA, I2C_SCL);
+  if(! Wire.begin(I2C_SDA, I2C_SCL)){
+      // If the RTC does not start, wait for a little while (1 sec?)
+    // Then carry on, but without correct filename.
+    DEBUGLN(DEBUG_FLAG, "Couldn't find RTC");
+    rtc_flag = false;
+  }
+  
   if (! rtc.begin()) {
-    // not wuite sure what to do here...
-    Serial.println("Couldn't find RTC");
-    Serial.flush();
-    abort();
+    // If the RTC does not start, wait for a little while (1 sec?)
+    // Then carry on, but without correct filename.
+    DEBUGLN(DEBUG_FLAG, "Couldn't find RTC");
+    rtc_flag = false;
+    //abort();
   }
-  if (rtc.lostPower()) {
-    Serial.println("RTC lost power, let's set the time!");
-    // When time needs to be set on a new device, or after a power loss, the
-    // following line sets the RTC to the date & time this sketch was compiled
-    // This is cool!!
-    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-    // This line sets the RTC with an explicit date & time, for example to set
-    // January 21, 2014 at 3am you would call:
-    // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
+  if (rtc_flag == true)
+  {
+    if (rtc.lostPower())
+    {
+      // Here we get the date and time from the SD card??
+      DEBUGLN(DEBUG_FLAG,"RTC lost power, let's set the time!");
+      
+      // When time needs to be set on a new device, or after a power loss, the
+      // following line sets the RTC to the date & time this sketch was compiled
+      // This is cool!!
+      
+      rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+      // This line sets the RTC with an explicit date & time, for example to set
+      // January 21, 2014 at 3am you would call:
+      // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
+    }
+    DateTime now = rtc.now();
+    // Set the date with date and time with the data, to use as filename later.
+    date = "D" + (String)now.year() + "_" + (String)now.month() + "_" +
+           (String)now.day() + "_T" + (String)now.hour() + "_" + (String)now.minute();
   }
-  DateTime now = rtc.now();
-  // Set the date with date and time with the data, to use as filename later.  
-  date = "D" +(String)now.year() + "_" + (String)now.month() + "_" + 
-         (String)now.day()+ "T" + (String)now.hour()+ "_" + (String)now.minute();
-    
+  else
+  {
+    date = "NO_RTC";
+  }
+
   // *************** SORT OUT THE SD CARD ****************************** //
   // Start up the SD card, using 1-bit xfers instead of 4-bit (set the "true" option).
   // Frees up GPIO13.
@@ -234,13 +260,10 @@ void setup()
 void loop()
 {
   uint8_t COUNTUP = 1;  // Create variable to take multiple pictures.
-  DEBUG(debug_photo, "Photo");
+
   while (COUNTUP <= number_photos)
   {
     // Take number_photos pictures before shutting down.
-    DEBUG(debug_photo, ":");
-    DEBUG(debug_photo, (String)COUNTUP);
-
     if (flash_flag == true)
     {
       switch_on_flash_LED();
@@ -266,26 +289,18 @@ void loop()
 
     // String path = "/pic" + String(PIC_COUNT) + "_" + String(COUNTUP) + "_of_" + String(number_photos) + ".jpg";
     String path = "/" + date + "_" + String(COUNTUP) + "_of_" + String(number_photos) + ".jpg";
-    Serial.print("Path is:");
-    Serial.println(path);
     
+    DEBUGLN(DEBUG_FLAG,("Path is: "+path));
+
     fs::FS &fs = SD_MMC;
 
     // Now, create a new file using the path and name set above.
     File file = fs.open(path.c_str(), FILE_WRITE);
     if (!file) {
       // If we're here, there's a problem creating a new file on the SD card.
-      // Turn off the ESP and wait for the next trigger.
-      //digitalWrite(13, LOW);
-      while (true) {
-        // Need this loop to wait in case the PIR is keeping the power on.
-        if (debug_flag == 1)
-        {
-          Serial.println("Error wth creating file on SD");
-        }
-        // This checks the mode the unit is in and then goes to sleep accordingly
-        check_mode();
-      }
+      DEBUGLN(debug_flag, "Error wth creating file on SD");
+      // This checks the mode the unit is in and then goes to sleep accordingly
+      check_mode();
     }
     else
     {
@@ -306,7 +321,6 @@ void loop()
 
     COUNTUP = COUNTUP + 1;  // We are done an image capture cycle. Increment the count.
   }
-  DEBUGLN(debug_photo, ":END");
 
   // If we're here then we've taken the pictures and we are ready to shut down. Write the current file number to
   // the EEPROM, then set D13 low.
@@ -482,8 +496,9 @@ void readSettings(fs::FS &fs, const char * path) {
 }
 
 void print_wakeup_reason() {
+  
   esp_sleep_wakeup_cause_t wakeup_reason;
-
+  
   wakeup_reason = esp_sleep_get_wakeup_cause();
 
   switch (wakeup_reason) {
