@@ -1,4 +1,4 @@
-1103925395567232
+1109084560096538
 Connector_PinSocket_2.54mm
 PinSocket_1x01_P2.54mm_Horizontal
 Through hole angled socket strip, 1x01, 2.54mm pitch, 8.51mm socket length, single row (from Kicad 4.0.7), script generated
@@ -4319,6 +4319,13 @@ EN_1591XXCFLBK
 0
 0
 REInnovationFootprint
+ESP32_CAM
+14 pins DIL package, elliptical pads
+DIL
+0
+16
+16
+REInnovationFootprint
 FOX924
 
 
@@ -5978,6 +5985,13 @@ CONN DEV
 7
 7
 REInnovationFootprint
+TH_SIL-8_large_pads
+Connecteur 7 pins
+CONN DEV
+0
+8
+8
+REInnovationFootprint
 TH_SIL-15
 Connecteur 10 pins
 CONN DEV
@@ -6140,6 +6154,13 @@ TR TO220
 3
 REInnovationFootprint
 TO220_BD135
+Regulateur TO220 serie LM78xx
+TR TO220
+0
+3
+3
+REInnovationFootprint
+TO220_MCP1826
 Regulateur TO220 serie LM78xx
 TR TO220
 0
