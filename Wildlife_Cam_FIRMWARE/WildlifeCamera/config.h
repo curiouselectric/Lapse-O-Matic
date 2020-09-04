@@ -41,6 +41,7 @@
 // ******** DEFAULT SETTINGS ARE ADDED HERE ********//
 
 #define   SETTINGS_FILENAME   "/settings.txt"
+#define   ERROR_FILENAME      "/error.txt"
 
 #define   LED_FLASH_PIN       4           // GPIO pin for the flash LED
 #define   LED_ONBOARD         33          // GPIO pin for the on-board LED
@@ -48,21 +49,20 @@
 #define   I2C_SDA             14
 #define   I2C_SCL             15
 
-
-#define   MODE                "SLEEP"     // SLEEP is for sleep mode, with info below
-// PIR is for PIR mode
+// These are the default settings (if not read from SD card)
+#define   MODE                "SLEEP"     // "SLEEP" is for sleep mode, with info below
+                                          // "TRIGGER" is for PIR/external trigger mode                                   
 #define   NUMBER_PHOTOS       3
 #define   FLASH_FLAG          1           // 0 for off, 1 for on
 #define   FLASH_START_DELAY   10          // mS to switch on light before taking photo - adjust for best quality
 #define   FLASH_STOP_DELAY    5           // mS to switch on light before taking photo - adjust for best quality
-#define   PHOTO_DELAY         500           // mS between photos (approx, due to photo time)
+#define   PHOTO_DELAY         500         // mS between photos (approx, due to photo time)
 
 // SLEEP MODE
 #define   TIME_TO_SLEEP       10          // Time (in sceonds) between wake ups
 #define   uS_TO_S_FACTOR      1000000ULL  /* Conversion factor for micro seconds to seconds */
 
-// PIR MODE
-// No other info is needed, right?
 
+// DEBUG Options
 #define   DEBUG_FLAG          1     // 0 for no debug 1 for debug on serial.
 #define   DEBUG_PHOTO         1     // 0 for no debug 1 for debug on serial.

@@ -1007,7 +1007,7 @@
     (fp_text reference SC1 (at 1.27 -5.08 180) (layer F.SilkS)
       (effects (font (size 1.524 1.524) (thickness 0.3048)))
     )
-    (fp_text value PV_IN (at -4.445 1.27 90) (layer F.SilkS)
+    (fp_text value PV_IN (at -3.81 1.27 90) (layer F.SilkS)
       (effects (font (size 1.524 1.016) (thickness 0.254)))
     )
     (fp_line (start -2.54 3.81) (end 7.62 3.81) (layer F.SilkS) (width 0.3))

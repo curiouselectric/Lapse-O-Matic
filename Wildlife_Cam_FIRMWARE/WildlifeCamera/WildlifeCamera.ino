@@ -33,28 +33,22 @@
     Sort out RTC for file name - done. I2C shared pins.
     Sort out file names.
     Sort out reprogramming with FTDI/USB
-    Sort out running all at 3.3V. Works with low drop out regulator
+    Sort out running all at 3.3V. Works with low drop out regulator.
+    What happens if no RTC connected? - reverts to other filename with a counter
 
     To do:
 
     Setting RTC
-    What happens if no RTC connected?
     Why getting camera errors?
     Report Error to log file.
-    Solar charger circuitry
-
-
 
     Some Information that has been very useful
-
     https://randomnerdtutorials.com/esp32-cam-take-photo-save-microsd-card/
     https://www.olimex.com/Products/IoT/ESP32/ESP32-CAM/
     https://marksbench.com/electronics/esp32-cam-low-power-trail-camera/
     https://hackaday.com/2020/05/18/esp32-trail-camera-goes-the-distance-on-aa-batteries/
     https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/
     https://dronebotworkshop.com/esp32-cam-intro/
-
-
 */
 
 #include "config.h"
@@ -115,13 +109,13 @@ void setup()
   bool rtc_flag = true;
   // Lets try reading/writing to I2C
   // Start the I2C interface
-  if(! Wire.begin(I2C_SDA, I2C_SCL)){
-      // If the RTC does not start, wait for a little while (1 sec?)
+  if (! Wire.begin(I2C_SDA, I2C_SCL)) {
+    // If the RTC does not start, wait for a little while (1 sec?)
     // Then carry on, but without correct filename.
     DEBUGLN(DEBUG_FLAG, "Couldn't find RTC");
     rtc_flag = false;
   }
-  
+
   if (! rtc.begin()) {
     // If the RTC does not start, wait for a little while (1 sec?)
     // Then carry on, but without correct filename.
@@ -134,12 +128,11 @@ void setup()
     if (rtc.lostPower())
     {
       // Here we get the date and time from the SD card??
-      DEBUGLN(DEBUG_FLAG,"RTC lost power, let's set the time!");
-      
+      DEBUGLN(DEBUG_FLAG, "RTC lost power, let's set the time!");
+
       // When time needs to be set on a new device, or after a power loss, the
       // following line sets the RTC to the date & time this sketch was compiled
       // This is cool!!
-      
       rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
       // This line sets the RTC with an explicit date & time, for example to set
       // January 21, 2014 at 3am you would call:
@@ -246,12 +239,32 @@ void setup()
 
   if (err != ESP_OK) {
     // If we're here, there's a problem communicating with the camera.
-    // Turn the ESP off and wait for the next trigger.
-    //digitalWrite(13, LOW);
+    DEBUGLN(debug_flag, "CAMERA ERROR");
+
     if (debug_flag == 1)
     {
-      Serial.printf("Camera init failed with error 0x%x", err);
+      Serial.printf("CAMERA ERROR: 0x%x", err);
     }
+    // If this happens want to write a line to the error log file.
+    // If possible add the date/time to this log file.
+    fs::FS &fs = SD_MMC;
+    
+    // Now, create a new file using the path and name set above.
+    File file = fs.open((String)ERROR_FILENAME, FILE_APPEND);
+    if (!file) {
+      // If we're here, there's a problem creating a new file on the SD card.
+      DEBUGLN(debug_flag, "Error with opening Error file on SD");
+      // This checks the mode the unit is in and then goes to sleep accordingly
+      check_mode();
+    }
+    else
+    {
+      DEBUGLN(debug_flag, ("Error at : " + date + " Code: " + err));
+      // Write to file
+      // If we're here, the file was created. Now write the captured image to the file.
+      file.println("Error at : " + date );
+    }
+    file.close(); // Done writing the file so close it.
     // This checks the mode the unit is in and then goes to sleep accordingly
     check_mode();
     return;
@@ -286,11 +299,9 @@ void loop()
 
     // Image captured: Save it here:
     // Want to use the date & time for the file name - to log it.
-
-    // String path = "/pic" + String(PIC_COUNT) + "_" + String(COUNTUP) + "_of_" + String(number_photos) + ".jpg";
     String path = "/" + date + "_" + String(COUNTUP) + "_of_" + String(number_photos) + ".jpg";
-    
-    DEBUGLN(DEBUG_FLAG,("Path is: "+path));
+
+    DEBUGLN(DEBUG_FLAG, ("Path is: " + path));
 
     fs::FS &fs = SD_MMC;
 
@@ -496,9 +507,9 @@ void readSettings(fs::FS &fs, const char * path) {
 }
 
 void print_wakeup_reason() {
-  
+
   esp_sleep_wakeup_cause_t wakeup_reason;
-  
+
   wakeup_reason = esp_sleep_get_wakeup_cause();
 
   switch (wakeup_reason) {
