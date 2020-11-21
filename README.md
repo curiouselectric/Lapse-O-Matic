@@ -79,12 +79,20 @@ Here is an example settings.txt file:
 
 ## Solar Power
 
+This unit has a sinlge 18650 lithium polymer cell for power. This has a battery charging circuit using one cell PV module.
+
+Based upon the BQ24210 800mA, single-input, single cell Li-ion Solar battery charger from Texas Instruments:
+
+https://www.ti.com/sitesearch/docs/universalsearch.tsp?searchTerm=BQ24210#q=BQ24210&t=everything&linkId=1
+
 ## PCB design
 
+PCB is designed in KiCAD.
+
+A Real Time Clock (RTC) has been added to use as a timestamp on the photo files. This can also be used for the timing of the unit wake up.
 
 ## Nice to have features (NOT implemented):
 
-* Photo timestamp (needs RTC?)
 * Wifi upload (if in range)
 
 
