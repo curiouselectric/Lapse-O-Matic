@@ -41,7 +41,7 @@ U 1 1 58B31275
 P 850 1450
 F 0 "SC1" H 950 1550 50  0000 L CNN
 F 1 "PV_IN" V 600 1350 50  0000 L CNN
-F 2 "REInnovationFootprint:SIL-2_screw_terminal" V 850 1510 50  0001 C CNN
+F 2 "REInnovationFootprint:SIL_2_screw_+_JST_2mm" V 850 1510 50  0001 C CNN
 F 3 "" V 850 1510 50  0000 C CNN
 F 4 "~" H 850 1450 60  0000 C CNN "Notes"
 F 5 "1-2W solar PV module" H 850 1450 60  0001 C CNN "Description"
@@ -857,11 +857,6 @@ Wire Wire Line
 Wire Wire Line
 	4100 6850 4300 6850
 Wire Wire Line
-	4100 6950 4550 6950
-Wire Wire Line
-	4550 6950 4950 6950
-Connection ~ 4550 6950
-Wire Wire Line
 	5250 6950 5400 6950
 Wire Wire Line
 	5400 7350 5400 7450
@@ -984,46 +979,10 @@ Wire Wire Line
 	10150 4000 9700 4000
 Wire Wire Line
 	9700 3900 10150 3900
-$Comp
-L WildlifeCamera_PCB-rescue:+3.3V-power #PWR024
-U 1 1 5F57A570
-P 9450 5750
-F 0 "#PWR024" H 9450 5600 50  0001 C CNN
-F 1 "+3.3V" H 9465 5926 50  0000 C CNN
-F 2 "" H 9450 5750 50  0001 C CNN
-F 3 "" H 9450 5750 50  0001 C CNN
-	1    9450 5750
-	1    0    0    -1  
-$EndComp
-$Comp
-L power1:GND #PWR027
-U 1 1 5F57ACA0
-P 10050 6000
-F 0 "#PWR027" H 10050 5750 50  0001 C CNN
-F 1 "GND" H 10050 5850 50  0000 C CNN
-F 2 "" H 10050 6000 50  0000 C CNN
-F 3 "" H 10050 6000 50  0000 C CNN
-	1    10050 6000
-	1    0    0    -1  
-$EndComp
 Text Label 5950 4600 0    60   ~ 0
 I2C_CLK
 Text Label 5950 4500 0    60   ~ 0
 I2C_DAT
-Text Label 9650 5650 0    60   ~ 0
-I2C_DAT
-Text Label 9650 5550 0    60   ~ 0
-I2C_CLK
-Wire Wire Line
-	10100 5750 9450 5750
-Wire Wire Line
-	10100 5850 10050 5850
-Wire Wire Line
-	10050 5850 10050 6000
-Wire Wire Line
-	9650 5650 10100 5650
-Wire Wire Line
-	10100 5550 9650 5550
 Text Notes 9750 5150 0    60   ~ 0
 RTC DS3231
 Text Notes 6650 3400 0    60   ~ 0
@@ -1031,51 +990,26 @@ SD Card is changed from 4 bit write to 1 bit write.\nThis frees up 3 x GPIO.\n1 
 $Comp
 L matts_components:ZENER D1
 U 1 1 5F4F0673
-P 4550 6600
-F 0 "D1" V 4503 6680 50  0000 L CNN
-F 1 "ZENER" V 4596 6680 50  0000 L CNN
-F 2 "REInnovationFootprint:TH_Diode_3" H 4550 6600 50  0001 C CNN
-F 3 "" H 4550 6600 50  0000 C CNN
-	1    4550 6600
+P 4550 7250
+F 0 "D1" V 4503 7330 50  0000 L CNN
+F 1 "ZENER" V 4596 7330 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Diode_3" H 4550 7250 50  0001 C CNN
+F 3 "" H 4550 7250 50  0000 C CNN
+	1    4550 7250
 	0    1    1    0   
 $EndComp
 Wire Wire Line
 	4950 6350 4950 6250
-Wire Wire Line
-	4950 6250 4550 6250
 Wire Wire Line
 	4300 6250 4300 6850
 Wire Wire Line
 	4300 6250 4300 6150
 Connection ~ 4300 6250
 Wire Wire Line
-	4550 6400 4550 6250
-Connection ~ 4550 6250
-Wire Wire Line
-	4550 6250 4300 6250
-Wire Wire Line
 	4950 6750 4950 6950
 Connection ~ 4950 6950
-Wire Wire Line
-	4550 6800 4550 6950
-$Comp
-L WildlifeCamera_PCB-rescue:Conn_01x06-Connector_Generic J3
-U 1 1 5F510D1E
-P 10300 5550
-F 0 "J3" H 10380 5542 50  0000 L CNN
-F 1 "RTC_DS3231" H 10380 5449 50  0000 L CNN
-F 2 "REInnovationFootprint:TH_RTC_MODULE" H 10300 5550 50  0001 C CNN
-F 3 "~" H 10300 5550 50  0001 C CNN
-	1    10300 5550
-	1    0    0    -1  
-$EndComp
 NoConn ~ 10150 3700
 NoConn ~ 10150 4100
-Text Label 9650 5450 0    60   ~ 0
-ALARM
-Wire Wire Line
-	9650 5450 10100 5450
-NoConn ~ 10100 5350
 $Comp
 L Connector_Generic:Conn_01x01 J7
 U 1 1 5F562F8B
@@ -1093,7 +1027,7 @@ U 1 1 5F5632BE
 P 6600 7150
 F 0 "J8" H 6680 7192 50  0000 L CNN
 F 1 "PCB" H 6680 7099 50  0000 L CNN
-F 2 "" H 6600 7150 50  0001 C CNN
+F 2 "REInnovationFootprint:PCB_Wildlife_Cam" H 6600 7150 50  0001 C CNN
 F 3 "~" H 6600 7150 50  0001 C CNN
 	1    6600 7150
 	1    0    0    -1  
@@ -1191,7 +1125,7 @@ U 1 1 5F5439F7
 P 1750 3550
 F 0 "Q3" H 1940 3597 50  0000 L CNN
 F 1 "BD135" H 1940 3504 50  0000 L CNN
-F 2 "REInnovationFootprint:TO92-EBC_large_pad" H 1950 3650 50  0001 C CNN
+F 2 "REInnovationFootprint:TO220_BD135" H 1950 3650 50  0001 C CNN
 F 3 "~" H 1750 3550 50  0001 C CNN
 	1    1750 3550
 	1    0    0    -1  
@@ -1393,4 +1327,72 @@ Wire Wire Line
 	8650 2250 8900 2250
 Wire Wire Line
 	8900 2250 8900 2200
+$Comp
+L Connector_Generic:Conn_01x05 J3
+U 1 1 5F9E542B
+P 10300 5700
+F 0 "J3" H 10380 5742 50  0000 L CNN
+F 1 "RTC_DS3231" H 10380 5651 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_RTC_MODULE_SM" H 10300 5700 50  0001 C CNN
+F 3 "~" H 10300 5700 50  0001 C CNN
+	1    10300 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR024
+U 1 1 5F9E59FA
+P 9950 5500
+F 0 "#PWR024" H 9950 5350 50  0001 C CNN
+F 1 "+3.3V" H 9965 5676 50  0000 C CNN
+F 2 "" H 9950 5500 50  0001 C CNN
+F 3 "" H 9950 5500 50  0001 C CNN
+	1    9950 5500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR027
+U 1 1 5F9E5C64
+P 9950 5900
+F 0 "#PWR027" H 9950 5650 50  0001 C CNN
+F 1 "GND" H 9950 5750 50  0000 C CNN
+F 2 "" H 9950 5900 50  0000 C CNN
+F 3 "" H 9950 5900 50  0000 C CNN
+	1    9950 5900
+	1    0    0    -1  
+$EndComp
+Text Label 9550 5700 0    60   ~ 0
+I2C_CLK
+Text Label 9550 5600 0    60   ~ 0
+I2C_DAT
+NoConn ~ 10100 5800
+Wire Wire Line
+	10100 5900 9950 5900
+Wire Wire Line
+	9950 5500 10100 5500
+Wire Wire Line
+	10100 5600 9550 5600
+Wire Wire Line
+	9550 5700 10100 5700
+Wire Wire Line
+	4100 6950 4550 6950
+Wire Wire Line
+	4300 6250 4950 6250
+Wire Wire Line
+	4550 7050 4550 6950
+Connection ~ 4550 6950
+Wire Wire Line
+	4550 6950 4950 6950
+$Comp
+L power1:GND #PWR0101
+U 1 1 5FA7F2FD
+P 4550 7550
+F 0 "#PWR0101" H 4550 7300 50  0001 C CNN
+F 1 "GND" H 4550 7400 50  0000 C CNN
+F 2 "" H 4550 7550 50  0000 C CNN
+F 3 "" H 4550 7550 50  0000 C CNN
+	1    4550 7550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4550 7550 4550 7450
 $EndSCHEMATC

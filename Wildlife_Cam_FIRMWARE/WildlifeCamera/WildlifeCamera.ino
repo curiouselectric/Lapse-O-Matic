@@ -35,13 +35,13 @@
     Sort out reprogramming with FTDI/USB
     Sort out running all at 3.3V. Works with low drop out regulator.
     What happens if no RTC connected? - reverts to other filename with a counter
+    Report Error to log file. - this happens when camera does not start with timestamp
 
     To do:
 
     Setting RTC
     Why getting camera errors?
-    Report Error to log file.
-
+    
     Some Information that has been very useful
     https://randomnerdtutorials.com/esp32-cam-take-photo-save-microsd-card/
     https://www.olimex.com/Products/IoT/ESP32/ESP32-CAM/
@@ -129,7 +129,6 @@ void setup()
     {
       // Here we get the date and time from the SD card??
       DEBUGLN(DEBUG_FLAG, "RTC lost power, let's set the time!");
-
       // When time needs to be set on a new device, or after a power loss, the
       // following line sets the RTC to the date & time this sketch was compiled
       // This is cool!!

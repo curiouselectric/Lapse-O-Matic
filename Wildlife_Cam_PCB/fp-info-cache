@@ -1,4 +1,4 @@
-531361801334973
+551521085802530
 CuriousElectric3
 2019_011_16_CuriousElectricCompany_Logo_Round_Logo_No_words_KiCAD
 
@@ -243,6 +243,13 @@ Batt_conn_20mm_Rapid183785_SMD
 
 0
 5
+2
+REInnovationFootprint
+Batt_Holder_AAA
+
+
+0
+2
 2
 REInnovationFootprint
 C1_lg_pad
@@ -546,6 +553,13 @@ ISP_3x2
 6
 6
 REInnovationFootprint
+JJS_PCB_Outline
+
+
+0
+0
+0
+REInnovationFootprint
 LED-5MM_larg_pad
 LED 5mm - Lead pitch 100mil (2,54mm)
 LED led 5mm 5MM 100mil 2,54mm
@@ -637,6 +651,13 @@ PCB_40x80mm
 0
 0
 REInnovationFootprint
+PCB_40x80mm_Solar_Charger
+
+
+0
+0
+0
+REInnovationFootprint
 PCB_40x85mm
 
 
@@ -693,6 +714,13 @@ PCB_50x50mm_ROUND
 0
 0
 REInnovationFootprint
+PCB_50x50_outline
+
+
+0
+4
+4
+REInnovationFootprint
 PCB_50x70mm
 
 
@@ -748,6 +776,13 @@ PCB_50x100mm_SOLAR
 0
 7
 7
+REInnovationFootprint
+PCB_60x55_outline
+
+
+0
+4
+4
 REInnovationFootprint
 PCB_65x65mm
 
@@ -889,12 +924,33 @@ PCB_Holes_40x60
 0
 0
 REInnovationFootprint
+PCB_JamJarSolar
+
+
+0
+0
+0
+REInnovationFootprint
 PCB_LuftDaten_70x70
 
 
 0
 3
 3
+REInnovationFootprint
+PCB_SolarChargerPCB40x80
+
+
+0
+4
+4
+REInnovationFootprint
+PCB_Wildlife_Cam
+
+
+0
+4
+4
 REInnovationFootprint
 PH_LOGO
 
@@ -1077,6 +1133,13 @@ PV_130mmx65mm_NoOutline
 0
 4
 2
+REInnovationFootprint
+QX5252
+
+
+0
+0
+0
 REInnovationFootprint
 R3-LARGE_PADS_0_8_hole
 Resitance 3 pas
@@ -2002,6 +2065,13 @@ CP
 2
 2
 REInnovationFootprint
+TH_Inductor_JJS
+Resitance 3 pas
+R
+0
+2
+2
+REInnovationFootprint
 TH_Inductor_SideMount
 Condensateur polarise
 CP
@@ -2148,6 +2218,13 @@ pin header
 0
 6
 6
+REInnovationFootprint
+TH_RTC_MODULE_SM
+Through hole pin header
+pin header
+0
+5
+5
 REInnovationFootprint
 TH_SD_MODULE
 Through hole pin header
@@ -2409,6 +2486,13 @@ USB USB_B USB_micro USB_OTG
 6
 REInnovationGraphics
 IDLogo
+
+
+0
+0
+0
+REInnovationGraphics
+JJS_Jar_logo
 
 
 0

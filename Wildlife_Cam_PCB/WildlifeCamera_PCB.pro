@@ -1,4 +1,4 @@
-update=20/08/2020 16:45:28
+update=31/10/2020 17:18:16
 version=1
 last_client=kicad
 [cvpcb]
@@ -6,6 +6,9 @@ version=1
 NetIExt=net
 [general]
 version=1
+[eeschema]
+version=1
+LibDir=
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
@@ -13,12 +16,9 @@ PlotDirectoryName=SolarCharger2017_OUTPUT/
 SubpartIdSeparator=0
 SubpartFirstId=65
 NetFmtName=Pcbnew
-SpiceForceRefPrefix=0
-SpiceUseNetNumbers=0
+SpiceAjustPassiveValues=0
 LabSize=60
-[eeschema]
-version=1
-LibDir=
+ERC_TestSimilarLabels=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=
@@ -36,8 +36,11 @@ MinMicroViaDiameter=0.2
 MinMicroViaDrill=0.09999999999999999
 MinHoleToHole=0.25
 TrackWidth1=0.762
+TrackWidth2=0.2
 ViaDiameter1=0.635
 ViaDrill1=0.508
+ViaDiameter2=0.7
+ViaDrill2=0.4
 dPairWidth1=0.2
 dPairGap1=0.25
 dPairViaGap1=0.25
@@ -64,4 +67,4 @@ OthersTextUpright=1
 SolderMaskClearance=0.2
 SolderMaskMinWidth=0
 SolderPasteClearance=0
-SolderPasteRatio=0
+SolderPasteRatio=-0
