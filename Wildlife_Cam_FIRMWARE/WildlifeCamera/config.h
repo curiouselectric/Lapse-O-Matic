@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Arduino.h>
 #include "utilitiesDL.h"
 
 //
@@ -49,20 +48,25 @@
 #define   I2C_SDA             14
 #define   I2C_SCL             15
 
-// These are the default settings (if not read from SD card)
-#define   MODE                "SLEEP"     // "SLEEP" is for sleep mode, with info below
-                                          // "TRIGGER" is for PIR/external trigger mode                                   
-#define   NUMBER_PHOTOS       3
-#define   FLASH_FLAG          1           // 0 for off, 1 for on
-#define   FLASH_START_DELAY   10          // mS to switch on light before taking photo - adjust for best quality
-#define   FLASH_STOP_DELAY    5           // mS to switch on light before taking photo - adjust for best quality
-#define   PHOTO_DELAY         500         // mS between photos (approx, due to photo time)
-
-// SLEEP MODE
-#define   TIME_TO_SLEEP       10          // Time (in sceonds) between wake ups
 #define   uS_TO_S_FACTOR      1000000ULL  /* Conversion factor for micro seconds to seconds */
 
+static const char *name_array[] = { "FLASH_FLAG", "FLASH_START_DELAY", "FLASH_STOP_DELAY", "DEBUG_FLAG", "DEBUG_PHOTO", "NUMBER_PHOTOS", "TIME_TO_SLEEP", "MODE", "PHOTO_DELAY", "WIFI_SSID", "WIFI_PASS", "WIFI_EMAIL"};
 
-// DEBUG Options
-#define   DEBUG_FLAG          1     // 0 for no debug 1 for debug on serial.
-#define   DEBUG_PHOTO         1     // 0 for no debug 1 for debug on serial.
+#include <Arduino.h>
+
+class settings {
+  public:
+    bool          FLASH_FLAG = 1;         // 0 for off, 1 for on
+    int           FLASH_START_DELAY = 10; // mS to switch on light before taking photo - adjust for best quality
+    int           FLASH_STOP_DELAY = 10;  // mS to switch on light before taking photo - adjust for best quality
+    bool          DEBUG_FLAG = 1;
+    bool          DEBUG_PHOTO = 1;
+    unsigned int  NUMBER_PHOTOS = 3;
+    unsigned int  TIME_TO_SLEEP = 10;
+    String        MODE = "SLEEP";         // "SLEEP" is for sleep mode, with info below
+                                          // "TRIGGER" is for PIR/external trigger mode
+    unsigned int  PHOTO_DELAY = 500;      // mS between photos (approx, due to photo time)
+    String        WIFI_SSID;
+    String        WIFI_PASS;
+    String        WIFI_EMAIL;
+};
