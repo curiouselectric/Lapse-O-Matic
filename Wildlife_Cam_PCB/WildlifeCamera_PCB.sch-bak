@@ -1371,7 +1371,7 @@ F 3 "transistors/bipolar/*.*" H 5590 6707 60  0001 L CNN
 	1    5400 6800
 	1    0    0    -1  
 $EndComp
-Text Notes 7100 5800 0    60   ~ 0
+Text Notes 6550 5800 0    60   ~ 0
 GPIO12 = HS2_DATA2\nGPIO12 = HS2_DATA2\nGPIO15 = HS2_DATA3\nGPIO14 = HS2_CLK\nGPIO2 = HS2_DATA0\nGPIO4 = HS2_DATA1/Flash\n
 Wire Wire Line
 	6950 4600 6850 4600

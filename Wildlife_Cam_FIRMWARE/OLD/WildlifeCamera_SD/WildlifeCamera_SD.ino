@@ -34,14 +34,15 @@
     What happens if no RTC connected? - reverts to other filename with a counter
     Report Error to log file. - this happens when camera does not start with timestamp
     if no RTC: need to sort out naming as it's overwriting the same one. - DONE
+
+    To do:
+    Setting RTC
+    RTC too low resistor value - change it!
+    Why getting camera errors?
     Send photos via email if on wifi (https://randomnerdtutorials.com/esp32-cam-send-photos-email/)
     https://rntlab.com/question/esp32-cam-send-email-with-attachment-from-sd-card-problem-no-attachment-in-email/
     Issue with SD_MMC and sending info with SD.
-
-    To do:
-    Why getting camera errors? - Sometimes get problem with camera
-    Need error feedback - flash 1 for OK, 2 for internet not OK, 3 for SD error, 5 for camera sync error
-
+    My workaround: Take photos with SD_MMC. Then open with SD and send.
 
     Some Information that has been very useful
     https://randomnerdtutorials.com/esp32-cam-take-photo-save-microsd-card/
@@ -57,6 +58,7 @@
 
 #include <esp_camera.h>
 #include <FS.h>
+#include <SD_MMC.h>
 #include <SPI.h>
 #include <SD.h>
 #include <Preferences.h>
@@ -77,7 +79,6 @@
 // Date and time functions using a DS3231 RTC connected via I2C and Wire lib
 #include <Wire.h>
 #include "RTClib.h"
-#include "time.h"
 RTC_DS3231 rtc;
 
 #include "soc/soc.h"           // Disable brownour problems
@@ -95,10 +96,27 @@ camera_config_t config;
 // Want to store this in 'sleep' protected memory
 uint16_t PIC_COUNT = 0;
 String filename = "";       // This holds the date string for the filename.
-String PHOTO_NAME[5];          // Holds the name of the photo to send. Actually want array of names opf photos to send.... Max photos to send = 5
+String PHOTO_NAME;          // Holds the name of the photo to send.
+
+// WIFI Stuff
+// REPLACE WITH YOUR NETWORK CREDENTIALS
+const char* ssid              = "VM1790574";
+const char* password          = "xvf8xdwfQgpf";
+
+// To send Email using Gmail use port 465 (SSL) and SMTP Server smtp.gmail.com
+// YOU MUST ENABLE less secure app option https://myaccount.google.com/lesssecureapps?pli=1
+
+#define emailSenderAccount    "esp32camemailtest@gmail.com"
+#define emailSenderPassword   "ESP32cam"
+#define smtpServer            "smtp.gmail.com"
+#define smtpServerPort        465
+#define emailSubject          "ESP32-CAM Photo Captured"
+#define emailRecipient        "matt@re-innovation.co.uk"
 
 // The Email Sending data object contains config and data to send
 SMTPData smtpData;
+
+// END OF WIFI TEST
 
 void setup()
 {
@@ -114,7 +132,8 @@ void setup()
   // Lets try reading/writing to I2C
   // Start the I2C interface
   if (! Wire.begin(I2C_SDA, I2C_SCL)) {
-    // If the RTC does not start,
+    // If the RTC does not start, wait for a little while (1 sec?)
+    delay(500);
     // Then carry on, but without correct filename.
     DEBUGLN(settings_config.DEBUG_FLAG, "Couldn't find RTC");
     rtc_flag = false;
@@ -123,7 +142,6 @@ void setup()
   if (! rtc.begin()) {
     // If the RTC does not start, wait for a little while (1 sec?)
     // Then carry on, but without correct filename.
-    delay(200);
     DEBUGLN(settings_config.DEBUG_FLAG, "Couldn't find RTC");
     rtc_flag = false;
     //abort();
@@ -144,7 +162,7 @@ void setup()
     DateTime now = rtc.now();
     // Set the date with date and time with the data, to use as filename later.
     filename = "D" + (String)now.year() + "_" + (String)now.month() + "_" +
-               (String)now.day() + "_T" + (String)now.hour() + "_" + (String)now.minute() + "_" + (String)now.second();
+               (String)now.day() + "_T" + (String)now.hour() + "_" + (String)now.minute();
   }
   else
   {
@@ -153,25 +171,33 @@ void setup()
   }
 
   // *************** SORT OUT THE SD CARD ****************************** //
+  //SDMMC_SLOT_CONFIG_DEFAULT();
+  //  sdmmc_host_t host_slot;
+  //  sdmmc_host_init_slot(SDMMC_HOST_SLOT_1, host_slot);
+
   // Start up the SD card, using 1-bit xfers instead of 4-bit (set the "true" option).
   // Frees up GPIO13.
+  SPIClass spi = SPIClass(HSPI);
+  spi.begin(14 /* SCK */, 2 /* MISO */, 15 /* MOSI */, 13 /* SS */);
 
-  if (!MailClient.sdBegin(14, 2, 15, 13))
+  if (!SD_MMC.begin("/sdcard", true))
   {
     // If we're here, there's a problem with the SD card.
     DEBUGLN(settings_config.DEBUG_FLAG, "SD Card Mount Fail");
     // We flash the LED to show an SD card error
-    flash_error(3); // Flash 3 times for an SD card mount error
+    flash_error(5); // Flash 5 times for an SD card mount error
     // This checks the mode the unit is in and then goes to sleep accordingly
     check_mode_then_sleep();
   }
 
   // Query the card to make sure it's OK
-  uint8_t SD_CARD = SD.cardType();
+  uint8_t SD_CARD = SD_MMC.cardType();
   DEBUG(settings_config.DEBUG_FLAG, "Card Type:");
 
   if (SD_CARD == CARD_NONE) {
     // If we're here, there's a problem with the SD card.
+    // Turn the ESP off and wait for the next trigger.
+    //digitalWrite(13, LOW);
     DEBUGLN(settings_config.DEBUG_FLAG, "No SD Card!");
     // Flash the LED to highlight this:
     flash_error(10);
@@ -192,7 +218,7 @@ void setup()
 
   // Here we read the settings file from the SD card.
   // This will change any default settings defined
-  readSettings(SD, SETTINGS_FILENAME, settings_config);
+  readSettings(SD_MMC, SETTINGS_FILENAME, settings_config);
 
   // ************** START UP THE CAMERA ********************** //
   preferences.begin("trailcam", false); // Open nonvolatile storage (EEPROM) on the ESP in RW mode
@@ -201,7 +227,7 @@ void setup()
   // getUShort() fetches a 16-bit unsigned value
   // We add the Picture Count to give unique ID to the photoname
 
-  configure_camera(config, settings_config);
+  configure_camera(config);
   // Start up the camera with the configuration settings made earlier in the "config." statements.
   esp_err_t err = esp_camera_init(&config);
 
@@ -215,7 +241,7 @@ void setup()
     }
     // If this happens want to write a line to the error log file.
     // If possible add the date/time to this log file.
-    fs::FS &fs = SD;
+    fs::FS &fs = SD_MMC;
 
     // Now, create a new file using the path and name set above.
     File file = fs.open((String)ERROR_FILENAME, FILE_APPEND);
@@ -233,9 +259,7 @@ void setup()
       file.println("Error on : " + filename );
     }
     file.close(); // Done writing the file so close it.
-
-    // We flash the LED to show an SD card error
-    flash_error(5); // Flash 5 times for an camera sync error
+    SD_MMC.end();
 
     // This checks the mode the unit is in and then goes to sleep accordingly
     check_mode_then_sleep();
@@ -280,10 +304,10 @@ void loop()
     {
       path = "/" + filename + "_" + String(COUNTUP) + "_of_" + String(settings_config.NUMBER_PHOTOS) + ".jpg";
     }
-    PHOTO_NAME[COUNTUP] = path;
-    //DEBUGLN(settings_config.DEBUG_FLAG, ("Path is: " + PHOTO_NAME));
+    PHOTO_NAME = path;
+    DEBUGLN(settings_config.DEBUG_FLAG, ("Path is: " + PHOTO_NAME));
 
-    fs::FS &fs = SD;
+    fs::FS &fs = SD_MMC;
 
     // Now, create a new file using the path and name set above.
     File file = fs.open(path.c_str(), FILE_WRITE);
@@ -291,9 +315,6 @@ void loop()
       // If we're here, there's a problem creating a new file on the SD card.
       DEBUGLN(settings_config.DEBUG_FLAG, "Error wth creating file on SD");
       // This checks the mode the unit is in and then goes to sleep accordingly
-      // We flash the LED to show an SD card error
-      flash_error(3); // Flash 3 times for an SD error
-
       check_mode_then_sleep();
     }
     else
@@ -310,46 +331,47 @@ void loop()
 
     // Free the memory used by the framebuffer so it's available for another picture
     esp_camera_fb_return(fb);
+
     delay(settings_config.PHOTO_DELAY); // Wait between photos - adjustable
+
     COUNTUP = COUNTUP + 1;  // We are done an image capture cycle. Increment the count.
   }
 
-  // If we're here then we've taken the pictures and we are ready to shut down.
-  // Write the current file number to the EEPROM
+  SD_MMC.end();
+
+  // If we're here then we've taken the pictures and we are ready to shut down. Write the current file number to
+  // the EEPROM, then set D13 low.
   preferences.putUShort("PIC_COUNT", PIC_COUNT);  // Store the picture count number in the EEPROM
 
-  // If there is data in the wifi SSID then try to connect to wifi.
-  // Else we go to sleep
-
-  if (settings_config.WIFI_SSID.length() != 0)
-  {
-    // In this case we have an SSID so try to connect to WiFi
-    char ssid[settings_config.WIFI_SSID.length() + 1];
-    settings_config.WIFI_SSID.toCharArray(ssid, settings_config.WIFI_SSID.length());
-    char pass[settings_config.WIFI_PASS.length() + 1];
-    settings_config.WIFI_PASS.toCharArray(pass, settings_config.WIFI_PASS.length());
-
-    // ******** SEND IMAGE via WIFI *****************************
-    // Connect to Wi-Fi
-    WiFi.begin(ssid, pass);
-    Serial.print("Connecting to WiFi...");
-    int timeout_wifi = 0;
-    while (WiFi.status() != WL_CONNECTED && timeout_wifi < 20) {
-      delay(500);
-      Serial.print(".");
-      timeout_wifi++;
-    }
-    if (timeout_wifi < 20)
-    {
-      // This means we have connected within 10 seconds, else timeout...
-      Serial.println("Connected to WiFi");
-      // Print ESP32 Local IP Address
-      Serial.print("IP Address: http://");
-      Serial.println(WiFi.localIP());
-      sendPhoto();
-      flash_error(1); // Show that we have sent the email OK
-    }
+  // ******** SEND IMAGE via WIFI *****************************
+  // Connect to Wi-Fi
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi...");
+  int timeout_wifi = 0;
+  while (WiFi.status() != WL_CONNECTED && timeout_wifi < 20) {
+    delay(500);
+    Serial.print(".");
+    timeout_wifi++;
   }
+
+  if (timeout_wifi < 20)
+  {
+    // This means we have connected within 10 seconds, else timeout...
+    Serial.println("Connected to WiFi");
+    //    if (!SPIFFS.begin(true)) {
+    //      Serial.println("An Error has occurred while mounting SPIFFS");
+    //      //ESP.restart();
+    //    }
+    //    else {
+    //      delay(500);
+    //      Serial.println("SPIFFS mounted successfully");
+    //    }
+    // Print ESP32 Local IP Address
+    Serial.print("IP Address: http://");
+    Serial.println(WiFi.localIP());
+    sendPhoto();
+  }
+
   // This checks the mode the unit is in and then goes to sleep accordingly
   check_mode_then_sleep();
 }
@@ -411,39 +433,21 @@ void sendPhoto( void )
   Serial.println("Sending email...");
   delay(10);
 
+  //  if (!SD_MMC.begin()) {
+  //    Serial.println("Card Mount did not begin");
+  //    return;
+  //  }
+  //  SD_MMC.end();
+  //  delay(200);
+
   if (MailClient.sdBegin(14, 2, 15, 13))
   {
     // Set the storage type to attach files in your email (SPIFFS)
     //smtpData.setFileStorageType(MailClientStorageType::SPIFFS);
     smtpData.setFileStorageType(MailClientStorageType::SD);
 
-    char emailSenderAccount[settings_config.EMAIL_SENDER.length() + 1];
-    settings_config.EMAIL_SENDER.toCharArray(emailSenderAccount, settings_config.EMAIL_SENDER.length());
-    char emailSenderPassword[settings_config.EMAIL_PASS.length() + 1];
-    settings_config.EMAIL_PASS.toCharArray(emailSenderPassword, settings_config.EMAIL_PASS.length());
-    char smtpServer[settings_config.SMTP_SERVER.length() + 1];
-    settings_config.SMTP_SERVER.toCharArray(smtpServer, settings_config.SMTP_SERVER.length());
-    int smtpServerPort = settings_config.SMTP_PORT;
-    char emailRecipient[settings_config.EMAIL_RECIPIENT.length() + 1];
-    settings_config.EMAIL_RECIPIENT.toCharArray(emailRecipient, settings_config.EMAIL_RECIPIENT.length());
-    char emailSubject[settings_config.EMAIL_SUBJECT.length() + 1];
-    settings_config.EMAIL_SUBJECT.toCharArray(emailSubject, settings_config.EMAIL_SUBJECT.length());
-
-    if (settings_config.DEBUG_FLAG == true)
-    {
-      Serial.print("SMTP data:");
-      Serial.print(smtpServer);
-      Serial.print(" , ");
-      Serial.print(smtpServerPort);
-      Serial.print(" , ");
-      Serial.print(emailSenderAccount);
-      Serial.print(" , ");
-      Serial.println(emailSenderPassword);
-    }
-
     // Set the SMTP Server Email host, port, account and password
     smtpData.setLogin(smtpServer, smtpServerPort, emailSenderAccount, emailSenderPassword);
-    //smtpData.setLogin(settings_config.SMTP_SERVER, settings_config.SMTP_PORT, settings_config.EMAIL_SENDER, settings_config.EMAIL_PASS);
 
     // Set the sender name and Email
     smtpData.setSender("ESP32-CAM", emailSenderAccount);
@@ -462,15 +466,12 @@ void sendPhoto( void )
     // Add recipients, can add more than one recipient
     smtpData.addRecipient(emailRecipient);
     //smtpData.addRecipient(emailRecipient2);
-    Serial.println("Sending Files: ");
+    Serial.print("File name is: ");
+    Serial.println(PHOTO_NAME);
 
     // Add attach files from SPIFFS/SD
     //smtpData.addAttachFile(PHOTO_NAME, "image/jpg");
-    for (int n = 1; n <= settings_config.NUMBER_PHOTOS; n++)
-    {
-      smtpData.addAttachFile(PHOTO_NAME[n]);
-      Serial.println(PHOTO_NAME[n]);
-    }
+    smtpData.addAttachFile(PHOTO_NAME);
 
     smtpData.setSendCallback(sendCallback);
 
@@ -478,12 +479,22 @@ void sendPhoto( void )
     if (!MailClient.sendMail(smtpData))
     {
       Serial.println("Error sending Email, " + MailClient.smtpErrorReason());
-      // We flash the LED to show an SD card error
-      flash_error(2); // Flash 2 times for an Internet connection error
     }
 
     // Clear all data from Email object to free memory
     smtpData.empty();
+
+    // In this case the GPIO pins are being overridden?
+    // See this for info:
+    // https://www.instructables.com/Select-SD-Interface-for-ESP32/
+    SPI.endTransaction();
+
+    if (!SD_MMC.begin("/sdcard", true))
+    {
+      Serial.println("SD_MMC not in 1-bit mode");
+    }
+    uint64_t cardSize = SD_MMC.cardSize() / (1024 * 1024);
+    Serial.printf("SD_MMC Card Size: %lluMB\n", cardSize);
   }
   else
   {
