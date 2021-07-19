@@ -14,437 +14,6 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L device:Battery_Cell BT1
-U 1 1 58B31232
-P 5150 -1800
-F 0 "BT1" H 5250 -1700 50  0000 L CNN
-F 1 "18650 LiIon Cell" V 5450 -2050 50  0000 L CNN
-F 2 "REInnovationFootprint:TH_LiIon_Holder" V 5150 -1740 50  0001 C CNN
-F 3 "" V 5150 -1740 50  0000 C CNN
-F 4 "~" H 5150 -1800 60  0000 C CNN "Notes"
-F 5 "18650 PCB mount holder" H 5150 -1800 60  0001 C CNN "Description"
-F 6 "~" H 5150 -1800 60  0001 C CNN "Manufacturer"
-F 7 "~" H 5150 -1800 60  0001 C CNN "Manufacturer Part No"
-F 8 "eBay" H 5150 -1800 60  0001 C CNN "Supplier 1"
-F 9 "http://www.ebay.co.uk/itm/122466718109" H 5150 -1800 60  0001 C CNN "Supplier 1 Part No"
-F 10 "0.50" H 5150 -1800 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 5150 -1800 60  0001 C CNN "Supplier 2"
-F 12 "~" H 5150 -1800 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 5150 -1800 60  0001 C CNN "Supplier 2 Cost"
-	1    5150 -1800
-	1    0    0    -1  
-$EndComp
-$Comp
-L device:Solar_Cells SC1
-U 1 1 58B31275
-P 600 -1950
-F 0 "SC1" H 700 -1850 50  0000 L CNN
-F 1 "PV_IN" V 350 -2050 50  0000 L CNN
-F 2 "REInnovationFootprint:SIL_2_screw_+_JST_2mm" V 600 -1890 50  0001 C CNN
-F 3 "" V 600 -1890 50  0000 C CNN
-F 4 "~" H 600 -1950 60  0000 C CNN "Notes"
-F 5 "1-2W solar PV module" H 600 -1950 60  0001 C CNN "Description"
-F 6 "~" H 600 -1950 60  0001 C CNN "Manufacturer"
-F 7 "~" H 600 -1950 60  0001 C CNN "Manufacturer Part No"
-F 8 "Aliexpress" H 600 -1950 60  0001 C CNN "Supplier 1"
-F 9 "~" H 600 -1950 60  0001 C CNN "Supplier 1 Part No"
-F 10 "2.5" H 600 -1950 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 600 -1950 60  0001 C CNN "Supplier 2"
-F 12 "~" H 600 -1950 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 600 -1950 60  0001 C CNN "Supplier 2 Cost"
-	1    600  -1950
-	1    0    0    -1  
-$EndComp
-$Comp
-L SolarCharger2017-rescue:BQ24210-RESCUE-SolarCharger2017 U2
-U 1 1 58B3146F
-P 2650 -2050
-F 0 "U2" H 2850 -2600 60  0000 C CNN
-F 1 "BQ24210" H 2700 -1600 60  0000 C CNN
-F 2 "REInnovationFootprint:SM_WSON-10-2x3" H 2650 -2050 60  0001 C CNN
-F 3 "http://www.ti.com/lit/ds/symlink/bq24210.pdf" H 2650 -2050 60  0001 C CNN
-F 4 "~" H 2650 -2050 60  0001 C CNN "Notes"
-F 5 "LiIon Charger 800mA PV Input" H 2650 -2050 60  0001 C CNN "Description"
-F 6 "Texas Instruments" H 2650 -2050 60  0001 C CNN "Manufacturer"
-F 7 "BQ24210" H 2650 -2050 60  0001 C CNN "Manufacturer Part No"
-F 8 "RS" H 2650 -2050 60  0001 C CNN "Supplier 1"
-F 9 "742-2836" H 2650 -2050 60  0001 C CNN "Supplier 1 Part No"
-F 10 "2.88" H 2650 -2050 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 2650 -2050 60  0001 C CNN "Supplier 2"
-F 12 "~" H 2650 -2050 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 2650 -2050 60  0001 C CNN "Supplier 2 Cost"
-F 14 "~" H 2650 -2050 60  0001 C CNN "Cost"
-	1    2650 -2050
-	1    0    0    -1  
-$EndComp
-$Comp
-L SolarCharger2017-rescue:LED-RESCUE-SolarCharger2017 D2
-U 1 1 58B3183D
-P 3700 -1650
-F 0 "D2" H 3700 -1550 50  0000 C CNN
-F 1 "CHG" H 3700 -1750 50  0000 C CNN
-F 2 "REInnovationFootprint:TH_LED-5MM_larg_pad" H 3700 -1650 50  0001 C CNN
-F 3 "" H 3700 -1650 50  0000 C CNN
-F 4 "~" H 3700 -1650 60  0000 C CNN "Notes"
-F 5 "~" H 3700 -1650 60  0001 C CNN "Description"
-F 6 "~" H 3700 -1650 60  0001 C CNN "Manufacturer"
-F 7 "~" H 3700 -1650 60  0001 C CNN "Manufacturer Part No"
-F 8 "~" H 3700 -1650 60  0001 C CNN "Supplier 1"
-F 9 "~" H 3700 -1650 60  0001 C CNN "Supplier 1 Part No"
-F 10 "0.05" H 3700 -1650 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 3700 -1650 60  0001 C CNN "Supplier 2"
-F 12 "~" H 3700 -1650 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 3700 -1650 60  0001 C CNN "Supplier 2 Cost"
-	1    3700 -1650
-	0    -1   -1   0   
-$EndComp
-$Comp
-L SolarCharger2017-rescue:LED-RESCUE-SolarCharger2017 D3
-U 1 1 58B31888
-P 4000 -1650
-F 0 "D3" H 4000 -1550 50  0000 C CNN
-F 1 "PG" H 4000 -1750 50  0000 C CNN
-F 2 "REInnovationFootprint:TH_LED-5MM_larg_pad" H 4000 -1650 50  0001 C CNN
-F 3 "" H 4000 -1650 50  0000 C CNN
-F 4 "~" H 4000 -1650 60  0000 C CNN "Notes"
-F 5 "~" H 4000 -1650 60  0001 C CNN "Description"
-F 6 "~" H 4000 -1650 60  0001 C CNN "Manufacturer"
-F 7 "~" H 4000 -1650 60  0001 C CNN "Manufacturer Part No"
-F 8 "~" H 4000 -1650 60  0001 C CNN "Supplier 1"
-F 9 "~" H 4000 -1650 60  0001 C CNN "Supplier 1 Part No"
-F 10 "0.05" H 4000 -1650 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 4000 -1650 60  0001 C CNN "Supplier 2"
-F 12 "~" H 4000 -1650 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 4000 -1650 60  0001 C CNN "Supplier 2 Cost"
-	1    4000 -1650
-	0    -1   -1   0   
-$EndComp
-$Comp
-L device:R R5
-U 1 1 58B318C0
-P 3700 -2050
-F 0 "R5" V 3780 -2050 50  0000 C CNN
-F 1 "2.2k" V 3700 -2050 50  0000 C CNN
-F 2 "REInnovationFootprint:TH_Resistor_1" V 3630 -2050 50  0001 C CNN
-F 3 "" H 3700 -2050 50  0000 C CNN
-F 4 "~" H 3700 -2050 60  0000 C CNN "Notes"
-F 5 "~" H 3700 -2050 60  0001 C CNN "Description"
-F 6 "~" H 3700 -2050 60  0001 C CNN "Manufacturer"
-F 7 "~" H 3700 -2050 60  0001 C CNN "Manufacturer Part No"
-F 8 "~" H 3700 -2050 60  0001 C CNN "Supplier 1"
-F 9 "~" H 3700 -2050 60  0001 C CNN "Supplier 1 Part No"
-F 10 "0.01" H 3700 -2050 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 3700 -2050 60  0001 C CNN "Supplier 2"
-F 12 "~" H 3700 -2050 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 3700 -2050 60  0001 C CNN "Supplier 2 Cost"
-	1    3700 -2050
-	1    0    0    -1  
-$EndComp
-$Comp
-L device:R R7
-U 1 1 58B31907
-P 4000 -2050
-F 0 "R7" V 4080 -2050 50  0000 C CNN
-F 1 "2.2k" V 4000 -2050 50  0000 C CNN
-F 2 "REInnovationFootprint:TH_Resistor_1" V 3930 -2050 50  0001 C CNN
-F 3 "" H 4000 -2050 50  0000 C CNN
-F 4 "~" H 4000 -2050 60  0000 C CNN "Notes"
-F 5 "~" H 4000 -2050 60  0001 C CNN "Description"
-F 6 "~" H 4000 -2050 60  0001 C CNN "Manufacturer"
-F 7 "~" H 4000 -2050 60  0001 C CNN "Manufacturer Part No"
-F 8 "~" H 4000 -2050 60  0001 C CNN "Supplier 1"
-F 9 "~" H 4000 -2050 60  0001 C CNN "Supplier 1 Part No"
-F 10 "0.01" H 4000 -2050 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 4000 -2050 60  0001 C CNN "Supplier 2"
-F 12 "~" H 4000 -2050 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 4000 -2050 60  0001 C CNN "Supplier 2 Cost"
-	1    4000 -2050
-	1    0    0    -1  
-$EndComp
-$Comp
-L device:CP C2
-U 1 1 58B319C0
-P 1400 -1950
-F 0 "C2" H 1425 -1850 50  0000 L CNN
-F 1 "1uF" H 1425 -2050 50  0000 L CNN
-F 2 "REInnovationFootprint:C_1V7_TH" H 1438 -2100 50  0001 C CNN
-F 3 "" H 1400 -1950 50  0000 C CNN
-F 4 "~" H 1400 -1950 60  0000 C CNN "Notes"
-F 5 "~" H 1400 -1950 60  0001 C CNN "Description"
-F 6 "~" H 1400 -1950 60  0001 C CNN "Manufacturer"
-F 7 "~" H 1400 -1950 60  0001 C CNN "Manufacturer Part No"
-F 8 "~" H 1400 -1950 60  0001 C CNN "Supplier 1"
-F 9 "~" H 1400 -1950 60  0001 C CNN "Supplier 1 Part No"
-F 10 "0.1" H 1400 -1950 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 1400 -1950 60  0001 C CNN "Supplier 2"
-F 12 "~" H 1400 -1950 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 1400 -1950 60  0001 C CNN "Supplier 2 Cost"
-	1    1400 -1950
-	1    0    0    -1  
-$EndComp
-$Comp
-L device:CP C4
-U 1 1 58B31A6D
-P 4550 -1850
-F 0 "C4" H 4575 -1750 50  0000 L CNN
-F 1 "1uF" H 4575 -1950 50  0000 L CNN
-F 2 "REInnovationFootprint:C_1V7_TH" H 4588 -2000 50  0001 C CNN
-F 3 "" H 4550 -1850 50  0000 C CNN
-F 4 "~" H 4550 -1850 60  0000 C CNN "Notes"
-F 5 "~" H 4550 -1850 60  0001 C CNN "Description"
-F 6 "~" H 4550 -1850 60  0001 C CNN "Manufacturer"
-F 7 "~" H 4550 -1850 60  0001 C CNN "Manufacturer Part No"
-F 8 "~" H 4550 -1850 60  0001 C CNN "Supplier 1"
-F 9 "~" H 4550 -1850 60  0001 C CNN "Supplier 1 Part No"
-F 10 "0.10" H 4550 -1850 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 4550 -1850 60  0001 C CNN "Supplier 2"
-F 12 "~" H 4550 -1850 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 4550 -1850 60  0001 C CNN "Supplier 2 Cost"
-	1    4550 -1850
-	1    0    0    -1  
-$EndComp
-$Comp
-L device:R R3
-U 1 1 58B31BC6
-P 1650 -1250
-F 0 "R3" V 1730 -1250 50  0000 C CNN
-F 1 "1k" V 1650 -1250 50  0000 C CNN
-F 2 "REInnovationFootprint:TH_Resistor_1" V 1580 -1250 50  0001 C CNN
-F 3 "" H 1650 -1250 50  0000 C CNN
-F 4 "~" H 1650 -1250 60  0000 C CNN "Notes"
-F 5 "~" H 1650 -1250 60  0001 C CNN "Description"
-F 6 "~" H 1650 -1250 60  0001 C CNN "Manufacturer"
-F 7 "~" H 1650 -1250 60  0001 C CNN "Manufacturer Part No"
-F 8 "~" H 1650 -1250 60  0001 C CNN "Supplier 1"
-F 9 "~" H 1650 -1250 60  0001 C CNN "Supplier 1 Part No"
-F 10 "0.01" H 1650 -1250 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 1650 -1250 60  0001 C CNN "Supplier 2"
-F 12 "~" H 1650 -1250 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 1650 -1250 60  0001 C CNN "Supplier 2 Cost"
-	1    1650 -1250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3150 -2250 3700 -2250
-Wire Wire Line
-	3700 -2200 3700 -2250
-Connection ~ 3700 -2250
-Wire Wire Line
-	4000 -2200 4000 -2250
-Connection ~ 4000 -2250
-Wire Wire Line
-	3700 -1850 3700 -1900
-Wire Wire Line
-	4000 -1850 4000 -1900
-Wire Wire Line
-	3550 -1950 3550 -1350
-Wire Wire Line
-	3550 -1950 3150 -1950
-Wire Wire Line
-	3150 -1650 3300 -1650
-Wire Wire Line
-	3500 -1650 3500 -1250
-$Comp
-L power1:GND #PWR09
-U 1 1 58B32042
-P 1800 -1900
-F 0 "#PWR09" H 1800 -2150 50  0001 C CNN
-F 1 "GND" H 1800 -2050 50  0000 C CNN
-F 2 "" H 1800 -1900 50  0000 C CNN
-F 3 "" H 1800 -1900 50  0000 C CNN
-	1    1800 -1900
-	1    0    0    -1  
-$EndComp
-$Comp
-L power1:PWR_FLAG #FLG01
-U 1 1 58B32070
-P 4400 -2250
-F 0 "#FLG01" H 4400 -2155 50  0001 C CNN
-F 1 "PWR_FLAG" H 4400 -2070 50  0000 C CNN
-F 2 "" H 4400 -2250 50  0000 C CNN
-F 3 "" H 4400 -2250 50  0000 C CNN
-	1    4400 -2250
-	1    0    0    -1  
-$EndComp
-$Comp
-L power1:VCC #PWR019
-U 1 1 58B3209E
-P 4750 -2250
-F 0 "#PWR019" H 4750 -2400 50  0001 C CNN
-F 1 "VCC" H 4750 -2100 50  0000 C CNN
-F 2 "" H 4750 -2250 50  0000 C CNN
-F 3 "" H 4750 -2250 50  0000 C CNN
-	1    4750 -2250
-	1    0    0    -1  
-$EndComp
-Connection ~ 4400 -2250
-$Comp
-L power1:GND #PWR08
-U 1 1 58B32372
-P 1650 -950
-F 0 "#PWR08" H 1650 -1200 50  0001 C CNN
-F 1 "GND" H 1650 -1100 50  0000 C CNN
-F 2 "" H 1650 -950 50  0000 C CNN
-F 3 "" H 1650 -950 50  0000 C CNN
-	1    1650 -950
-	1    0    0    -1  
-$EndComp
-$Comp
-L power1:GND #PWR011
-U 1 1 58B323A4
-P 2700 -1250
-F 0 "#PWR011" H 2700 -1500 50  0001 C CNN
-F 1 "GND" H 2700 -1400 50  0000 C CNN
-F 2 "" H 2700 -1250 50  0000 C CNN
-F 3 "" H 2700 -1250 50  0000 C CNN
-	1    2700 -1250
-	1    0    0    -1  
-$EndComp
-$Comp
-L power1:GND #PWR06
-U 1 1 58B32581
-P 1400 -1700
-F 0 "#PWR06" H 1400 -1950 50  0001 C CNN
-F 1 "GND" H 1400 -1850 50  0000 C CNN
-F 2 "" H 1400 -1700 50  0000 C CNN
-F 3 "" H 1400 -1700 50  0000 C CNN
-	1    1400 -1700
-	1    0    0    -1  
-$EndComp
-$Comp
-L power1:GND #PWR04
-U 1 1 58B325B3
-P 600 -1650
-F 0 "#PWR04" H 600 -1900 50  0001 C CNN
-F 1 "GND" H 600 -1800 50  0000 C CNN
-F 2 "" H 600 -1650 50  0000 C CNN
-F 3 "" H 600 -1650 50  0000 C CNN
-	1    600  -1650
-	1    0    0    -1  
-$EndComp
-$Comp
-L power1:GND #PWR017
-U 1 1 58B325E5
-P 4550 -1600
-F 0 "#PWR017" H 4550 -1850 50  0001 C CNN
-F 1 "GND" H 4550 -1750 50  0000 C CNN
-F 2 "" H 4550 -1600 50  0000 C CNN
-F 3 "" H 4550 -1600 50  0000 C CNN
-	1    4550 -1600
-	1    0    0    -1  
-$EndComp
-$Comp
-L power1:GND #PWR020
-U 1 1 58B32617
-P 5150 -1600
-F 0 "#PWR020" H 5150 -1850 50  0001 C CNN
-F 1 "GND" H 5150 -1750 50  0000 C CNN
-F 2 "" H 5150 -1600 50  0000 C CNN
-F 3 "" H 5150 -1600 50  0000 C CNN
-	1    5150 -1600
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	600  -2250 600  -2150
-Wire Wire Line
-	1800 -1950 2250 -1950
-Wire Wire Line
-	1800 -1950 1800 -1900
-Wire Wire Line
-	1650 -1400 1650 -2100
-Wire Wire Line
-	1650 -2100 2250 -2100
-Wire Wire Line
-	1650 -950 1650 -1100
-Wire Wire Line
-	1400 -1700 1400 -1800
-Wire Wire Line
-	1400 -2100 1400 -2250
-Connection ~ 1400 -2250
-Wire Wire Line
-	600  -1650 600  -1750
-Wire Wire Line
-	2700 -1250 2700 -1350
-Wire Wire Line
-	5150 -2250 5150 -2000
-Connection ~ 4750 -2250
-Wire Wire Line
-	4550 -2000 4550 -2250
-Connection ~ 4550 -2250
-Wire Wire Line
-	4550 -1700 4550 -1600
-Wire Wire Line
-	5150 -1700 5150 -1600
-Text Notes 450  -2350 0    60   ~ 0
-Solar PV Input\n<800mA\n<20V DC
-Text Notes 4750 -2550 0    60   ~ 0
-LiIon Cell 18650
-Wire Wire Line
-	3550 -1350 3700 -1350
-Wire Wire Line
-	3700 -1350 3700 -1450
-Wire Wire Line
-	3500 -1250 4000 -1250
-Wire Wire Line
-	4000 -1250 4000 -1450
-$Comp
-L device:R R4
-U 1 1 58B6EAFF
-P 2100 -1450
-F 0 "R4" V 2180 -1450 50  0000 C CNN
-F 1 "100k" V 2100 -1450 50  0000 C CNN
-F 2 "REInnovationFootprint:TH_Resistor_1" V 2030 -1450 50  0001 C CNN
-F 3 "" H 2100 -1450 50  0000 C CNN
-F 4 "~" H 2100 -1450 60  0000 C CNN "Notes"
-F 5 "~" H 2100 -1450 60  0001 C CNN "Description"
-F 6 "~" H 2100 -1450 60  0001 C CNN "Manufacturer"
-F 7 "~" H 2100 -1450 60  0001 C CNN "Manufacturer Part No"
-F 8 "~" H 2100 -1450 60  0001 C CNN "Supplier 1"
-F 9 "~" H 2100 -1450 60  0001 C CNN "Supplier 1 Part No"
-F 10 "0.01" H 2100 -1450 60  0001 C CNN "Supplier 1 Cost"
-F 11 "~" H 2100 -1450 60  0001 C CNN "Supplier 2"
-F 12 "~" H 2100 -1450 60  0001 C CNN "Supplier 2 Part No"
-F 13 "~" H 2100 -1450 60  0001 C CNN "Supplier 2 Cost"
-	1    2100 -1450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2250 -1650 2100 -1650
-Wire Wire Line
-	2100 -1650 2100 -1600
-Wire Wire Line
-	2100 -1300 2100 -1200
-Wire Wire Line
-	2100 -1200 2000 -1200
-Wire Wire Line
-	2000 -1200 2000 -1800
-Wire Wire Line
-	2000 -1800 2250 -1800
-NoConn ~ 3150 -2100
-Wire Wire Line
-	3150 -1800 3300 -1800
-Wire Wire Line
-	3300 -1800 3300 -1650
-Connection ~ 3300 -1650
-Wire Wire Line
-	3700 -2250 4000 -2250
-Wire Wire Line
-	4000 -2250 4400 -2250
-Wire Wire Line
-	4400 -2250 4550 -2250
-Wire Wire Line
-	4750 -2250 5150 -2250
-Wire Wire Line
-	4550 -2250 4750 -2250
-Wire Wire Line
-	3300 -1650 3500 -1650
-Wire Wire Line
-	1400 -2250 2250 -2250
-Wire Wire Line
-	600  -2250 1400 -2250
-Text Notes 5900 -1000 0    60   ~ 0
-Ts pulled high for solar charing applications\nLimited current mode to ensure battery temperature OK\nPull high with 100k \n\nVDPM\nKept open for load tracking, such as solar PV \nVDPM to ground using\nRVDPM= (VBUS_DPM–VBUS_DPM_1)/KVBUS_DPM\n= (4.6 V - 3.5 V) / ( 0.15V/kΩ) \n= 7.333kΩ → 7.32kΩ closest 1% resistor\n\nIset\n2W of solar PV gives 400mA maximum\nRiset = Kiset/Iout Iout = 400mA. \nKiset = 395Aohm. Riset = 987.5. Close to 1k\n\nEN tied to PG as load mode never used
-$Comp
 L WildlifeCamera_PCB-rescue:R-Device R10
 U 1 1 5F433F45
 P 5750 3500
@@ -993,26 +562,14 @@ U 1 1 5F5632BE
 P 6600 7150
 F 0 "J8" H 6680 7192 50  0000 L CNN
 F 1 "PCB" H 6680 7099 50  0000 L CNN
-F 2 "REInnovationFootprint:PCB_Wildlife_Cam" H 6600 7150 50  0001 C CNN
+F 2 "REInnovationFootprint:PCB_SolarChargerPCB40x80" H 6600 7150 50  0001 C CNN
 F 3 "~" H 6600 7150 50  0001 C CNN
 	1    6600 7150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector_Generic:Conn_01x01 J9
-U 1 1 5F56380B
-P 6600 7400
-F 0 "J9" H 6680 7442 50  0000 L CNN
-F 1 "PV" H 6680 7349 50  0000 L CNN
-F 2 "" H 6600 7400 50  0001 C CNN
-F 3 "~" H 6600 7400 50  0001 C CNN
-	1    6600 7400
 	1    0    0    -1  
 $EndComp
 NoConn ~ 6400 6700
 NoConn ~ 6400 6900
 NoConn ~ 6400 7150
-NoConn ~ 6400 7400
 Wire Wire Line
 	8400 2150 8450 2150
 Wire Wire Line
@@ -1397,21 +954,21 @@ Wire Wire Line
 Wire Wire Line
 	10100 3850 9550 3850
 $Comp
-L Connector_Generic:Conn_01x02 J?
+L Connector_Generic:Conn_01x02 J10
 U 1 1 60F7BB91
 P 1150 1500
-F 0 "J?" H 1068 1175 50  0000 C CNN
+F 0 "J10" H 1068 1175 50  0000 C CNN
 F 1 "POWER" H 1068 1266 50  0000 C CNN
-F 2 "" H 1150 1500 50  0001 C CNN
+F 2 "REInnovationFootprint:SIL-2_screw_terminal" H 1150 1500 50  0001 C CNN
 F 3 "~" H 1150 1500 50  0001 C CNN
 	1    1150 1500
 	-1   0    0    1   
 $EndComp
 $Comp
-L power1:VCC #PWR?
+L power1:VCC #PWR0102
 U 1 1 60F7C351
 P 1500 1350
-F 0 "#PWR?" H 1500 1200 50  0001 C CNN
+F 0 "#PWR0102" H 1500 1200 50  0001 C CNN
 F 1 "VCC" H 1500 1500 50  0000 C CNN
 F 2 "" H 1500 1350 50  0000 C CNN
 F 3 "" H 1500 1350 50  0000 C CNN
@@ -1419,10 +976,10 @@ F 3 "" H 1500 1350 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power1:GND #PWR?
+L power1:GND #PWR0103
 U 1 1 60F7C877
 P 1500 1550
-F 0 "#PWR?" H 1500 1300 50  0001 C CNN
+F 0 "#PWR0103" H 1500 1300 50  0001 C CNN
 F 1 "GND" H 1500 1400 50  0000 C CNN
 F 2 "" H 1500 1550 50  0000 C CNN
 F 3 "" H 1500 1550 50  0000 C CNN

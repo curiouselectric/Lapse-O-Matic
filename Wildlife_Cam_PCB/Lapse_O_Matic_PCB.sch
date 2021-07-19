@@ -1,0 +1,997 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R10
+U 1 1 5F433F45
+P 5550 3500
+F 0 "R10" H 5620 3547 50  0000 L CNN
+F 1 "10k" H 5620 3454 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 5480 3500 50  0001 C CNN
+F 3 "~" H 5550 3500 50  0001 C CNN
+	1    5550 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R1
+U 1 1 5F4345CF
+P 1800 6300
+F 0 "R1" V 1590 6300 50  0000 C CNN
+F 1 "1k" V 1683 6300 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 1730 6300 50  0001 C CNN
+F 3 "~" H 1800 6300 50  0001 C CNN
+	1    1800 6300
+	0    1    1    0   
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:Conn_01x03-Connector_Generic J1
+U 1 1 5F434B25
+P 1100 6300
+F 0 "J1" V 1017 5970 50  0000 C CNN
+F 1 "PIR" H 1017 6063 50  0000 C CNN
+F 2 "REInnovationFootprint:SIL-3_PIR_SENSOR" H 1100 6300 50  0001 C CNN
+F 3 "~" H 1100 6300 50  0001 C CNN
+	1    1100 6300
+	-1   0    0    1   
+$EndComp
+$Comp
+L power1:GND #PWR03
+U 1 1 5F43612D
+P 1550 6650
+F 0 "#PWR03" H 1550 6400 50  0001 C CNN
+F 1 "GND" H 1550 6500 50  0000 C CNN
+F 2 "" H 1550 6650 50  0000 C CNN
+F 3 "" H 1550 6650 50  0000 C CNN
+	1    1550 6650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR022
+U 1 1 5F4386F1
+P 8800 2800
+F 0 "#PWR022" H 8800 2550 50  0001 C CNN
+F 1 "GND" H 8800 2650 50  0000 C CNN
+F 2 "" H 8800 2800 50  0000 C CNN
+F 3 "" H 8800 2800 50  0000 C CNN
+	1    8800 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR02
+U 1 1 5F4389FE
+P 1550 5900
+F 0 "#PWR02" H 1550 5750 50  0001 C CNN
+F 1 "+3.3V" H 1565 6076 50  0000 C CNN
+F 2 "" H 1550 5900 50  0001 C CNN
+F 3 "" H 1550 5900 50  0001 C CNN
+	1    1550 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR07
+U 1 1 5F439209
+P 2750 6650
+F 0 "#PWR07" H 2750 6400 50  0001 C CNN
+F 1 "GND" H 2750 6500 50  0000 C CNN
+F 2 "" H 2750 6650 50  0000 C CNN
+F 3 "" H 2750 6650 50  0000 C CNN
+	1    2750 6650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR018
+U 1 1 5F43E1BA
+P 5350 2200
+F 0 "#PWR018" H 5350 1950 50  0001 C CNN
+F 1 "GND" H 5350 2050 50  0000 C CNN
+F 2 "" H 5350 2200 50  0000 C CNN
+F 3 "" H 5350 2200 50  0000 C CNN
+	1    5350 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR023
+U 1 1 5F43E4F8
+P 8950 2350
+F 0 "#PWR023" H 8950 2100 50  0001 C CNN
+F 1 "GND" H 8950 2200 50  0000 C CNN
+F 2 "" H 8950 2350 50  0000 C CNN
+F 3 "" H 8950 2350 50  0000 C CNN
+	1    8950 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR021
+U 1 1 5F43E8AB
+P 8800 2000
+F 0 "#PWR021" H 8800 1850 50  0001 C CNN
+F 1 "+3.3V" H 8815 2176 50  0000 C CNN
+F 2 "" H 8800 2000 50  0001 C CNN
+F 3 "" H 8800 2000 50  0001 C CNN
+	1    8800 2000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8800 2050 8800 2000
+Wire Wire Line
+	8800 2750 8800 2800
+Wire Wire Line
+	5350 2150 5350 2200
+Wire Wire Line
+	5550 3650 5550 3750
+Wire Wire Line
+	2750 6500 2750 6650
+Wire Wire Line
+	1300 6200 1550 6200
+Wire Wire Line
+	1550 6200 1550 5900
+Wire Wire Line
+	1300 6300 1650 6300
+Wire Wire Line
+	1300 6400 1550 6400
+Wire Wire Line
+	1550 6400 1550 6650
+$Comp
+L WildlifeCamera_PCB-rescue:Conn_01x03-Connector_Generic J2
+U 1 1 5F455A97
+P 3700 6400
+F 0 "J2" V 3617 6070 50  0000 C CNN
+F 1 "TRIG" H 3617 6163 50  0000 C CNN
+F 2 "REInnovationFootprint:SIL-3_lg_pad" H 3700 6400 50  0001 C CNN
+F 3 "~" H 3700 6400 50  0001 C CNN
+	1    3700 6400
+	-1   0    0    1   
+$EndComp
+$Comp
+L matts_components:SPST SW1
+U 1 1 5F462D31
+P 2350 1850
+F 0 "SW1" H 2350 2120 50  0000 C CNN
+F 1 "POWER" H 2350 2027 50  0000 C CNN
+F 2 "REInnovationFootprint:SW_SPDT_R_Angle_ALIEX" H 2350 1850 50  0001 C CNN
+F 3 "" H 2350 1850 50  0000 C CNN
+	1    2350 1850
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power1:VCC #PWR01
+U 1 1 5F463920
+P 2100 2350
+F 0 "#PWR01" H 2100 2200 50  0001 C CNN
+F 1 "VCC" H 2100 2500 50  0000 C CNN
+F 2 "" H 2100 2350 50  0000 C CNN
+F 3 "" H 2100 2350 50  0000 C CNN
+	1    2100 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR010
+U 1 1 5F463CF4
+P 3300 2150
+F 0 "#PWR010" H 3300 1900 50  0001 C CNN
+F 1 "GND" H 3300 2000 50  0000 C CNN
+F 2 "" H 3300 2150 50  0000 C CNN
+F 3 "" H 3300 2150 50  0000 C CNN
+	1    3300 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR012
+U 1 1 5F467366
+P 4250 1300
+F 0 "#PWR012" H 4250 1150 50  0001 C CNN
+F 1 "+3.3V" H 4265 1476 50  0000 C CNN
+F 2 "" H 4250 1300 50  0001 C CNN
+F 3 "" H 4250 1300 50  0001 C CNN
+	1    4250 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:CP C1
+U 1 1 5F46966A
+P 2650 1650
+F 0 "C1" H 2770 1697 50  0000 L CNN
+F 1 "1uf" H 2770 1604 50  0000 L CNN
+F 2 "REInnovationFootprint:C_1V7_TH" H 2688 1500 50  0001 C CNN
+F 3 "~" H 2650 1650 50  0001 C CNN
+	1    2650 1650
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:CP C3
+U 1 1 5F469C49
+P 4000 1650
+F 0 "C3" H 4120 1697 50  0000 L CNN
+F 1 "1uf" H 4120 1604 50  0000 L CNN
+F 2 "REInnovationFootprint:C_1V7_TH" H 4038 1500 50  0001 C CNN
+F 3 "~" H 4000 1650 50  0001 C CNN
+	1    4000 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3700 1350 4000 1350
+Wire Wire Line
+	4250 1350 4250 1300
+Wire Wire Line
+	4000 1500 4000 1350
+Connection ~ 4000 1350
+Wire Wire Line
+	4000 1350 4250 1350
+Wire Wire Line
+	2350 1350 2650 1350
+Wire Wire Line
+	2650 1350 2650 1500
+Wire Wire Line
+	2650 1800 2650 1950
+Wire Wire Line
+	2650 1950 3300 1950
+Wire Wire Line
+	4000 1950 4000 1800
+Wire Wire Line
+	3300 1650 3300 1950
+Connection ~ 3300 1950
+Wire Wire Line
+	3300 1950 4000 1950
+Wire Wire Line
+	3300 1950 3300 2150
+Wire Wire Line
+	2650 1350 2900 1350
+Connection ~ 2650 1350
+$Comp
+L WildlifeCamera_PCB-rescue:LED-device D4
+U 1 1 5F4D026C
+P 5100 3050
+F 0 "D4" V 5140 2930 50  0000 R CNN
+F 1 "TRIG?" V 5047 2930 50  0000 R CNN
+F 2 "REInnovationFootprint:TH_LED-5MM" H 5100 3050 50  0001 C CNN
+F 3 "~" H 5100 3050 50  0001 C CNN
+	1    5100 3050
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	1950 6300 2200 6300
+$Comp
+L WildlifeCamera_PCB-rescue:SW_Push-Switch SW2
+U 1 1 5F4DA4DE
+P 4750 6000
+F 0 "SW2" V 4797 5950 50  0000 R CNN
+F 1 "TRIGGER" V 4704 5950 50  0000 R CNN
+F 2 "REInnovationFootprint:SW_PUSH_SMALL_lg_pad" H 4750 6200 50  0001 C CNN
+F 3 "~" H 4750 6200 50  0001 C CNN
+	1    4750 6000
+	0    -1   -1   0   
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R6
+U 1 1 5F4DF1E6
+P 4900 6400
+F 0 "R6" V 4690 6400 50  0000 C CNN
+F 1 "1k" V 4783 6400 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 4830 6400 50  0001 C CNN
+F 3 "~" H 4900 6400 50  0001 C CNN
+	1    4900 6400
+	0    1    1    0   
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R9
+U 1 1 5F4DFB70
+P 5100 3500
+F 0 "R9" H 5170 3547 50  0000 L CNN
+F 1 "330" H 5170 3454 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 5030 3500 50  0001 C CNN
+F 3 "~" H 5100 3500 50  0001 C CNN
+	1    5100 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR015
+U 1 1 5F4E0074
+P 5100 2700
+F 0 "#PWR015" H 5100 2550 50  0001 C CNN
+F 1 "+3.3V" H 5115 2876 50  0000 C CNN
+F 2 "" H 5100 2700 50  0001 C CNN
+F 3 "" H 5100 2700 50  0001 C CNN
+	1    5100 2700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 2700 5100 2900
+Wire Wire Line
+	5100 3200 5100 3350
+Wire Wire Line
+	5100 3650 5100 3750
+Wire Wire Line
+	5100 3750 5550 3750
+Connection ~ 5550 3750
+$Comp
+L power1:GND #PWR016
+U 1 1 5F4E6DB4
+P 5500 7000
+F 0 "#PWR016" H 5500 6750 50  0001 C CNN
+F 1 "GND" H 5500 6850 50  0000 C CNN
+F 2 "" H 5500 7000 50  0000 C CNN
+F 3 "" H 5500 7000 50  0000 C CNN
+	1    5500 7000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR014
+U 1 1 5F4E713C
+P 4100 6600
+F 0 "#PWR014" H 4100 6350 50  0001 C CNN
+F 1 "GND" H 4100 6450 50  0000 C CNN
+F 2 "" H 4100 6600 50  0000 C CNN
+F 3 "" H 4100 6600 50  0000 C CNN
+	1    4100 6600
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR013
+U 1 1 5F4E76B0
+P 4100 5600
+F 0 "#PWR013" H 4100 5450 50  0001 C CNN
+F 1 "+3.3V" H 4115 5776 50  0000 C CNN
+F 2 "" H 4100 5600 50  0001 C CNN
+F 3 "" H 4100 5600 50  0001 C CNN
+	1    4100 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R2
+U 1 1 5F4E7ABA
+P 2200 6550
+F 0 "R2" H 2270 6597 50  0000 L CNN
+F 1 "10k" H 2270 6504 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 2130 6550 50  0001 C CNN
+F 3 "~" H 2200 6550 50  0001 C CNN
+	1    2200 6550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR05
+U 1 1 5F4E7F19
+P 2200 6800
+F 0 "#PWR05" H 2200 6550 50  0001 C CNN
+F 1 "GND" H 2200 6650 50  0000 C CNN
+F 2 "" H 2200 6800 50  0000 C CNN
+F 3 "" H 2200 6800 50  0000 C CNN
+	1    2200 6800
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R8
+U 1 1 5F4E826D
+P 5200 6650
+F 0 "R8" H 5270 6697 50  0000 L CNN
+F 1 "10k" H 5270 6604 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 5130 6650 50  0001 C CNN
+F 3 "~" H 5200 6650 50  0001 C CNN
+	1    5200 6650
+	1    0    0    -1  
+$EndComp
+Text Label 5800 3750 0    60   ~ 0
+TRIG
+Wire Wire Line
+	5550 3750 5800 3750
+Text Label 5600 5900 0    60   ~ 0
+TRIG
+Wire Wire Line
+	5600 6200 5600 5900
+Wire Wire Line
+	3900 6300 4100 6300
+Wire Wire Line
+	5050 6400 5200 6400
+Wire Wire Line
+	5200 6800 5200 6900
+Wire Wire Line
+	5200 6900 5500 6900
+Wire Wire Line
+	5600 6900 5600 6600
+Wire Wire Line
+	5500 7000 5500 6900
+Connection ~ 5500 6900
+Wire Wire Line
+	5500 6900 5600 6900
+Wire Wire Line
+	5200 6500 5200 6400
+Connection ~ 5200 6400
+Wire Wire Line
+	5200 6400 5300 6400
+Wire Wire Line
+	3900 6500 4100 6500
+Wire Wire Line
+	4100 6500 4100 6600
+Wire Wire Line
+	2200 6400 2200 6300
+Connection ~ 2200 6300
+Wire Wire Line
+	2200 6300 2450 6300
+Wire Wire Line
+	2200 6700 2200 6800
+Text Label 2750 5950 0    60   ~ 0
+TRIG
+Wire Wire Line
+	2750 6100 2750 5950
+Wire Wire Line
+	5550 2350 5550 3350
+Text Notes 1900 5750 0    60   ~ 0
+PIR Trigger
+Text Notes 4450 5500 0    60   ~ 0
+EXTERNAL Trigger
+Text Notes 7000 1050 0    60   ~ 0
+ESP32_CAM Pinout
+Text Notes 2650 950  0    60   ~ 0
+Power Supply 3.3V 1A
+$Comp
+L WildlifeCamera_PCB-rescue:Conn_01x06-Connector_Generic J4
+U 1 1 5F50D962
+P 10150 1950
+F 0 "J4" H 10230 1942 50  0000 L CNN
+F 1 "PROG" H 10230 1849 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_6x1_CONN" H 10150 1950 50  0001 C CNN
+F 3 "~" H 10150 1950 50  0001 C CNN
+	1    10150 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:Conn_01x02-Connector_Generic J5
+U 1 1 5F50EC3E
+P 10150 2500
+F 0 "J5" H 10230 2492 50  0000 L CNN
+F 1 "PROG_EN" H 10230 2399 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Pin_Header_Straight_1x02" H 10150 2500 50  0001 C CNN
+F 3 "~" H 10150 2500 50  0001 C CNN
+	1    10150 2500
+	1    0    0    -1  
+$EndComp
+Text Notes 9750 1350 0    60   ~ 0
+Programming
+Text Label 8700 2250 0    60   ~ 0
+PROG_EN
+Text Label 9450 2500 0    60   ~ 0
+PROG_EN
+$Comp
+L power1:GND #PWR025
+U 1 1 5F53D671
+P 9450 2700
+F 0 "#PWR025" H 9450 2450 50  0001 C CNN
+F 1 "GND" H 9450 2550 50  0000 C CNN
+F 2 "" H 9450 2700 50  0000 C CNN
+F 3 "" H 9450 2700 50  0000 C CNN
+	1    9450 2700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9450 2500 9950 2500
+Wire Wire Line
+	9950 2600 9450 2600
+Wire Wire Line
+	9450 2600 9450 2700
+$Comp
+L power1:GND #PWR026
+U 1 1 5F547C35
+P 9700 1650
+F 0 "#PWR026" H 9700 1400 50  0001 C CNN
+F 1 "GND" H 9700 1500 50  0000 C CNN
+F 2 "" H 9700 1650 50  0000 C CNN
+F 3 "" H 9700 1650 50  0000 C CNN
+	1    9700 1650
+	1    0    0    -1  
+$EndComp
+Text Label 5750 2050 0    60   ~ 0
+5V_PWR
+Text Label 9400 1950 0    60   ~ 0
+5V_PWR
+Wire Wire Line
+	9950 1950 9400 1950
+Wire Wire Line
+	9700 1650 9850 1650
+Wire Wire Line
+	9850 1650 9850 1750
+Wire Wire Line
+	9850 1750 9950 1750
+Text Label 8650 2550 0    60   ~ 0
+U0R
+Text Label 8650 2650 0    60   ~ 0
+U0T
+Text Label 9500 2050 0    60   ~ 0
+U0R
+Text Label 9500 2150 0    60   ~ 0
+U0T
+Wire Wire Line
+	9950 2150 9500 2150
+Wire Wire Line
+	9500 2050 9950 2050
+Text Label 5750 2450 0    60   ~ 0
+I2C_CLK
+Text Label 5750 2550 0    60   ~ 0
+I2C_DAT
+Text Notes 9550 3300 0    60   ~ 0
+RTC DS3231
+Text Notes 6450 1550 0    60   ~ 0
+SD Card is changed from 4 bit write to 1 bit write.\nThis frees up 3 x GPIO.\n1 is for External Interrupt\n2 are form I2C - connect to RTC.
+$Comp
+L matts_components:ZENER D1
+U 1 1 5F4F0673
+P 4350 6700
+F 0 "D1" V 4303 6780 50  0000 L CNN
+F 1 "ZENER" V 4396 6780 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Diode_3" H 4350 6700 50  0001 C CNN
+F 3 "" H 4350 6700 50  0000 C CNN
+	1    4350 6700
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4750 5800 4750 5700
+Wire Wire Line
+	4100 5700 4100 6300
+Wire Wire Line
+	4100 5700 4100 5600
+Connection ~ 4100 5700
+Wire Wire Line
+	4750 6200 4750 6400
+Connection ~ 4750 6400
+NoConn ~ 9950 1850
+NoConn ~ 9950 2250
+$Comp
+L Connector_Generic:Conn_01x01 J7
+U 1 1 5F562F8B
+P 6600 6900
+F 0 "J7" H 6680 6942 50  0000 L CNN
+F 1 "LOGO2" H 6680 6849 50  0000 L CNN
+F 2 "CuriousElectric3:2019_011_16_CuriousElectricCompany_Logo_Round_Logo_No_words_KiCAD_10mm_PCBLogo" H 6600 6900 50  0001 C CNN
+F 3 "~" H 6600 6900 50  0001 C CNN
+	1    6600 6900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J8
+U 1 1 5F5632BE
+P 6600 7150
+F 0 "J8" H 6680 7192 50  0000 L CNN
+F 1 "PCB" H 6680 7099 50  0000 L CNN
+F 2 "REInnovationFootprint:PCB_SolarChargerPCB40x80" H 6600 7150 50  0001 C CNN
+F 3 "~" H 6600 7150 50  0001 C CNN
+	1    6600 7150
+	1    0    0    -1  
+$EndComp
+NoConn ~ 6400 6700
+NoConn ~ 6400 6900
+NoConn ~ 6400 7150
+Wire Wire Line
+	8200 2150 8250 2150
+Wire Wire Line
+	8200 2450 8250 2450
+Wire Wire Line
+	6750 2250 6650 2250
+$Comp
+L matts_components:MCP1826S-3302 U1
+U 1 1 5F5E56C3
+P 3300 1400
+F 0 "U1" H 3300 1745 60  0000 C CNN
+F 1 "MCP1826S-3302" H 3300 1635 60  0000 C CNN
+F 2 "REInnovationFootprint:TO220_MCP1826S" H 3300 1400 60  0001 C CNN
+F 3 "http://docs-europe.electrocomponents.com/webdocs/137e/0900766b8137eda2.pdf" H 3300 1635 60  0001 C CNN
+	1    3300 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8200 2050 8800 2050
+Wire Wire Line
+	8200 2250 8700 2250
+Wire Wire Line
+	8200 2350 8950 2350
+Wire Wire Line
+	8200 2550 8650 2550
+Wire Wire Line
+	8200 2650 8650 2650
+Wire Wire Line
+	8200 2750 8800 2750
+Wire Wire Line
+	5550 2350 6750 2350
+Wire Wire Line
+	5350 2150 6750 2150
+Wire Wire Line
+	5750 2050 6750 2050
+NoConn ~ 6650 2250
+NoConn ~ 6650 2750
+NoConn ~ 6650 2650
+NoConn ~ 8250 2150
+NoConn ~ 8250 2450
+$Comp
+L Connector_Generic:Conn_01x01 J6
+U 1 1 5F562AB4
+P 6600 6700
+F 0 "J6" H 6680 6742 50  0000 L CNN
+F 1 "LOGO1" H 6680 6649 50  0000 L CNN
+F 2 "CuriousElectric3:TCEC_Words_13mm" H 6600 6700 50  0001 C CNN
+F 3 "~" H 6600 6700 50  0001 C CNN
+	1    6600 6700
+	1    0    0    -1  
+$EndComp
+Text Label 1250 3800 0    60   ~ 0
+I2C_CLK
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R11
+U 1 1 5F5439ED
+P 1800 3800
+F 0 "R11" V 1590 3800 50  0000 C CNN
+F 1 "1k" V 1683 3800 50  0000 C CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 1730 3800 50  0001 C CNN
+F 3 "~" H 1800 3800 50  0001 C CNN
+	1    1800 3800
+	0    1    1    0   
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:Q_NPN_BCE-Device Q3
+U 1 1 5F5439F7
+P 2400 3800
+F 0 "Q3" H 2590 3847 50  0000 L CNN
+F 1 "BD135" H 2590 3754 50  0000 L CNN
+F 2 "REInnovationFootprint:TO220_BD135" H 2600 3900 50  0001 C CNN
+F 3 "~" H 2400 3800 50  0001 C CNN
+	1    2400 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR028
+U 1 1 5F543A01
+P 2400 4400
+F 0 "#PWR028" H 2400 4150 50  0001 C CNN
+F 1 "GND" H 2400 4250 50  0000 C CNN
+F 2 "" H 2400 4400 50  0000 C CNN
+F 3 "" H 2400 4400 50  0000 C CNN
+	1    2400 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R12
+U 1 1 5F543A0B
+P 2100 4050
+F 0 "R12" H 2170 4097 50  0000 L CNN
+F 1 "10k" H 2170 4004 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 2030 4050 50  0001 C CNN
+F 3 "~" H 2100 4050 50  0001 C CNN
+	1    2100 4050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2500 3600 2500 3300
+Wire Wire Line
+	1950 3800 2100 3800
+Wire Wire Line
+	2100 4200 2100 4300
+Wire Wire Line
+	2100 4300 2400 4300
+Wire Wire Line
+	2500 4300 2500 4000
+Wire Wire Line
+	2400 4400 2400 4300
+Connection ~ 2400 4300
+Wire Wire Line
+	2400 4300 2500 4300
+Wire Wire Line
+	2100 3900 2100 3800
+Connection ~ 2100 3800
+Wire Wire Line
+	2100 3800 2200 3800
+$Comp
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR029
+U 1 1 5F54F9CF
+P 4000 3200
+F 0 "#PWR029" H 4000 3050 50  0001 C CNN
+F 1 "+3.3V" H 4015 3376 50  0000 C CNN
+F 2 "" H 4000 3200 50  0001 C CNN
+F 3 "" H 4000 3200 50  0001 C CNN
+	1    4000 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:LED-device D5
+U 1 1 5F5503F1
+P 3550 3300
+F 0 "D5" V 3590 3180 50  0000 R CNN
+F 1 "FLASH" V 3497 3180 50  0000 R CNN
+F 2 "REInnovationFootprint:TH_LED-5MM" H 3550 3300 50  0001 C CNN
+F 3 "~" H 3550 3300 50  0001 C CNN
+	1    3550 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:LED-device D6
+U 1 1 5F550E8E
+P 3550 3700
+F 0 "D6" V 3590 3580 50  0000 R CNN
+F 1 "FLASH" V 3497 3580 50  0000 R CNN
+F 2 "REInnovationFootprint:TH_LED-5MM" H 3550 3700 50  0001 C CNN
+F 3 "~" H 3550 3700 50  0001 C CNN
+	1    3550 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:LED-device D7
+U 1 1 5F5511AB
+P 3550 4100
+F 0 "D7" V 3590 3980 50  0000 R CNN
+F 1 "FLASH" V 3497 3980 50  0000 R CNN
+F 2 "REInnovationFootprint:TH_LED-5MM" H 3550 4100 50  0001 C CNN
+F 3 "~" H 3550 4100 50  0001 C CNN
+	1    3550 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:LED-device D8
+U 1 1 5F55161A
+P 3550 4500
+F 0 "D8" V 3590 4380 50  0000 R CNN
+F 1 "FLASH" V 3497 4380 50  0000 R CNN
+F 2 "REInnovationFootprint:TH_LED-5MM" H 3550 4500 50  0001 C CNN
+F 3 "~" H 3550 4500 50  0001 C CNN
+	1    3550 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R13
+U 1 1 5F557941
+P 3150 3300
+F 0 "R13" H 3220 3347 50  0000 L CNN
+F 1 "100" H 3220 3254 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 3080 3300 50  0001 C CNN
+F 3 "~" H 3150 3300 50  0001 C CNN
+	1    3150 3300
+	0    1    1    0   
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R14
+U 1 1 5F5580BC
+P 3150 3700
+F 0 "R14" H 3220 3747 50  0000 L CNN
+F 1 "100" H 3220 3654 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 3080 3700 50  0001 C CNN
+F 3 "~" H 3150 3700 50  0001 C CNN
+	1    3150 3700
+	0    1    1    0   
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R15
+U 1 1 5F558344
+P 3150 4100
+F 0 "R15" H 3220 4147 50  0000 L CNN
+F 1 "100" H 3220 4054 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 3080 4100 50  0001 C CNN
+F 3 "~" H 3150 4100 50  0001 C CNN
+	1    3150 4100
+	0    1    1    0   
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:R-Device R16
+U 1 1 5F5586EA
+P 3150 4500
+F 0 "R16" H 3220 4547 50  0000 L CNN
+F 1 "100" H 3220 4454 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_Resistor_1" V 3080 4500 50  0001 C CNN
+F 3 "~" H 3150 4500 50  0001 C CNN
+	1    3150 4500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3700 4500 4000 4500
+Wire Wire Line
+	4000 4500 4000 4100
+Wire Wire Line
+	2500 3300 2900 3300
+Wire Wire Line
+	2900 3300 2900 3700
+Wire Wire Line
+	2900 4500 3000 4500
+Wire Wire Line
+	2900 3300 3000 3300
+Connection ~ 2900 3300
+Wire Wire Line
+	3300 3300 3400 3300
+Wire Wire Line
+	3700 3300 4000 3300
+Connection ~ 4000 3300
+Wire Wire Line
+	4000 3300 4000 3200
+Wire Wire Line
+	3000 3700 2900 3700
+Connection ~ 2900 3700
+Wire Wire Line
+	2900 3700 2900 4100
+Wire Wire Line
+	3000 4100 2900 4100
+Connection ~ 2900 4100
+Wire Wire Line
+	2900 4100 2900 4500
+Wire Wire Line
+	3300 3700 3400 3700
+Wire Wire Line
+	3300 4100 3400 4100
+Wire Wire Line
+	3300 4500 3400 4500
+Wire Wire Line
+	3700 4100 4000 4100
+Connection ~ 4000 4100
+Wire Wire Line
+	4000 4100 4000 3700
+Wire Wire Line
+	3700 3700 4000 3700
+Connection ~ 4000 3700
+Wire Wire Line
+	4000 3700 4000 3300
+Wire Wire Line
+	1250 3800 1650 3800
+Text Notes 1850 3300 0    60   ~ 0
+LED Control
+Wire Wire Line
+	2100 2350 2100 2400
+Wire Wire Line
+	2100 2400 2350 2400
+Wire Wire Line
+	2350 2400 2350 2350
+$Comp
+L Connector_Generic:Conn_01x05 J3
+U 1 1 5F9E542B
+P 10100 3850
+F 0 "J3" H 10180 3892 50  0000 L CNN
+F 1 "RTC_DS3231" H 10180 3801 50  0000 L CNN
+F 2 "REInnovationFootprint:TH_RTC_MODULE_SM" H 10100 3850 50  0001 C CNN
+F 3 "~" H 10100 3850 50  0001 C CNN
+	1    10100 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L WildlifeCamera_PCB-rescue:+3.3V-power #PWR024
+U 1 1 5F9E59FA
+P 9750 3650
+F 0 "#PWR024" H 9750 3500 50  0001 C CNN
+F 1 "+3.3V" H 9765 3826 50  0000 C CNN
+F 2 "" H 9750 3650 50  0001 C CNN
+F 3 "" H 9750 3650 50  0001 C CNN
+	1    9750 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR027
+U 1 1 5F9E5C64
+P 9750 4050
+F 0 "#PWR027" H 9750 3800 50  0001 C CNN
+F 1 "GND" H 9750 3900 50  0000 C CNN
+F 2 "" H 9750 4050 50  0000 C CNN
+F 3 "" H 9750 4050 50  0000 C CNN
+	1    9750 4050
+	1    0    0    -1  
+$EndComp
+Text Label 9350 3850 0    60   ~ 0
+I2C_CLK
+Text Label 9350 3750 0    60   ~ 0
+I2C_DAT
+NoConn ~ 9900 3950
+Wire Wire Line
+	9900 4050 9750 4050
+Wire Wire Line
+	9750 3650 9900 3650
+Wire Wire Line
+	3900 6400 4350 6400
+Wire Wire Line
+	4100 5700 4750 5700
+Wire Wire Line
+	4350 6500 4350 6400
+Connection ~ 4350 6400
+Wire Wire Line
+	4350 6400 4750 6400
+$Comp
+L power1:GND #PWR0101
+U 1 1 5FA7F2FD
+P 4350 7000
+F 0 "#PWR0101" H 4350 6750 50  0001 C CNN
+F 1 "GND" H 4350 6850 50  0000 C CNN
+F 2 "" H 4350 7000 50  0000 C CNN
+F 3 "" H 4350 7000 50  0000 C CNN
+	1    4350 7000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4350 7000 4350 6900
+$Comp
+L matts_components:NPN Q1
+U 1 1 5FCCCC31
+P 2650 6300
+F 0 "Q1" H 2840 6347 50  0000 L CNN
+F 1 "2N3904" H 2840 6254 50  0000 L CNN
+F 2 "REInnovationFootprint:NPN_BC337" H 2650 6300 60  0001 C CNN
+F 3 "transistors/bipolar/*.*" H 2840 6207 60  0001 L CNN
+	1    2650 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L matts_components:NPN Q2
+U 1 1 5FCD0A57
+P 5500 6400
+F 0 "Q2" H 5690 6447 50  0000 L CNN
+F 1 "2N3904" H 5690 6354 50  0000 L CNN
+F 2 "REInnovationFootprint:NPN_BC337" H 5500 6400 60  0001 C CNN
+F 3 "transistors/bipolar/*.*" H 5690 6307 60  0001 L CNN
+	1    5500 6400
+	1    0    0    -1  
+$EndComp
+Text Notes 6900 3950 0    60   ~ 0
+GPIO12 = HS2_DATA2\nGPIO12 = HS2_DATA2\nGPIO15 = HS2_DATA3\nGPIO14 = HS2_CLK\nGPIO2 = HS2_DATA0\nGPIO4 = HS2_DATA1/Flash\n
+Wire Wire Line
+	6750 2750 6650 2750
+Wire Wire Line
+	6750 2650 6650 2650
+Wire Wire Line
+	5750 2550 6750 2550
+Wire Wire Line
+	5750 2450 6750 2450
+$Comp
+L matts_components:ESP32_CAM U3
+U 1 1 5F431B0D
+P 7550 1950
+F 0 "U3" H 7475 2145 60  0000 C CNN
+F 1 "ESP32_CAM" H 7475 2035 60  0000 C CNN
+F 2 "REInnovationFootprint:ESP32_CAM" H 7550 1950 60  0001 C CNN
+F 3 "" H 7550 1950 60  0001 C CNN
+	1    7550 1950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9350 3750 9900 3750
+Wire Wire Line
+	9900 3850 9350 3850
+$Comp
+L Connector_Generic:Conn_01x02 J10
+U 1 1 60F7BB91
+P 1150 1500
+F 0 "J10" H 1068 1175 50  0000 C CNN
+F 1 "POWER" H 1068 1266 50  0000 C CNN
+F 2 "REInnovationFootprint:SIL-2_screw_terminal" H 1150 1500 50  0001 C CNN
+F 3 "~" H 1150 1500 50  0001 C CNN
+	1    1150 1500
+	-1   0    0    1   
+$EndComp
+$Comp
+L power1:VCC #PWR0102
+U 1 1 60F7C351
+P 1500 1350
+F 0 "#PWR0102" H 1500 1200 50  0001 C CNN
+F 1 "VCC" H 1500 1500 50  0000 C CNN
+F 2 "" H 1500 1350 50  0000 C CNN
+F 3 "" H 1500 1350 50  0000 C CNN
+	1    1500 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power1:GND #PWR0103
+U 1 1 60F7C877
+P 1500 1550
+F 0 "#PWR0103" H 1500 1300 50  0001 C CNN
+F 1 "GND" H 1500 1400 50  0000 C CNN
+F 2 "" H 1500 1550 50  0000 C CNN
+F 3 "" H 1500 1550 50  0000 C CNN
+	1    1500 1550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1350 1400 1500 1400
+Wire Wire Line
+	1500 1400 1500 1350
+Wire Wire Line
+	1350 1500 1500 1500
+Wire Wire Line
+	1500 1500 1500 1550
+$EndSCHEMATC
