@@ -548,28 +548,28 @@ NoConn ~ 9950 2250
 $Comp
 L Connector_Generic:Conn_01x01 J7
 U 1 1 5F562F8B
-P 6600 6900
-F 0 "J7" H 6680 6942 50  0000 L CNN
-F 1 "LOGO2" H 6680 6849 50  0000 L CNN
-F 2 "CuriousElectric3:2019_011_16_CuriousElectricCompany_Logo_Round_Logo_No_words_KiCAD_10mm_PCBLogo" H 6600 6900 50  0001 C CNN
-F 3 "~" H 6600 6900 50  0001 C CNN
-	1    6600 6900
+P 6400 6800
+F 0 "J7" H 6480 6842 50  0000 L CNN
+F 1 "LOGO2" H 6480 6749 50  0000 L CNN
+F 2 "CuriousElectric3:2019_011_16_CuriousElectricCompany_Logo_Round_Logo_No_words_KiCAD_10mm_PCBLogo" H 6400 6800 50  0001 C CNN
+F 3 "~" H 6400 6800 50  0001 C CNN
+	1    6400 6800
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 J8
 U 1 1 5F5632BE
-P 6600 7150
-F 0 "J8" H 6680 7192 50  0000 L CNN
-F 1 "PCB" H 6680 7099 50  0000 L CNN
-F 2 "REInnovationFootprint:PCB_SolarChargerPCB40x80" H 6600 7150 50  0001 C CNN
-F 3 "~" H 6600 7150 50  0001 C CNN
-	1    6600 7150
+P 6400 7050
+F 0 "J8" H 6480 7092 50  0000 L CNN
+F 1 "PCB" H 6480 6999 50  0000 L CNN
+F 2 "REInnovationFootprint:PCB_SolarChargerPCB40x80" H 6400 7050 50  0001 C CNN
+F 3 "~" H 6400 7050 50  0001 C CNN
+	1    6400 7050
 	1    0    0    -1  
 $EndComp
-NoConn ~ 6400 6700
-NoConn ~ 6400 6900
-NoConn ~ 6400 7150
+NoConn ~ 6200 6600
+NoConn ~ 6200 6800
+NoConn ~ 6200 7050
 Wire Wire Line
 	8200 2150 8250 2150
 Wire Wire Line
@@ -613,12 +613,12 @@ NoConn ~ 8250 2450
 $Comp
 L Connector_Generic:Conn_01x01 J6
 U 1 1 5F562AB4
-P 6600 6700
-F 0 "J6" H 6680 6742 50  0000 L CNN
-F 1 "LOGO1" H 6680 6649 50  0000 L CNN
-F 2 "CuriousElectric3:TCEC_Words_13mm" H 6600 6700 50  0001 C CNN
-F 3 "~" H 6600 6700 50  0001 C CNN
-	1    6600 6700
+P 6400 6600
+F 0 "J6" H 6480 6642 50  0000 L CNN
+F 1 "LOGO1" H 6480 6549 50  0000 L CNN
+F 2 "CuriousElectric3:TCEC_Words_13mm" H 6400 6600 50  0001 C CNN
+F 3 "~" H 6400 6600 50  0001 C CNN
+	1    6400 6600
 	1    0    0    -1  
 $EndComp
 Text Label 1250 3800 0    60   ~ 0
@@ -994,4 +994,28 @@ Wire Wire Line
 	1350 1500 1500 1500
 Wire Wire Line
 	1500 1500 1500 1550
+NoConn ~ 6200 7300
+$Comp
+L Connector_Generic:Conn_01x01 J9
+U 1 1 60F795A6
+P 6400 7300
+F 0 "J9" H 6480 7342 50  0000 L CNN
+F 1 "LOGO3" H 6480 7249 50  0000 L CNN
+F 2 "REInnovationGraphics:lapseomatic logo" H 6400 7300 50  0001 C CNN
+F 3 "~" H 6400 7300 50  0001 C CNN
+	1    6400 7300
+	1    0    0    -1  
+$EndComp
+NoConn ~ 6200 7500
+$Comp
+L Connector_Generic:Conn_01x01 J11
+U 1 1 60F7DA72
+P 6400 7500
+F 0 "J11" H 6480 7542 50  0000 L CNN
+F 1 "LOGO4" H 6480 7449 50  0000 L CNN
+F 2 "REInnovationGraphics:lapseomatic logo_20x6mm" H 6400 7500 50  0001 C CNN
+F 3 "~" H 6400 7500 50  0001 C CNN
+	1    6400 7500
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
