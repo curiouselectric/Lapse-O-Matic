@@ -4,7 +4,7 @@
     by Matt Little
     The Curious Electric Company (www.curiouselectric.co.uk)
     hello@curiouselectric.co.uk
-    05/12/2020
+    17/12/2021
     This code is Open Source - please adjust and use as you would like.
     Please ensure accreditation
     (although most of this code is based on work of others - see list below).
@@ -21,7 +21,9 @@
     At that point the unit takes a number of photos with a delay between them
     Unit can wake up with either SLEEP or TRIGGER.
     SLEEP will be every sleep seconds. TRIGGER will be on PIR or external switch.
-
+    
+    ***TO PROGRAM: Set Board to "AI Thinker ESP32-CAM"***
+    *
     Done:
     Sort out the LED on (at low glow level)? - This is solved.
     Sort out flash LED - only works on first reprogram - This is solved.
@@ -41,7 +43,7 @@
     To do:
     Why getting camera errors? - Sometimes get problem with camera
     Need error feedback - flash 1 for OK, 2 for internet not OK, 3 for SD error, 5 for camera sync error
-
+    Add configuration via WifiManager
 
     Some Information that has been very useful
     https://randomnerdtutorials.com/esp32-cam-take-photo-save-microsd-card/
@@ -52,8 +54,7 @@
     https://dronebotworkshop.com/esp32-cam-intro/
 
     Need to include the following libraries:
-    **DEPRECIATED!!** ESP32 Mail Client by Mobizt. Info from : https://randomnerdtutorials.com/esp32-cam-send-photos-email/
-    ESP_Mail_Client by Mobizt
+    ESP32 Mail Client by Mobizt. Info from : https://randomnerdtutorials.com/esp32-cam-send-photos-email/
 */
 
 #include <esp_camera.h>
@@ -62,10 +63,13 @@
 #include <SD.h>
 #include <Preferences.h>
 #include <Arduino.h>
-//#include "ESP32_MailClient.h"
-#include <ESP_Mail_Client.h>
+#include "ESP32_MailClient.h"
 #include <SPIFFS.h>
 #include <WiFi.h>
+
+// Now support ArduinoJson 6.0.0+ ( tested with v6.14.1 )
+#include <ArduinoJson.h>      // get it from https://arduinojson.org/ or install via Arduino library manager
+
 
 #include "config.h"
 #include "camera_pins.h"
@@ -82,8 +86,8 @@
 #include "time.h"
 RTC_DS3231 rtc;
 
-#include "soc/soc.h"           // Disable brownout problems
-#include "soc/rtc_cntl_reg.h"  // Disable brownout problems
+#include "soc/soc.h"           // Disable brownour problems
+#include "soc/rtc_cntl_reg.h"  // Disable brownour problems
 #include "driver/rtc_io.h"
 
 // The ESP32 EEPROM library is deprecated. Use the Preferences library instead.
@@ -100,7 +104,7 @@ String filename = "";       // This holds the date string for the filename.
 String PHOTO_NAME[5];          // Holds the name of the photo to send. Actually want array of names opf photos to send.... Max photos to send = 5
 
 // The Email Sending data object contains config and data to send
-SMTPSession smtpData;
+SMTPData smtpData;
 
 void setup()
 {
@@ -112,7 +116,7 @@ void setup()
   switch_off_flash_LED(); // Ensure LED is OFF to start.
 
   bool rtc_flag = true;
-     
+
   // Lets try reading/writing to I2C
   // Start the I2C interface
   if (! Wire.begin(I2C_SDA, I2C_SCL)) {
@@ -126,7 +130,7 @@ void setup()
     // If the RTC does not start, wait for a little while (1 sec?)
     // Then carry on, but without correct filename.
     delay(200);
-    DEBUGLN(settings_config.DEBUG_FLAG, "RTC did not begin");
+    DEBUGLN(settings_config.DEBUG_FLAG, "Couldn't find RTC");
     rtc_flag = false;
     //abort();
   }

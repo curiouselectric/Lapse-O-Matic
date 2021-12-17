@@ -31,6 +31,15 @@
     // XGA (1024x768)
     // SXGA (1280x1024)
     // UXGA (1600x1200) **Full-resolution for OV2640
+
+char            PHOTO_EMAIL_Label[20]           = "Email for photos";
+#define         PHOTO_EMAIL_LEN                 60
+char            PHOTO_EMAIL[PHOTO_EMAIL_LEN]    = "YOUR EMAIL";
+
+#define         AP_SSID                    "ESP_WILDLIFECAM"
+#define         AP_PASS                    "password"
+#define         AP_TIMEOUT_SEC             20           // Timeout in seconds for AP if no parameters
+
     
 // ******** DEFAULT SETTINGS ARE ADDED HERE ********//
 

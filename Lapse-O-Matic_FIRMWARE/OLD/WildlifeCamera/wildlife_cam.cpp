@@ -65,11 +65,8 @@ void readFile(fs::FS &fs, const char * path) {
   }
 }
 
-
-
 //Read a file in SD card
 void readSettings(fs::FS &fs, const char * path, settings &_settings_config) {
-
   //  This reads in the settings file and updates the various global parameters as required.
   Serial.printf("Reading file: %s\n", path);
   File file = fs.open(path);
@@ -150,8 +147,32 @@ void readSettings(fs::FS &fs, const char * path, settings &_settings_config) {
               Serial.println(_settings_config.WIFI_PASS);
               break;
             case 11:
-              _settings_config.WIFI_EMAIL  = outputString;
-              Serial.println(_settings_config.WIFI_EMAIL);
+              _settings_config.EMAIL_SENDER  = outputString;
+              Serial.println(_settings_config.EMAIL_SENDER);
+              break;
+            case 12:
+              _settings_config.EMAIL_PASS  = outputString;
+              Serial.println(_settings_config.EMAIL_PASS);
+              break;
+            case 13:
+              _settings_config.SMTP_SERVER = outputString;
+              Serial.println(_settings_config.SMTP_SERVER);
+              break;
+            case 14:
+              _settings_config.SMTP_PORT = outputString.toInt();
+              Serial.println(_settings_config.SMTP_PORT);
+              break;
+            case 15:
+              _settings_config.EMAIL_RECIPIENT = outputString;
+              Serial.println(_settings_config.EMAIL_RECIPIENT);
+              break;
+            case 16:
+              _settings_config.EMAIL_SUBJECT = outputString;
+              Serial.println(_settings_config.EMAIL_SUBJECT);
+              break;
+            case 17:
+              _settings_config.IMAGE_QUALITY = outputString.toInt();
+              Serial.println(_settings_config.IMAGE_QUALITY);
               break;
           }
         }
@@ -172,9 +193,8 @@ void readSettings(fs::FS &fs, const char * path, settings &_settings_config) {
           outputString += inChar;
           data_valid = true; //We got some data so it is valid - need to do more checks here
         }
-
         // Here we want to check the testString against the list:
-        for (int j = 0; j < 12; j++)
+        for (int j = 0; j < 18; j++)
         {
           if (testString == name_array[j])
           {
@@ -187,7 +207,7 @@ void readSettings(fs::FS &fs, const char * path, settings &_settings_config) {
   }
 }
 
-void configure_camera(camera_config_t &_config)
+void configure_camera(camera_config_t &_config, settings &_settings_config)
 {
   // This configures all the info for the camera set up
   _config.pin_d0     = CAM_PIN_D0;
@@ -215,7 +235,7 @@ void configure_camera(camera_config_t &_config)
   if (psramFound())
   {
     _config.frame_size = IMAGE_SIZE;  // If there's PSRAM then there's enough memory to capture up to 1600x1200
-    _config.jpeg_quality = IMAGE_QUALITY; // Valid: 0-63, with 0 being highest quality and largest file size.
+    _config.jpeg_quality = _settings_config.IMAGE_QUALITY; // Valid: 0-63, with 0 being highest quality and largest file size.
     _config.fb_count = 2;  // With the PSRAM, there's enough memory for two framebuffers, which speeds captures.
   }
   else {
@@ -225,17 +245,4 @@ void configure_camera(camera_config_t &_config)
     _config.jpeg_quality = 12;
     _config.fb_count = 1;
   }
-}
-
-
-void send_email()
-{
-//    If you’re using a Gmail account, these are the SMTP Server details:
-//    SMTP Server: smtp.gmail.com
-//    SMTP username: Complete Gmail address
-//    SMTP password: Your Gmail password
-//    SMTP port (TLS): 587
-//    SMTP port (SSL): 465
-//    SMTP TLS/SSL required: yes
-
 }

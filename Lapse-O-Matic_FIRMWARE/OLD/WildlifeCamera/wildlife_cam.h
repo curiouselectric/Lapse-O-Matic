@@ -15,6 +15,4 @@ void print_wakeup_reason();
 void readFile(fs::FS &fs, const char * path,settings &my_settings_config);
 void readSettings(fs::FS &fs, const char * path, settings &my_settings_config);
 
-void configure_camera(camera_config_t &my_config);
-
-void send_email();
+void configure_camera(camera_config_t &my_config, settings &my_settings_config);
