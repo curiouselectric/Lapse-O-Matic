@@ -1,4 +1,4 @@
-# Wildlife_ESP_Cam
+# Solar Powered ESP_Cam For Wildlife and Time-Lapse
 This is code, PCB and enclosure design for an ESP32_CAM based, solar powered wildlife camera
 
 This unit is based on the ESP32_CAM.
