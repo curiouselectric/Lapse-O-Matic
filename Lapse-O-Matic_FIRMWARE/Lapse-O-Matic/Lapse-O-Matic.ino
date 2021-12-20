@@ -1,4 +1,3 @@
-
 /* ********* ESP32_CAM Wildlife Camera Unit **************************
 
     by Matt Little
@@ -10,7 +9,7 @@
     (although most of this code is based on work of others - see list below).
 
     More information (full files and firmware) is here:
-    https://github.com/curiouselectric/Wildlife_ESP_Cam
+    https://github.com/curiouselectric/Lapse-O-Matic
 
     Idea for this code:
     Unit is solar powered with a lithium ion battery bank 18650 cell
@@ -21,9 +20,9 @@
     At that point the unit takes a number of photos with a delay between them
     Unit can wake up with either SLEEP or TRIGGER.
     SLEEP will be every sleep seconds. TRIGGER will be on PIR or external switch.
-    
+
     ***TO PROGRAM: Set Board to "AI Thinker ESP32-CAM"***
-    *
+
     Done:
     Sort out the LED on (at low glow level)? - This is solved.
     Sort out flash LED - only works on first reprogram - This is solved.
@@ -54,7 +53,9 @@
     https://dronebotworkshop.com/esp32-cam-intro/
 
     Need to include the following libraries:
-    ESP32 Mail Client by Mobizt. Info from : https://randomnerdtutorials.com/esp32-cam-send-photos-email/
+    ESP Mail Client by Mobizt.
+    https://github.com/mobizt/ESP-Mail-Client
+
 */
 
 #include <esp_camera.h>
@@ -63,19 +64,18 @@
 #include <SD.h>
 #include <Preferences.h>
 #include <Arduino.h>
-#include "ESP32_MailClient.h"
+#include <ESP_Mail_Client.h>
 #include <SPIFFS.h>
 #include <WiFi.h>
 
 // Now support ArduinoJson 6.0.0+ ( tested with v6.14.1 )
 #include <ArduinoJson.h>      // get it from https://arduinojson.org/ or install via Arduino library manager
 
-
 #include "config.h"
 #include "camera_pins.h"
 #include "Esp.h"
 #include "utilitiesDL.h"
-#include "wildlife_cam.h"
+#include "lapseomatic.h"
 
 #include "driver/sdmmc_host.h"
 #include "driver/sdspi_host.h"
@@ -101,10 +101,13 @@ camera_config_t config;
 // Want to store this in 'sleep' protected memory
 uint16_t PIC_COUNT = 0;
 String filename = "";       // This holds the date string for the filename.
-String PHOTO_NAME[5];          // Holds the name of the photo to send. Actually want array of names opf photos to send.... Max photos to send = 5
+String PHOTO_NAME[5];          // Holds the name of the photo to send. Actually want array of names of photos to send.... Max photos to send = 5
 
 // The Email Sending data object contains config and data to send
-SMTPData smtpData;
+SMTPSession smtp;
+/* Callback function to get the Email sending status */
+void smtpCallback(SMTP_Status status);
+
 
 void setup()
 {
@@ -161,6 +164,7 @@ void setup()
   // *************** SORT OUT THE SD CARD ****************************** //
   // Start up the SD card, using 1-bit xfers instead of 4-bit (set the "true" option).
   // Frees up GPIO13.
+  switch_on_flash_LED();
 
   if (!MailClient.sdBegin(14, 2, 15, 13))
   {
@@ -202,12 +206,14 @@ void setup()
 
   // ************** START UP THE CAMERA ********************** //
   preferences.begin("trailcam", false); // Open nonvolatile storage (EEPROM) on the ESP in RW mode
+
   PIC_COUNT = preferences.getUShort("PIC_COUNT", 0);  // Get the stored picture count from the EEPROM.
+
   // Return 0 if it doesn't exist.
   // getUShort() fetches a 16-bit unsigned value
   // We add the Picture Count to give unique ID to the photoname
-
   configure_camera(config, settings_config);
+
   // Start up the camera with the configuration settings made earlier in the "config." statements.
   esp_err_t err = esp_camera_init(&config);
 
@@ -287,19 +293,23 @@ void loop()
       path = "/" + filename + "_" + String(COUNTUP) + "_of_" + String(settings_config.NUMBER_PHOTOS) + ".jpg";
     }
     PHOTO_NAME[COUNTUP] = path;
-    //DEBUGLN(settings_config.DEBUG_FLAG, ("Path is: " + PHOTO_NAME));
+    if (settings_config.DEBUG_FLAG == 1)
+    {
+      Serial.print("Photo Path: ");
+      Serial.println(PHOTO_NAME[COUNTUP]);
+    }
 
     fs::FS &fs = SD;
 
     // Now, create a new file using the path and name set above.
     File file = fs.open(path.c_str(), FILE_WRITE);
+
     if (!file) {
       // If we're here, there's a problem creating a new file on the SD card.
       DEBUGLN(settings_config.DEBUG_FLAG, "Error wth creating file on SD");
       // This checks the mode the unit is in and then goes to sleep accordingly
       // We flash the LED to show an SD card error
       flash_error(3); // Flash 3 times for an SD error
-
       check_mode_then_sleep();
     }
     else
@@ -330,11 +340,17 @@ void loop()
   if (settings_config.WIFI_SSID.length() != 0)
   {
     // In this case we have an SSID so try to connect to WiFi
-    char ssid[settings_config.WIFI_SSID.length() + 1];
-    settings_config.WIFI_SSID.toCharArray(ssid, settings_config.WIFI_SSID.length());
-    char pass[settings_config.WIFI_PASS.length() + 1];
-    settings_config.WIFI_PASS.toCharArray(pass, settings_config.WIFI_PASS.length());
-
+    char ssid[settings_config.WIFI_SSID.length() + 2];
+    settings_config.WIFI_SSID.toCharArray(ssid, settings_config.WIFI_SSID.length() + 1);
+    char pass[settings_config.WIFI_PASS.length() + 2];
+    settings_config.WIFI_PASS.toCharArray(pass, settings_config.WIFI_PASS.length() + 1);
+    if (settings_config.DEBUG_FLAG == 1)
+    {
+      Serial.print("SSID: ");
+      Serial.print(ssid);
+      Serial.print(" PW: ");
+      Serial.println(pass);
+    }
     // ******** SEND IMAGE via WIFI *****************************
     // Connect to Wi-Fi
     WiFi.begin(ssid, pass);
@@ -394,7 +410,7 @@ void check_mode_then_sleep()
   Serial.print("Mode is: ");
   Serial.println(settings_config.MODE);
   String mode_string = settings_config.MODE;
-  if (mode_string.indexOf(String("SLEEP")) >= 0)
+  if (mode_string.indexOf(String("LAPSE")) >= 0)
   {
     Serial.println("ZZZZzzzzz....");
     enable_sleep();
@@ -419,77 +435,113 @@ void sendPhoto( void )
 
   if (MailClient.sdBegin(14, 2, 15, 13))
   {
-    // Set the storage type to attach files in your email (SPIFFS)
-    //smtpData.setFileStorageType(MailClientStorageType::SPIFFS);
-    smtpData.setFileStorageType(MailClientStorageType::SD);
-
-    char emailSenderAccount[settings_config.EMAIL_SENDER.length() + 1];
-    settings_config.EMAIL_SENDER.toCharArray(emailSenderAccount, settings_config.EMAIL_SENDER.length());
-    char emailSenderPassword[settings_config.EMAIL_PASS.length() + 1];
-    settings_config.EMAIL_PASS.toCharArray(emailSenderPassword, settings_config.EMAIL_PASS.length());
-    char smtpServer[settings_config.SMTP_SERVER.length() + 1];
-    settings_config.SMTP_SERVER.toCharArray(smtpServer, settings_config.SMTP_SERVER.length());
-    int smtpServerPort = settings_config.SMTP_PORT;
-    char emailRecipient[settings_config.EMAIL_RECIPIENT.length() + 1];
-    settings_config.EMAIL_RECIPIENT.toCharArray(emailRecipient, settings_config.EMAIL_RECIPIENT.length());
-    char emailSubject[settings_config.EMAIL_SUBJECT.length() + 1];
-    settings_config.EMAIL_SUBJECT.toCharArray(emailSubject, settings_config.EMAIL_SUBJECT.length());
+    char AUTHOR_EMAIL[settings_config.EMAIL_SENDER.length() + 2];
+    settings_config.EMAIL_SENDER.toCharArray(AUTHOR_EMAIL, settings_config.EMAIL_SENDER.length() + 1);
+    char AUTHOR_PASSWORD[settings_config.EMAIL_PASS.length() + 2];
+    settings_config.EMAIL_PASS.toCharArray(AUTHOR_PASSWORD, settings_config.EMAIL_PASS.length() + 1);
+    char SMTP_HOST[settings_config.SMTP_SERVER.length() + 2];
+    settings_config.SMTP_SERVER.toCharArray(SMTP_HOST, settings_config.SMTP_SERVER.length() + 1);
+    int SMTP_PORT = settings_config.SMTP_PORT;
+    char RECIPIENT_EMAIL[settings_config.EMAIL_RECIPIENT.length() + 2];
+    settings_config.EMAIL_RECIPIENT.toCharArray(RECIPIENT_EMAIL, settings_config.EMAIL_RECIPIENT.length() + 1);
+    char EMAIL_SUBJECT[settings_config.EMAIL_SUBJECT.length() + 2];
+    settings_config.EMAIL_SUBJECT.toCharArray(EMAIL_SUBJECT, settings_config.EMAIL_SUBJECT.length() + 1);
 
     if (settings_config.DEBUG_FLAG == true)
     {
       Serial.print("SMTP data:");
-      Serial.print(smtpServer);
-      Serial.print(" , ");
-      Serial.print(smtpServerPort);
-      Serial.print(" , ");
-      Serial.print(emailSenderAccount);
-      Serial.print(" , ");
-      Serial.println(emailSenderPassword);
+      Serial.print(SMTP_HOST);
+      Serial.print(", ");
+      Serial.print(SMTP_PORT);
+      Serial.print(", ");
+      Serial.print(AUTHOR_EMAIL);
+      Serial.print(", ");
+      Serial.print(AUTHOR_PASSWORD);
+      Serial.print(", ");
+      Serial.print(RECIPIENT_EMAIL);
+      Serial.print(", ");
+      Serial.println(EMAIL_SUBJECT);
     }
 
-    // Set the SMTP Server Email host, port, account and password
-    smtpData.setLogin(smtpServer, smtpServerPort, emailSenderAccount, emailSenderPassword);
-    //smtpData.setLogin(settings_config.SMTP_SERVER, settings_config.SMTP_PORT, settings_config.EMAIL_SENDER, settings_config.EMAIL_PASS);
+    // This comes from the ESP Mail Client SMTP example
+    /** Enable the debug via Serial port
+       none debug or 0
+       basic debug or 1
 
-    // Set the sender name and Email
-    smtpData.setSender("ESP32-CAM", emailSenderAccount);
+       Debug port can be changed via ESP_MAIL_DEFAULT_DEBUG_PORT in ESP_Mail_FS.h
+    */
+    smtp.debug(1);
+    /* Set the callback function to get the sending results */
+    smtp.callback(smtpCallback);
+    /* Declare the session config data */
+    ESP_Mail_Session session;
+    /* Set the session config */
+    session.server.host_name = SMTP_HOST;
+    session.server.port = SMTP_PORT;
+    session.login.email = AUTHOR_EMAIL;
+    session.login.password = AUTHOR_PASSWORD;
+    session.login.user_domain = "mydomain.net";
 
-    // Set Email priority or importance High, Normal, Low or 1 to 5 (1 is highest)
-    smtpData.setPriority("High");
+    /* Declare the message class */
+    SMTP_Message message;
+    /* Enable the chunked data transfer with pipelining for large message if server supported */
+    message.enable.chunking = true;
+    /* Set the message headers */
+    message.sender.name = "ESP Mail";
+    message.sender.email = AUTHOR_EMAIL;
 
-    // Set the subject
-    smtpData.setSubject(emailSubject);
+    message.subject = EMAIL_SUBJECT;
+    message.addRecipient("user1", RECIPIENT_EMAIL);
 
-    // Set the email message in HTML format
-    smtpData.setMessage("<h2>Photo captured with ESP32-CAM and attached in this email.</h2>", true);
+    // This defines how the message looks and the text in the message:
+    String htmlMsg = "<span style=\"color:#ff0000;\">Lapse-O-Matic<br>This message contains ";
+    htmlMsg += settings_config.NUMBER_PHOTOS;
+    htmlMsg +=" attachment files.</span>";
 
-    // Set the email message in text format
-    //smtpData.setMessage("Photo captured with ESP32-CAM and attached in this email.", false);
-    // Add recipients, can add more than one recipient
-    smtpData.addRecipient(emailRecipient);
-    //smtpData.addRecipient(emailRecipient2);
-    Serial.println("Sending Files: ");
+    message.html.content = htmlMsg.c_str();
+    message.html.charSet = "utf-8";
+    message.html.transfer_encoding = Content_Transfer_Encoding::enc_qp;
+    message.text.content = "Lapse-O-Matic Photos";
+    message.text.charSet = "utf-8";
+    message.text.transfer_encoding = Content_Transfer_Encoding::enc_base64;
+    message.priority = esp_mail_smtp_priority::esp_mail_smtp_priority_normal;
+    /* Set the custom message header */
+    message.addHeader("Message-ID: <user1@gmail.com>");
 
-    // Add attach files from SPIFFS/SD
-    //smtpData.addAttachFile(PHOTO_NAME, "image/jpg");
-    for (int n = 1; n <= settings_config.NUMBER_PHOTOS; n++)
+    /* The attachment data item */
+    /* Want to send all the photos we have just takem
+       Names are in the PHOTO_NAME[COUNTUP] list
+    */
+
+    SMTP_Attachment att[settings_config.NUMBER_PHOTOS];
+    int attIndex = 0;
+
+    for (int i = 1; i <= settings_config.NUMBER_PHOTOS; i++)
     {
-      smtpData.addAttachFile(PHOTO_NAME[n]);
-      Serial.println(PHOTO_NAME[n]);
+      /** Set the attachment info e.g.
+         file name, MIME type, file path, file storage type,
+         transfer encoding and content encoding
+      */
+      att[attIndex].descr.filename = PHOTO_NAME[i].c_str();
+      att[attIndex].descr.mime = "image/jpeg";
+      att[attIndex].file.path = PHOTO_NAME[i].c_str();
+      att[attIndex].file.storage_type = esp_mail_file_storage_type_sd;
+      att[attIndex].descr.transfer_encoding = Content_Transfer_Encoding::enc_base64;
+      /* Add attachment to the message */
+      message.addAttachment(att[attIndex]);
+      attIndex++;
     }
 
-    smtpData.setSendCallback(sendCallback);
+    /* Connect to server with the session config */
+    if (!smtp.connect(&session))
+      return;
+    /* Start sending the Email and close the session */
+    if (!MailClient.sendMail(&smtp, &message, true))
+      Serial.println("Error sending Email, " + smtp.errorReason());
 
-    // Start sending Email, can be set callback function to track the status
-    if (!MailClient.sendMail(smtpData))
-    {
-      Serial.println("Error sending Email, " + MailClient.smtpErrorReason());
-      // We flash the LED to show an SD card error
-      flash_error(2); // Flash 2 times for an Internet connection error
-    }
-
-    // Clear all data from Email object to free memory
-    smtpData.empty();
+    ESP_MAIL_PRINTF("Free Heap: %d\n", MailClient.getFreeHeap());
+    smtp.sendingResult.clear();
+    
   }
   else
   {
@@ -497,8 +549,40 @@ void sendPhoto( void )
   }
 }
 
-// Callback function to get the Email sending status
-void sendCallback(SendStatus msg) {
-  //Print the current status
-  Serial.println(msg.info());
+/* Callback function to get the Email sending status */
+void smtpCallback(SMTP_Status status)
+{
+  /* Print the current status */
+  Serial.println(status.info());
+
+  /* Print the sending result */
+  if (status.success())
+  {
+    Serial.println("----------------");
+    ESP_MAIL_PRINTF("Message sent success: %d\n", status.completedCount());
+    ESP_MAIL_PRINTF("Message sent failled: %d\n", status.failedCount());
+    Serial.println("----------------\n");
+    struct tm dt;
+
+    for (size_t i = 0; i < smtp.sendingResult.size(); i++)
+    {
+      /* Get the result item */
+      SMTP_Result result = smtp.sendingResult.getItem(i);
+      time_t ts = (time_t)result.timestamp;
+      localtime_r(&ts, &dt);
+
+      ESP_MAIL_PRINTF("Message No: %d\n", i + 1);
+      ESP_MAIL_PRINTF("Status: %s\n", result.completed ? "success" : "failed");
+      ESP_MAIL_PRINTF("Date/Time: %d/%d/%d %d:%d:%d\n", dt.tm_year + 1900, dt.tm_mon + 1, dt.tm_mday, dt.tm_hour, dt.tm_min, dt.tm_sec);
+      ESP_MAIL_PRINTF("Recipient: %s\n", result.recipients);
+      ESP_MAIL_PRINTF("Subject: %s\n", result.subject);
+    }
+    Serial.println("----------------\n");
+
+    //You need to clear sending result as the memory usage will grow up as it keeps the status, timstamp and
+    //pointer to const char of recipients and subject that user assigned to the SMTP_Message object.
+    //Because of pointer to const char that stores instead of dynamic string, the subject and recipients value can be
+    //a garbage string (pointer points to undefind location) as SMTP_Message was declared as local variable or the value changed.
+    //smtp.sendingResult.clear();
+  }
 }

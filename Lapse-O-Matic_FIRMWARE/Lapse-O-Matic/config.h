@@ -16,7 +16,7 @@
 #define   CAMERA_MODEL_AI_THINKER
 
 //#define   IMAGE_QUALITY       10    // Set via SD card
-#define   IMAGE_SIZE          FRAMESIZE_SXGA
+#define   IMAGE_SIZE          FRAMESIZE_UXGA
     // The following resolutions are available:
     // 96x96 (96x96)
     // QQVGA (160x120)
@@ -32,15 +32,6 @@
     // SXGA (1280x1024)
     // UXGA (1600x1200) **Full-resolution for OV2640
 
-char            PHOTO_EMAIL_Label[20]           = "Email for photos";
-#define         PHOTO_EMAIL_LEN                 60
-char            PHOTO_EMAIL[PHOTO_EMAIL_LEN]    = "YOUR EMAIL";
-
-#define         AP_SSID                    "ESP_WILDLIFECAM"
-#define         AP_PASS                    "password"
-#define         AP_TIMEOUT_SEC             20           // Timeout in seconds for AP if no parameters
-
-    
 // ******** DEFAULT SETTINGS ARE ADDED HERE ********//
 
 #define   SETTINGS_FILENAME   "/settings.txt"
@@ -71,7 +62,7 @@ class settings {
     bool          DEBUG_PHOTO = 1;
     unsigned int  NUMBER_PHOTOS = 1;
     unsigned int  TIME_TO_SLEEP = 10;
-    String        MODE = "TRIGGER";       // "SLEEP" is for sleep mode, with info below
+    String        MODE = "TRIGGER";       // "LAPSE" is for sleep mode, with info below
     // "TRIGGER" is for PIR/external trigger mode
     unsigned int  PHOTO_DELAY = 500;      // mS between photos (approx, due to photo time)
     String        WIFI_SSID;

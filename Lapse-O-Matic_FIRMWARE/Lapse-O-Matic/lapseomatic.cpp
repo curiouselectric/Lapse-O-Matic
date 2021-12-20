@@ -1,7 +1,7 @@
-#include "wildlife_cam.h"
+#include "lapseomatic.h"
 #include "config.h"
-#include "soc/soc.h"           // Disable brownour problems
-#include "soc/rtc_cntl_reg.h"  // Disable brownour problems
+#include "soc/soc.h"           // Disable brownout problems
+#include "soc/rtc_cntl_reg.h"  // Disable brownout problems
 #include "driver/rtc_io.h"
 #include "camera_pins.h"
 
@@ -15,7 +15,7 @@ void switch_off_flash_LED()
 
 void switch_on_flash_LED()
 {
-  // Turns off the ESP32-CAM white on-board LED (flash) connected to GPIO 4
+  // Turns on the ESP32-CAM white on-board LED (flash) connected to GPIO 4
   pinMode(LED_FLASH_PIN, OUTPUT);
   digitalWrite(LED_FLASH_PIN, LOW);
   rtc_gpio_hold_dis(GPIO_NUM_4);
@@ -49,6 +49,10 @@ void print_wakeup_reason()
     case ESP_SLEEP_WAKEUP_ULP : Serial.println("Wakeup caused by ULP program"); break;
     default : Serial.printf("Wakeup was not caused by deep sleep: %d\n", wakeup_reason); break;
   }
+
+//  // Here when we wake up we reslease the GPIO pin that might have been previously held (LED Pin):
+//  rtc_gpio_hold_dis(GPIO_NUM_4);    // Other wise this causes SD card reading issues...
+//  
 }
 
 //Read a file in SD card
