@@ -437,8 +437,10 @@ void switch_off_gpio()
 //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_XCLK);
 //  digitalWrite(CAM_PIN_XCLK, LOW);
  
-  digitalWrite(CAM_PIN_PWDN, HIGH);
-
+  //digitalWrite(CAM_PIN_PWDN, HIGH);
+  gpio_set_level(GPIO_NUM_32,1);
+  gpio_set_level(GPIO_NUM_0,0);
+  gpio_deep_sleep_hold_en();
   
 //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_SIOD);
 //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_SIOC);
@@ -459,10 +461,12 @@ void switch_off_gpio()
 void enable_sleep()
 {
   switch_off_flash_LED();
-  switch_off_gpio();
+
   delay(10);
   //   Now go to sleep:
   esp_sleep_enable_timer_wakeup(settings_config.TIME_TO_SLEEP * uS_TO_S_FACTOR);
+  switch_off_gpio();
+  
   Serial.println("Setup ESP32 to sleep for " + String(settings_config.TIME_TO_SLEEP) + " Seconds");
   Serial.println("ZZZZzzzzz....");
   Serial.flush();
@@ -473,10 +477,12 @@ void enable_sleep()
 void enable_trigger()
 {
   switch_off_flash_LED();
-  switch_off_gpio();
-  delay(50);
+  delay(10);
+  
   //   Now go to sleep:
   esp_sleep_enable_ext0_wakeup(GPIO_PIN_WAKEUP, 0);
+  switch_off_gpio();
+  
   Serial.println("Setup ESP32 to sleep Until Trigger on GPIO 13");
   Serial.println("ZZZZzzzzz....");
   Serial.flush();
