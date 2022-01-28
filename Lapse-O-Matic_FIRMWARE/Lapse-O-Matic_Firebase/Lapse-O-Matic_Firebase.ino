@@ -166,7 +166,8 @@ void setup()
   bool rtc_flag = true;
 
   initSPIFFS();
-
+  clearSPIFFS();  // If files in SPIFFS then delete them!
+  
   // Lets try reading/writing to I2C
   // Start the I2C interface
   if (! Wire.begin(I2C_SDA, I2C_SCL)) {
@@ -424,6 +425,11 @@ void loop()
       flash_error(1); // Show that we have sent the email OK
     }
   }
+
+  // Switch off wifi:
+  WiFi.setSleep(true);
+  // as the PIR is triggering due to the wifi activity, need to have a decent delay here after switching off wifi
+  delay(20000);  //20 s delay before retrigger.
   // This checks the mode the unit is in and then goes to sleep accordingly
   check_mode_then_sleep();
 }
@@ -647,4 +653,19 @@ void deleteFile(fs::FS &fs, const char * path) {
   } else {
     Serial.println("− delete failed");
   }
+}
+
+void clearSPIFFS(){
+ 
+  File root = SPIFFS.open("/");
+  File file = root.openNextFile();
+ 
+  while(file){
+ 
+      Serial.print("FILE: ");
+      Serial.println(file.name());
+      deleteFile(SPIFFS, file.name());  // remove the file for next time (if it exists)
+      file = root.openNextFile();
+  }
+ 
 }
