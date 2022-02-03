@@ -168,6 +168,11 @@ void readSettings(fs::FS &fs, const char * path, settings &_settings_config) {
               _settings_config.IMAGE_QUALITY = outputString.toInt();
               Serial.println(_settings_config.IMAGE_QUALITY);
               break;
+            case 16:
+              _settings_config.PIR_ENABLE = bool(outputString.toInt());
+              Serial.println(_settings_config.PIR_ENABLE);
+              break;
+              
           }
         }
         setting_number = 0; // reset
@@ -188,7 +193,7 @@ void readSettings(fs::FS &fs, const char * path, settings &_settings_config) {
           data_valid = true; //We got some data so it is valid - need to do more checks here
         }
         // Here we want to check the testString against the list:
-        for (int j = 0; j < 16; j++)
+        for (int j = 0; j < 17; j++)
         {
           if (testString == name_array[j])
           {

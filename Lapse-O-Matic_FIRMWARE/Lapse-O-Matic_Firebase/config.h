@@ -13,20 +13,20 @@
 
 //#define   IMAGE_QUALITY       10    // Set via SD card
 #define   IMAGE_SIZE          FRAMESIZE_UXGA
-    // The following resolutions are available:
-    // 96x96 (96x96)
-    // QQVGA (160x120)
-    // QQVGA2 (128x160)
-    // QCIF (176x144)
-    // HQVGA (240x176)
-    // 240x240 (240x240)
-    // QVGA (320x240)
-    // CIF (400x296)
-    // VGA (640x480)
-    // SVGA (800x600)
-    // XGA (1024x768)
-    // SXGA (1280x1024)
-    // UXGA (1600x1200) **Full-resolution for OV2640
+// The following resolutions are available:
+// 96x96 (96x96)
+// QQVGA (160x120)
+// QQVGA2 (128x160)
+// QCIF (176x144)
+// HQVGA (240x176)
+// 240x240 (240x240)
+// QVGA (320x240)
+// CIF (400x296)
+// VGA (640x480)
+// SVGA (800x600)
+// XGA (1024x768)
+// SXGA (1280x1024)
+// UXGA (1600x1200) **Full-resolution for OV2640
 
 // ******** DEFAULT SETTINGS ARE ADDED HERE ********//
 
@@ -44,7 +44,7 @@
 static const char *name_array[] = { "FLASH_FLAG", "FLASH_START_DELAY", "FLASH_STOP_DELAY", "DEBUG_FLAG",
                                     "DEBUG_PHOTO", "NUMBER_PHOTOS", "TIME_TO_SLEEP", "MODE", "PHOTO_DELAY",
                                     "WIFI_SSID", "WIFI_PASS", "USER_EMAIL", "USER_PASSWORD", "API_KEY",
-                                    "STORAGE_BUCKET_ID", "IMAGE_QUALITY"
+                                    "STORAGE_BUCKET_ID", "IMAGE_QUALITY", "PIR_FLAG"
                                   };
 
 class settings {
@@ -72,4 +72,7 @@ class settings {
     // to save to the SD card.
     // The camera and lens aren't the best quality, so huge files
     // won't get you a better picture beyond a certain point.
+    bool          PIR_ENABLE = 0;   // Set true if PIR is used (need to delay retrigger
+
+
 };

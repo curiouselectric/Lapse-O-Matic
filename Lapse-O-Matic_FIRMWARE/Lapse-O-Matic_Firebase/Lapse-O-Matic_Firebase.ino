@@ -167,7 +167,7 @@ void setup()
 
   initSPIFFS();
   clearSPIFFS();  // If files in SPIFFS then delete them!
-  
+
   // Lets try reading/writing to I2C
   // Start the I2C interface
   if (! Wire.begin(I2C_SDA, I2C_SCL)) {
@@ -425,11 +425,16 @@ void loop()
       flash_error(1); // Show that we have sent the email OK
     }
   }
-
-  // Switch off wifi:
-  WiFi.setSleep(true);
-  // as the PIR is triggering due to the wifi activity, need to have a decent delay here after switching off wifi
-  delay(20000);  //20 s delay before retrigger.
+  
+  if (settings_config.PIR_ENABLE == 1)
+  {
+    // only need to do this if using PIR
+    // Switch off wifi:
+    WiFi.setSleep(true);
+    // as the PIR is triggering due to the wifi activity, need to have a decent delay here after switching off wifi
+    delay(10000);  //10 s delay before retrigger on PIR.
+  }
+  
   // This checks the mode the unit is in and then goes to sleep accordingly
   check_mode_then_sleep();
 }
@@ -440,27 +445,27 @@ void switch_off_gpio()
   pinMode(OUTPUT_OPEN_DRAIN, GPIO_NUM_12);
   pinMode(OUTPUT_OPEN_DRAIN, GPIO_NUM_15);
 
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_XCLK);
-//  digitalWrite(CAM_PIN_XCLK, LOW);
- 
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_XCLK);
+  //  digitalWrite(CAM_PIN_XCLK, LOW);
+
   //digitalWrite(CAM_PIN_PWDN, HIGH);
-  gpio_set_level(GPIO_NUM_32,1);
-  gpio_set_level(GPIO_NUM_0,0);
+  gpio_set_level(GPIO_NUM_32, 1);
+  gpio_set_level(GPIO_NUM_0, 0);
   gpio_deep_sleep_hold_en();
-  
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_SIOD);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_SIOC);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D7);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D6);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D5);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D4);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D3);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D2);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D1);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D0);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_VSYNC);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_HREF);
-//  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_PCLK);
+
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_SIOD);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_SIOC);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D7);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D6);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D5);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D4);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D3);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D2);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D1);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_D0);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_VSYNC);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_HREF);
+  //  pinMode(OUTPUT_OPEN_DRAIN, CAM_PIN_PCLK);
 
 }
 
@@ -472,7 +477,7 @@ void enable_sleep()
   //   Now go to sleep:
   esp_sleep_enable_timer_wakeup(settings_config.TIME_TO_SLEEP * uS_TO_S_FACTOR);
   switch_off_gpio();
-  
+
   Serial.println("Setup ESP32 to sleep for " + String(settings_config.TIME_TO_SLEEP) + " Seconds");
   Serial.println("ZZZZzzzzz....");
   Serial.flush();
@@ -483,12 +488,13 @@ void enable_sleep()
 void enable_trigger()
 {
   switch_off_flash_LED();
+
   delay(10);
-  
+
   //   Now go to sleep:
   esp_sleep_enable_ext0_wakeup(GPIO_PIN_WAKEUP, 0);
   switch_off_gpio();
-  
+
   Serial.println("Setup ESP32 to sleep Until Trigger on GPIO 13");
   Serial.println("ZZZZzzzzz....");
   Serial.flush();
@@ -655,17 +661,17 @@ void deleteFile(fs::FS &fs, const char * path) {
   }
 }
 
-void clearSPIFFS(){
- 
+void clearSPIFFS() {
+
   File root = SPIFFS.open("/");
   File file = root.openNextFile();
- 
-  while(file){
- 
-      Serial.print("FILE: ");
-      Serial.println(file.name());
-      deleteFile(SPIFFS, file.name());  // remove the file for next time (if it exists)
-      file = root.openNextFile();
+
+  while (file) {
+
+    Serial.print("FILE: ");
+    Serial.println(file.name());
+    deleteFile(SPIFFS, file.name());  // remove the file for next time (if it exists)
+    file = root.openNextFile();
   }
- 
+
 }
