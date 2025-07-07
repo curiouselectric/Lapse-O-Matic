@@ -43,26 +43,15 @@ Here is an example settings.txt file:
 
 
     // Adjust these settings as required: //
-    
-    FLASH_FLAG = 0
-
-    NUMBER_PHOTOS = 4
-    
-    TIME_TO_SLEEP = 8
-    
-    MODE = TRIGGER
-    
-    PHOTO_DELAY = 250
-    
-    FLASH_START_DELAY = 100
-    
-    FLASH_STOP_DELAY = 100
-     
-    DEBUG_FLAG = 1
-    
-    DEBUG_PHOTO = 1
-    
-    
+    FLASH_FLAG=1
+    NUMBER_PHOTOS=4
+    TIME_TO_SLEEP=800
+    MODE=TRIGGER
+    PHOTO_DELAY=250
+    FLASH_START_DELAY=100
+    FLASH_STOP_DELAY=100
+    DEBUG_FLAG=1
+    DEBUG_PHOTO=1
     // END OF SETTINGS - LEAVE THIS LINE  //
 
 * FLASH_FLAG - Use a flash with the photo? (0 (OFF) or 1 (ON))
@@ -75,7 +64,7 @@ Here is an example settings.txt file:
 * DEBUG_FLAG - See debug info on serial port (0 (OFF) or 1 (ON))
 * DEBUG_PHOTO - See debug info on serial port (0 (OFF) or 1 (ON))
 
-*Note: Spaces and equals signs are ignored in the parser, so does not matter how many spaces there are.*
+*Note: Spaces can be used in the WIFI SSID. Do not use spaces around the equals sign.*
 
 ## Solar Power
 
