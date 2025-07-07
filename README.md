@@ -80,9 +80,16 @@ PCB is designed in KiCAD.
 
 A Real Time Clock (RTC) has been added to use as a timestamp on the photo files. This can also be used for the timing of the unit wake up.
 
-## Nice to have features (NOT implemented):
+## WiFi Upload
 
-* Wifi upload (if in range)
+This unit uses ReadyMail from mobizt to send photos via an email SMTP server to any email address. You must set up your own email from which to send photos (I used gmail).
 
+This is not always totally reliable, especially if any reception issues. But photos are still saved on the SD card.
+
+## More information
+
+There is lots more about this project at this blog post:
+
+[*https://www.curiouselectric.co.uk/blogs/blog/prototyping-a-wildlife-camera**](https://www.curiouselectric.co.uk/blogs/blog/prototyping-a-wildlife-camera)
 
 
