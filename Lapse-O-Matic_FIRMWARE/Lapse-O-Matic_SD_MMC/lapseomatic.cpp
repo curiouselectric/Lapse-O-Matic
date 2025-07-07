@@ -36,9 +36,7 @@ void flash_error(int _flash_number)
 
 void print_wakeup_reason()
 {
-
   esp_sleep_wakeup_cause_t wakeup_reason;
-
   wakeup_reason = esp_sleep_get_wakeup_cause();
 
   switch (wakeup_reason) {
@@ -50,9 +48,10 @@ void print_wakeup_reason()
     default : Serial.printf("Wakeup was not caused by deep sleep: %d\n", wakeup_reason); break;
   }
 
-//  // Here when we wake up we reslease the GPIO pin that might have been previously held (LED Pin):
-//  rtc_gpio_hold_dis(GPIO_NUM_4);    // Other wise this causes SD card reading issues...
-//  
+  // Here when we wake up we reslease the GPIO pin that might have been previously held (LED Pin):
+  rtc_gpio_hold_dis(GPIO_NUM_4);    // Other wise this causes SD card reading issues...
+  
+
 }
 
 //Read a file in SD card
@@ -91,9 +90,7 @@ void readSettings(fs::FS &fs, const char * path, settings &_settings_config) {
   while (file.available())
   {
     char inChar = file.read();
-    //Serial.print(inChar);
-
-    if (inChar != ' ' && inChar != '=') // Dont worry about blanks or equals
+    if (inChar != '=') // Dont worry about equals
     {
       if (inChar == '\n')
       {
@@ -151,24 +148,24 @@ void readSettings(fs::FS &fs, const char * path, settings &_settings_config) {
               Serial.println(_settings_config.WIFI_PASS);
               break;
             case 11:
-              _settings_config.EMAIL_SENDER  = outputString;
-              Serial.println(_settings_config.EMAIL_SENDER);
+              _settings_config.AUTHOR_EMAIL  = outputString;
+              Serial.println(_settings_config.AUTHOR_EMAIL);
               break;
             case 12:
-              _settings_config.EMAIL_PASS  = outputString;
-              Serial.println(_settings_config.EMAIL_PASS);
+              _settings_config.AUTHOR_PASSWORD  = outputString;
+              Serial.println(_settings_config.AUTHOR_PASSWORD);
               break;
             case 13:
-              _settings_config.SMTP_SERVER = outputString;
-              Serial.println(_settings_config.SMTP_SERVER);
+              _settings_config.SMTP_HOST = outputString;
+              Serial.println(_settings_config.SMTP_HOST);
               break;
             case 14:
               _settings_config.SMTP_PORT = outputString.toInt();
               Serial.println(_settings_config.SMTP_PORT);
               break;
             case 15:
-              _settings_config.EMAIL_RECIPIENT = outputString;
-              Serial.println(_settings_config.EMAIL_RECIPIENT);
+              _settings_config.RECIPIENT_EMAIL = outputString;
+              Serial.println(_settings_config.RECIPIENT_EMAIL);
               break;
             case 16:
               _settings_config.EMAIL_SUBJECT = outputString;
@@ -209,6 +206,7 @@ void readSettings(fs::FS &fs, const char * path, settings &_settings_config) {
       }
     }
   }
+  file.close();
 }
 
 void configure_camera(camera_config_t &_config, settings &_settings_config)

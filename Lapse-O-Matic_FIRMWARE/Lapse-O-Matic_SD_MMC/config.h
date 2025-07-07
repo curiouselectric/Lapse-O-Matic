@@ -34,21 +34,27 @@
 
 // ******** DEFAULT SETTINGS ARE ADDED HERE ********//
 
+#define   WIFI_TIMEOUT        10        // Number of seconds before doing wifi timeout
 #define   SETTINGS_FILENAME   "/settings.txt"
 #define   ERROR_FILENAME      "/error.txt"
 
 #define   LED_FLASH_PIN       GPIO_NUM_4           // GPIO pin for the flash LED
 #define   LED_ONBOARD         GPIO_NUM_33          // GPIO pin for the on-board LED
 #define   GPIO_PIN_WAKEUP     GPIO_NUM_13
-#define   I2C_SDA             GPIO_NUM_14
+
 #define   I2C_SCL             GPIO_NUM_15
+#define   I2C_SDA             GPIO_NUM_14
+
+#define   SD_CLK              GPIO_NUM_14
+#define   SD_CMD              GPIO_NUM_15
+#define   SD_DATA0            GPIO_NUM_2
 
 #define   uS_TO_S_FACTOR      1000000ULL  /* Conversion factor for micro seconds to seconds */
 
 static const char *name_array[] = { "FLASH_FLAG", "FLASH_START_DELAY", "FLASH_STOP_DELAY", "DEBUG_FLAG",
                                     "DEBUG_PHOTO", "NUMBER_PHOTOS", "TIME_TO_SLEEP", "MODE", "PHOTO_DELAY",
-                                    "WIFI_SSID", "WIFI_PASS", "EMAIL_SENDER", "EMAIL_PASS", "SMTP_SERVER",
-                                    "SMTP_PORT", "EMAIL_RECIPIENT", "EMAIL_SUBJECT", "IMAGE_QUALITY"
+                                    "WIFI_SSID", "WIFI_PASS", "AUTHOR_EMAIL", "AUTHOR_PASSWORD", "SMTP_HOST",
+                                    "SMTP_PORT", "RECIPIENT_EMAIL", "EMAIL_SUBJECT", "IMAGE_QUALITY"
                                   };
 
 #include <Arduino.h>
@@ -67,13 +73,13 @@ class settings {
     unsigned int  PHOTO_DELAY = 500;      // mS between photos (approx, due to photo time)
     String        WIFI_SSID;
     String        WIFI_PASS;
-    String        EMAIL_SENDER;
-    String        EMAIL_PASS;
-    String        SMTP_SERVER;
+    String        AUTHOR_EMAIL;
+    String        AUTHOR_PASSWORD;
+    String        SMTP_HOST;
     int           SMTP_PORT = 465;
-    String        EMAIL_RECIPIENT;
-    String        EMAIL_SUBJECT;
-    int           IMAGE_QUALITY = 10;
+    String        RECIPIENT_EMAIL;
+    String        EMAIL_SUBJECT = "Lapse-O-Matic";
+    int           IMAGE_QUALITY = 12;
     // Valid: 0-63, with 0 being highest quality and largest file size.
     // Anything lower than 8 creates large file sizes that take a long time
     // to save to the SD card.

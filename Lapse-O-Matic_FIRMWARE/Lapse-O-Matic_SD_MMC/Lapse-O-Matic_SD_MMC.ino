@@ -3,7 +3,7 @@
     by Matt Little
     The Curious Electric Company (www.curiouselectric.co.uk)
     hello@curiouselectric.co.uk
-    17/12/2021
+    1/7/2025
     This code is Open Source - please adjust and use as you would like.
     Please ensure accreditation
     (although most of this code is based on work of others - see list below).
@@ -38,11 +38,15 @@
     Send photos via email if on wifi (https://randomnerdtutorials.com/esp32-cam-send-photos-email/)
     https://rntlab.com/question/esp32-cam-send-email-with-attachment-from-sd-card-problem-no-attachment-in-email/
     Issue with SD_MMC and sending info with SD.
+    Update unit for ReadyMail - Done 3/7/2025
+    Why getting camera errors? - Sometimes get problem with camera. - Is this ue to GPIO12 which is high at start = 1.8V flash? Need to set to 3.3V flash. Use fuses? - NO it was putting unit into 1 bit mode clashing. - Done 7/7/2025
+    Need error feedback - flash 1 for OK, 2 for internet not OK, 3 for SD error, 5 for camera sync error - Added 7/7/2025
+    NOT NEEDED: Add configuration via WifiManager - This is all handled on the SD card. The settings file has all the info for setting up the unit.
+
 
     To do:
-    Why getting camera errors? - Sometimes get problem with camera
-    Need error feedback - flash 1 for OK, 2 for internet not OK, 3 for SD error, 5 for camera sync error
-    Add configuration via WifiManager
+    Sort out RTC to UNIX timestamp for emails
+    Test power consumption. What can be done to get this as low as possible?
 
     Some Information that has been very useful
     https://randomnerdtutorials.com/esp32-cam-take-photo-save-microsd-card/
@@ -51,25 +55,37 @@
     https://hackaday.com/2020/05/18/esp32-trail-camera-goes-the-distance-on-aa-batteries/
     https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/
     https://dronebotworkshop.com/esp32-cam-intro/
+    https://stuartsprojects.github.io/2022/02/05/Long-Range-Wireless-Adapter-for-ESP32CAM.html
+    https://github.com/StuartsProjects/Devices/tree/master/Long%20Range%20Wireless%20Adapter%20for%20ESP32CAM%20V2
 
     Need to include the following libraries:
-    ESP Mail Client by Mobizt.
-    https://github.com/mobizt/ESP-Mail-Client
+    ReadyMail by Mobizt
+    https://github.com/mobizt/ReadyMail
 
 */
 
-#include <esp_camera.h>
-#include <FS.h>
-#include <SPI.h>
-#include <SD.h>
-#include <Preferences.h>
 #include <Arduino.h>
-#include <ESP_Mail_Client.h>
-#include <SPIFFS.h>
-#include <WiFi.h>
+#include <FS.h>
+#include <SD_MMC.h>
+#include "soc/soc.h"           // Disable brownour problems
+#include "soc/rtc_cntl_reg.h"  // Disable brownour problems
+#include "driver/rtc_io.h"
 
-// Now support ArduinoJson 6.0.0+ ( tested with v6.14.1 )
-#include <ArduinoJson.h>      // get it from https://arduinojson.org/ or install via Arduino library manager
+#include "driver/sdmmc_types.h"
+#include "sd_defines.h"
+#include "vfs_api.h"
+#include <dirent.h>
+#include "esp_vfs_fat.h"
+#include "driver/sdmmc_host.h"
+#include "driver/sdmmc_defs.h"
+sdmmc_card_t *card;
+sdmmc_host_t host = SDMMC_HOST_DEFAULT();
+
+
+#include <Preferences.h>
+#include <WiFi.h>
+#include <WiFiClientSecure.h>
+#include "esp_camera.h"
 
 #include "config.h"
 #include "camera_pins.h"
@@ -77,18 +93,11 @@
 #include "utilitiesDL.h"
 #include "lapseomatic.h"
 
-#include "driver/sdmmc_host.h"
-#include "driver/sdspi_host.h"
-
 // Date and time functions using a DS3231 RTC connected via I2C and Wire lib
 #include <Wire.h>
 #include "RTClib.h"
 #include "time.h"
 RTC_DS3231 rtc;
-
-#include "soc/soc.h"           // Disable brownour problems
-#include "soc/rtc_cntl_reg.h"  // Disable brownour problems
-#include "driver/rtc_io.h"
 
 // The ESP32 EEPROM library is deprecated. Use the Preferences library instead.
 Preferences preferences;
@@ -102,23 +111,79 @@ camera_config_t config;
 uint16_t PIC_COUNT = 0;
 String filename = "";       // This holds the date string for the filename.
 String PHOTO_NAME[5];          // Holds the name of the photo to send. Actually want array of names of photos to send.... Max photos to send = 5
+bool rtc_flag = true;
+uint32_t unix_time_now;     // Holds unix time for message upload
 
-// The Email Sending data object contains config and data to send
-SMTPSession smtp;
-/* Callback function to get the Email sending status */
-void smtpCallback(SMTP_Status status);
+#define ENABLE_SMTP  // Allows SMTP class and data
+#define ENABLE_DEBUG // Allows debugging
+#define READYMAIL_DEBUG_PORT Serial
+#define ENABLE_FS // Allow filesystem integration
+#include <ReadyMail.h>
+File myFile;
 
+WiFiClientSecure ssl_client;
+SMTPClient smtp(ssl_client);
+
+// Below are from ESP32Camera ReadyMail examples:
+void fileCb(File &file, const char *filename, readymail_file_operating_mode mode)
+{
+  switch (mode)
+  {
+    case readymail_file_mode_open_read:
+      myFile = SD_MMC.open(filename, FILE_READ);
+      break;
+    case readymail_file_mode_open_write:
+      myFile = SD_MMC.open(filename, FILE_WRITE);
+      break;
+    case readymail_file_mode_open_append:
+      myFile = SD_MMC.open(filename, FILE_APPEND);
+      break;
+    case readymail_file_mode_remove:
+      SD_MMC.remove(filename);
+      break;
+    default:
+      break;
+  }
+  // This is required by library to get the file object
+  // that uses in its read/write processes.
+  file = myFile;
+}
+
+// For more information, see https://bit.ly/44g9Fuc
+void smtpCb(SMTPStatus status)
+{
+  if (status.progress.available)
+    ReadyMail.printf("ReadyMail[smtp][%d] Uploading file %s, %d %% completed\n", status.state,
+                     status.progress.filename.c_str(), status.progress.value);
+  else
+    ReadyMail.printf("ReadyMail[smtp][%d]%s\n", status.state, status.text.c_str());
+}
+
+void addFileAttachment(SMTPMessage &msg, const String &filename, const String &mime, const String &name, FileCallback cb, const String &filepath, const String &encoding = "", const String &cid = "")
+{
+  Attachment attachment;
+  attachment.filename = filename;
+  attachment.mime = mime;
+  attachment.name = name;
+  // The inline content disposition.
+  // Should be matched the image src's cid in html body
+  attachment.content_id = cid;
+  attachment.attach_file.callback = cb;
+  attachment.attach_file.path = filepath;
+  // Specify only when content is already encoded.
+  attachment.content_encoding = encoding;
+  msg.attachments.add(attachment, cid.length() > 0 ? attach_type_inline : attach_type_attachment);
+}
 
 void setup()
 {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);  //disable brownout detector
+
   Serial.begin(115200);
   //Print the wakeup reason for ESP32
   print_wakeup_reason();
   DEBUGLN(settings_config.DEBUG_FLAG, "Starting");
   switch_off_flash_LED(); // Ensure LED is OFF to start.
-
-  bool rtc_flag = true;
 
   // Lets try reading/writing to I2C
   // Start the I2C interface
@@ -154,19 +219,65 @@ void setup()
     // Set the date with date and time with the data, to use as filename later.
     filename = "D" + (String)now.year() + "_" + (String)now.month() + "_" +
                (String)now.day() + "_T" + (String)now.hour() + "_" + (String)now.minute() + "_" + (String)now.second();
+    unix_time_now = now.unixtime();
+
+    // Check the date/time and unix timestamp:
+    Serial.print("Unix Time:");
+    Serial.println((String)unix_time_now);
+    Serial.print("Filname:");
+    Serial.println(filename);
   }
   else
   {
     // RTC is not attached so cannot use it!
     filename = "NO_RTC_";
   }
+  Wire.end();   // Must end the wire function, as pin is used for I2C and SD connections
 
   // *************** SORT OUT THE SD CARD ****************************** //
   // Start up the SD card, using 1-bit xfers instead of 4-bit (set the "true" option).
-  // Frees up GPIO13.
-  switch_on_flash_LED();
 
-  if (!MailClient.sdBegin(14, 2, 15, 13))
+  // Set up the SD_MMC to work in 1 Bit mode
+  // host.max_freq_khz = SDMMC_FREQ_HIGHSPEED;
+  host.max_freq_khz = SDMMC_FREQ_DEFAULT;
+  //   host.flags = SDMMC_HOST_FLAG_4BIT;
+  host.flags = SDMMC_HOST_FLAG_1BIT;
+  host.flags &= ~SDMMC_HOST_FLAG_DDR;
+
+  sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
+  slot_config.width = 1;
+  slot_config.clk =  SD_CLK;
+  slot_config.cmd =  SD_CMD;
+  slot_config.d0 =   SD_DATA0;
+  sdmmc_host_init_slot(SDMMC_HOST_SLOT_1, &slot_config);
+
+  gpio_reset_pin(SD_CLK);
+  gpio_reset_pin(SD_CMD);
+  gpio_reset_pin(SD_DATA0);
+  gpio_reset_pin(GPIO_NUM_4);
+  gpio_reset_pin(GPIO_NUM_12);
+  gpio_reset_pin(GPIO_NUM_13);
+  gpio_pullup_en(SD_CLK);
+  gpio_pulldown_dis(SD_CLK);
+  gpio_pullup_en(SD_CMD);
+  gpio_pulldown_dis(SD_CMD);
+  gpio_pullup_en(SD_DATA0);
+  gpio_pulldown_dis(SD_DATA0);
+  gpio_pullup_en(GPIO_NUM_4);
+  gpio_pulldown_dis(GPIO_NUM_4);
+  gpio_pullup_en(GPIO_NUM_12);
+  gpio_pulldown_dis(GPIO_NUM_12);
+  gpio_pullup_en(GPIO_NUM_13);
+  gpio_pulldown_dis(GPIO_NUM_13);
+
+  esp_vfs_fat_sdmmc_mount_config_t mount_config = {
+    .format_if_mount_failed = true,
+    .max_files = 5,
+  };
+  esp_err_t ret = esp_vfs_fat_sdmmc_mount("/root", &host, &slot_config, &mount_config, &card);
+  ESP_ERROR_CHECK(ret);
+
+  if (!SD_MMC.begin("/sdcard", true))
   {
     // If we're here, there's a problem with the SD card.
     DEBUGLN(settings_config.DEBUG_FLAG, "SD Card Mount Fail");
@@ -177,7 +288,7 @@ void setup()
   }
 
   // Query the card to make sure it's OK
-  uint8_t SD_CARD = SD.cardType();
+  uint8_t SD_CARD = SD_MMC.cardType();
   DEBUG(settings_config.DEBUG_FLAG, "Card Type:");
 
   if (SD_CARD == CARD_NONE) {
@@ -187,7 +298,6 @@ void setup()
     flash_error(10);
     // This checks the mode the unit is in and then goes to sleep accordingly
     check_mode_then_sleep();
-
   } else if (SD_CARD == CARD_MMC) {
     DEBUGLN(settings_config.DEBUG_FLAG, "MMC");
   } else if (SD_CARD == CARD_SD) {
@@ -202,7 +312,7 @@ void setup()
 
   // Here we read the settings file from the SD card.
   // This will change any default settings defined
-  readSettings(SD, SETTINGS_FILENAME, settings_config);
+  readSettings(SD_MMC, SETTINGS_FILENAME, settings_config);
 
   // ************** START UP THE CAMERA ********************** //
   preferences.begin("trailcam", false); // Open nonvolatile storage (EEPROM) on the ESP in RW mode
@@ -227,10 +337,10 @@ void setup()
     }
     // If this happens want to write a line to the error log file.
     // If possible add the date/time to this log file.
-    fs::FS &fs = SD;
+    fs::FS &fs = SD_MMC;
 
     // Now, create a new file using the path and name set above.
-    File file = fs.open((String)ERROR_FILENAME, FILE_APPEND);
+    File file = fs.open((String)ERROR_FILENAME, FILE_WRITE);
     if (!file) {
       // If we're here, there's a problem creating a new file on the SD card.
       DEBUGLN(settings_config.DEBUG_FLAG, "Error with opening Error file on SD");
@@ -245,10 +355,8 @@ void setup()
       file.println("Error on : " + filename );
     }
     file.close(); // Done writing the file so close it.
-
     // We flash the LED to show an SD card error
     flash_error(5); // Flash 5 times for an camera sync error
-
     // This checks the mode the unit is in and then goes to sleep accordingly
     check_mode_then_sleep();
     return;
@@ -257,6 +365,21 @@ void setup()
 
 void loop()
 {
+
+  // Take picture and read the frame buffer
+  camera_fb_t * fb;
+  // Warm-up loop to discard first few frames
+  for (int i = 0; i < 20; i++)
+  {
+    fb = esp_camera_fb_get();
+    if (!fb) {
+      Serial.println(F("Failed to capture frame"));
+      continue;
+    }
+    esp_camera_fb_return(fb);
+    delay(5);
+  }
+
   uint8_t COUNTUP = 1;  // Create variable to take multiple pictures.
   while (COUNTUP <= settings_config.NUMBER_PHOTOS)
   {
@@ -267,8 +390,9 @@ void loop()
       digitalWrite(LED_FLASH_PIN, HIGH);
       delay(settings_config.FLASH_START_DELAY);
     }
-    // Take picture and read the frame buffer
-    camera_fb_t * fb = esp_camera_fb_get();
+
+    // Take an image
+    fb = esp_camera_fb_get();
 
     if (settings_config.FLASH_FLAG == true)
     {
@@ -280,9 +404,9 @@ void loop()
       // This checks the mode the unit is in and then goes to sleep accordingly
       check_mode_then_sleep();
     }
+
     // Image captured: Save it here:
     // Want to use the date & time for the file name - to log it.
-
     String path;
     if (filename == "NO_RTC_")
     {
@@ -295,18 +419,26 @@ void loop()
     PHOTO_NAME[COUNTUP] = path;
     if (settings_config.DEBUG_FLAG == 1)
     {
-      Serial.print("Photo Path: ");
+      Serial.print(F("Photo Path: "));
       Serial.println(PHOTO_NAME[COUNTUP]);
     }
 
-    fs::FS &fs = SD;
+    if (!SD_MMC.begin("/sdcard", true))
+    {
+      // If we're here, there's a problem with the SD card.
+      DEBUGLN(settings_config.DEBUG_FLAG, "SD Card Mount Fail");
+      // We flash the LED to show an SD card error
+      flash_error(3); // Flash 3 times for an SD card mount error
+      // This checks the mode the unit is in and then goes to sleep accordingly
+      check_mode_then_sleep();
+    }
 
+    fs::FS &fs = SD_MMC;
     // Now, create a new file using the path and name set above.
     File file = fs.open(path.c_str(), FILE_WRITE);
-
     if (!file) {
       // If we're here, there's a problem creating a new file on the SD card.
-      DEBUGLN(settings_config.DEBUG_FLAG, "Error wth creating file on SD");
+      DEBUGLN(settings_config.DEBUG_FLAG, "Failed to open file for writing");
       // This checks the mode the unit is in and then goes to sleep accordingly
       // We flash the LED to show an SD card error
       flash_error(3); // Flash 3 times for an SD error
@@ -326,6 +458,7 @@ void loop()
 
     // Free the memory used by the framebuffer so it's available for another picture
     esp_camera_fb_return(fb);
+
     delay(settings_config.PHOTO_DELAY); // Wait between photos - adjustable
     COUNTUP = COUNTUP + 1;  // We are done an image capture cycle. Increment the count.
   }
@@ -336,7 +469,6 @@ void loop()
 
   // If there is data in the wifi SSID then try to connect to wifi.
   // Else we go to sleep
-
   if (settings_config.WIFI_SSID.length() != 0)
   {
     // In this case we have an SSID so try to connect to WiFi
@@ -346,32 +478,43 @@ void loop()
     settings_config.WIFI_PASS.toCharArray(pass, settings_config.WIFI_PASS.length() + 1);
     if (settings_config.DEBUG_FLAG == 1)
     {
-      Serial.print("SSID: ");
+      Serial.print(F("SSID: "));
       Serial.print(ssid);
-      Serial.print(" PW: ");
+      Serial.print(F(" PW: "));
       Serial.println(pass);
     }
     // ******** SEND IMAGE via WIFI *****************************
     // Connect to Wi-Fi
+
     WiFi.begin(ssid, pass);
-    Serial.print("Connecting to WiFi...");
+    //delay(50);
+    Serial.print(F("Connecting to WiFi."));
+
     int timeout_wifi = 0;
-    while (WiFi.status() != WL_CONNECTED && timeout_wifi < 20) {
-      delay(500);
+    while (WiFi.status() != WL_CONNECTED && timeout_wifi < (WIFI_TIMEOUT * 10)) {
+      delay(100);
       Serial.print(".");
       timeout_wifi++;
+      //WiFi.reconnect();
     }
-    if (timeout_wifi < 20)
+    if (timeout_wifi < (WIFI_TIMEOUT * 10))
     {
       // This means we have connected within 10 seconds, else timeout...
       Serial.println("Connected to WiFi");
       // Print ESP32 Local IP Address
-      Serial.print("IP Address: http://");
+      Serial.print(F("IP Address: http://"));
       Serial.println(WiFi.localIP());
       sendPhoto();
       flash_error(1); // Show that we have sent the email OK
     }
+    else
+    {
+      Serial.print(F("Did not connect to WiFi"));
+      flash_error(2); // Show that error with WiFI sending
+    }
   }
+  SD_MMC.end();
+  WiFi.disconnect();
   // This checks the mode the unit is in and then goes to sleep accordingly
   check_mode_then_sleep();
 }
@@ -379,27 +522,31 @@ void loop()
 void enable_sleep()
 {
   switch_off_flash_LED();
-  delay(50);
+  delay(10);
+  rtc_gpio_hold_en(LED_FLASH_PIN);
   //   Now go to sleep:
   esp_sleep_enable_timer_wakeup(settings_config.TIME_TO_SLEEP * uS_TO_S_FACTOR);
   Serial.println("Setup ESP32 to sleep for " + String(settings_config.TIME_TO_SLEEP) + " Seconds");
-  Serial.println("ZZZZzzzzz....");
+  Serial.println(F("ZZzz.."));
   Serial.flush();
   esp_deep_sleep_start();
-  Serial.println("This will never be printed");
+  Serial.println(F("This will never be printed"));
 }
 
 void enable_trigger()
 {
   switch_off_flash_LED();
-  delay(50);
+  delay(10);
+
+  rtc_gpio_hold_en(LED_FLASH_PIN);
   //   Now go to sleep:
   esp_sleep_enable_ext0_wakeup(GPIO_PIN_WAKEUP, 0);
-  Serial.println("Setup ESP32 to sleep Until Trigger on GPIO 13");
-  Serial.println("ZZZZzzzzz....");
+
+  Serial.println(F("ESP32 sleep Until Trig GPIO 13"));
+  Serial.println(F("ZZzz.."));
   Serial.flush();
   esp_deep_sleep_start();
-  Serial.println("This will never be printed");
+  Serial.println(F("This will never be printed"));
 }
 
 void check_mode_then_sleep()
@@ -412,17 +559,17 @@ void check_mode_then_sleep()
   String mode_string = settings_config.MODE;
   if (mode_string.indexOf(String("LAPSE")) >= 0)
   {
-    Serial.println("ZZZZzzzzz....");
+    Serial.println(F("ZZzz.."));
     enable_sleep();
   }
   else if (mode_string.indexOf(String("TRIGGER")) >= 0)
   {
-    Serial.println("Trigger Mode. Attach Interrupt. Then Sleep");
+    Serial.println(F("Trigger. ZZzz.."));
     enable_trigger();
   }
   else
   {
-    Serial.println("Mode invalid. Still going to sleep...");
+    Serial.println(F("Mode invalid. ZZzz..."));
     enable_sleep();
   }
 }
@@ -430,159 +577,74 @@ void check_mode_then_sleep()
 void sendPhoto( void )
 {
   // Preparing email
-  Serial.println("Sending email...");
-  delay(10);
+  Serial.println(F("Sending email..."));
 
-  if (MailClient.sdBegin(14, 2, 15, 13))
+  char AUTHOR_EMAIL[settings_config.AUTHOR_EMAIL.length() + 2];
+  settings_config.AUTHOR_EMAIL.toCharArray(AUTHOR_EMAIL, settings_config.AUTHOR_EMAIL.length() + 1);
+  char AUTHOR_PASSWORD[settings_config.AUTHOR_PASSWORD.length() + 2];
+  settings_config.AUTHOR_PASSWORD.toCharArray(AUTHOR_PASSWORD, settings_config.AUTHOR_PASSWORD.length() + 1);
+  char SMTP_HOST[settings_config.SMTP_HOST.length() + 2];
+  settings_config.SMTP_HOST.toCharArray(SMTP_HOST, settings_config.SMTP_HOST.length() + 1);
+  int SMTP_PORT = settings_config.SMTP_PORT;
+  char RECIPIENT_EMAIL[settings_config.RECIPIENT_EMAIL.length() + 2];
+  settings_config.RECIPIENT_EMAIL.toCharArray(RECIPIENT_EMAIL, settings_config.RECIPIENT_EMAIL.length() + 1);
+  char EMAIL_SUBJECT[settings_config.EMAIL_SUBJECT.length() + 2];
+  settings_config.EMAIL_SUBJECT.toCharArray(EMAIL_SUBJECT, settings_config.EMAIL_SUBJECT.length() + 1);
+
+  if (settings_config.DEBUG_FLAG == true)
   {
-    char AUTHOR_EMAIL[settings_config.EMAIL_SENDER.length() + 2];
-    settings_config.EMAIL_SENDER.toCharArray(AUTHOR_EMAIL, settings_config.EMAIL_SENDER.length() + 1);
-    char AUTHOR_PASSWORD[settings_config.EMAIL_PASS.length() + 2];
-    settings_config.EMAIL_PASS.toCharArray(AUTHOR_PASSWORD, settings_config.EMAIL_PASS.length() + 1);
-    char SMTP_HOST[settings_config.SMTP_SERVER.length() + 2];
-    settings_config.SMTP_SERVER.toCharArray(SMTP_HOST, settings_config.SMTP_SERVER.length() + 1);
-    int SMTP_PORT = settings_config.SMTP_PORT;
-    char RECIPIENT_EMAIL[settings_config.EMAIL_RECIPIENT.length() + 2];
-    settings_config.EMAIL_RECIPIENT.toCharArray(RECIPIENT_EMAIL, settings_config.EMAIL_RECIPIENT.length() + 1);
-    char EMAIL_SUBJECT[settings_config.EMAIL_SUBJECT.length() + 2];
-    settings_config.EMAIL_SUBJECT.toCharArray(EMAIL_SUBJECT, settings_config.EMAIL_SUBJECT.length() + 1);
+    Serial.print("SMTP data:");
+    Serial.print(SMTP_HOST);
+    Serial.print(", ");
+    Serial.print(SMTP_PORT);
+    Serial.print(", ");
+    Serial.print(AUTHOR_EMAIL);
+    Serial.print(", ");
+    Serial.print(AUTHOR_PASSWORD);
+    Serial.print(", ");
+    Serial.print(RECIPIENT_EMAIL);
+    Serial.print(", ");
+    Serial.println(EMAIL_SUBJECT);
+  }
 
-    if (settings_config.DEBUG_FLAG == true)
-    {
-      Serial.print("SMTP data:");
-      Serial.print(SMTP_HOST);
-      Serial.print(", ");
-      Serial.print(SMTP_PORT);
-      Serial.print(", ");
-      Serial.print(AUTHOR_EMAIL);
-      Serial.print(", ");
-      Serial.print(AUTHOR_PASSWORD);
-      Serial.print(", ");
-      Serial.print(RECIPIENT_EMAIL);
-      Serial.print(", ");
-      Serial.println(EMAIL_SUBJECT);
-    }
+  // This comes from the ESP Mail Client SMTP example
+  ssl_client.setInsecure();
 
-    // This comes from the ESP Mail Client SMTP example
-    /** Enable the debug via Serial port
-       none debug or 0
-       basic debug or 1
+  auto statusCallback = [](SMTPStatus status) {
+    Serial.println(status.text);
+  };
+  smtp.connect(SMTP_HOST, SMTP_PORT, smtpCb);
+  if (!smtp.isConnected())
+    return;
 
-       Debug port can be changed via ESP_MAIL_DEFAULT_DEBUG_PORT in ESP_Mail_FS.h
-    */
-    smtp.debug(1);
-    /* Set the callback function to get the sending results */
-    smtp.callback(smtpCallback);
-    /* Declare the session config data */
-    ESP_Mail_Session session;
-    /* Set the session config */
-    session.server.host_name = SMTP_HOST;
-    session.server.port = SMTP_PORT;
-    session.login.email = AUTHOR_EMAIL;
-    session.login.password = AUTHOR_PASSWORD;
-    session.login.user_domain = "mydomain.net";
+  smtp.authenticate(AUTHOR_EMAIL, AUTHOR_PASSWORD, readymail_auth_password);
+  if (!smtp.isAuthenticated())
+    return;
 
-    /* Declare the message class */
-    SMTP_Message message;
-    /* Enable the chunked data transfer with pipelining for large message if server supported */
-    message.enable.chunking = true;
-    /* Set the message headers */
-    message.sender.name = "ESP Mail";
-    message.sender.email = AUTHOR_EMAIL;
+  SMTPMessage msg;
+  msg.headers.add(rfc822_subject, EMAIL_SUBJECT);
+  msg.headers.add(rfc822_from, "Lapse-O-matic <" + String(AUTHOR_EMAIL) + ">");
+  msg.headers.add(rfc822_to, "User <" + String(RECIPIENT_EMAIL) + ">");
+  String bodyText = "Your Lapse-O-Matic has just taken this image:";
+  msg.text.body(bodyText);
+  msg.html.body("<html><body><div style=\"color:#cc0066;\">" + bodyText + "</div></body></html>");
 
-    message.subject = EMAIL_SUBJECT;
-    message.addRecipient("user1", RECIPIENT_EMAIL);
-
-    // This defines how the message looks and the text in the message:
-    String htmlMsg = "<span style=\"color:#ff0000;\">Lapse-O-Matic<br>This message contains ";
-    htmlMsg += settings_config.NUMBER_PHOTOS;
-    htmlMsg +=" attachment files.</span>";
-
-    message.html.content = htmlMsg.c_str();
-    message.html.charSet = "utf-8";
-    message.html.transfer_encoding = Content_Transfer_Encoding::enc_qp;
-    message.text.content = "Lapse-O-Matic Photos";
-    message.text.charSet = "utf-8";
-    message.text.transfer_encoding = Content_Transfer_Encoding::enc_base64;
-    message.priority = esp_mail_smtp_priority::esp_mail_smtp_priority_normal;
-    /* Set the custom message header */
-    message.addHeader("Message-ID: <user1@gmail.com>");
-
-    /* The attachment data item */
-    /* Want to send all the photos we have just takem
-       Names are in the PHOTO_NAME[COUNTUP] list
-    */
-
-    SMTP_Attachment att[settings_config.NUMBER_PHOTOS];
-    int attIndex = 0;
-
-    for (int i = 1; i <= settings_config.NUMBER_PHOTOS; i++)
-    {
-      /** Set the attachment info e.g.
-         file name, MIME type, file path, file storage type,
-         transfer encoding and content encoding
-      */
-      att[attIndex].descr.filename = PHOTO_NAME[i].c_str();
-      att[attIndex].descr.mime = "image/jpeg";
-      att[attIndex].file.path = PHOTO_NAME[i].c_str();
-      att[attIndex].file.storage_type = esp_mail_file_storage_type_sd;
-      att[attIndex].descr.transfer_encoding = Content_Transfer_Encoding::enc_base64;
-      /* Add attachment to the message */
-      message.addAttachment(att[attIndex]);
-      attIndex++;
-    }
-
-    /* Connect to server with the session config */
-    if (!smtp.connect(&session))
-      return;
-    /* Start sending the Email and close the session */
-    if (!MailClient.sendMail(&smtp, &message, true))
-      Serial.println("Error sending Email, " + smtp.errorReason());
-
-    ESP_MAIL_PRINTF("Free Heap: %d\n", MailClient.getFreeHeap());
-    smtp.sendingResult.clear();
-    
+  // Set message timestamp (change this with current time)
+  // See https://bit.ly/4jy8oU1
+  if (rtc_flag == true)
+  {
+    // RTC connected, so use this for UNIX timestamp
+    msg.timestamp = unix_time_now;
   }
   else
   {
-    Serial.println("Cannot start SD for mail client");
+    Serial.println("no rtc");
+    msg.timestamp = 1751446181; // This is a random timestamp and may/maynot work for your application!
   }
-}
-
-/* Callback function to get the Email sending status */
-void smtpCallback(SMTP_Status status)
-{
-  /* Print the current status */
-  Serial.println(status.info());
-
-  /* Print the sending result */
-  if (status.success())
+  // Attaches all the images
+  for (int i = 1; i <= settings_config.NUMBER_PHOTOS; i++)
   {
-    Serial.println("----------------");
-    ESP_MAIL_PRINTF("Message sent success: %d\n", status.completedCount());
-    ESP_MAIL_PRINTF("Message sent failled: %d\n", status.failedCount());
-    Serial.println("----------------\n");
-    struct tm dt;
-
-    for (size_t i = 0; i < smtp.sendingResult.size(); i++)
-    {
-      /* Get the result item */
-      SMTP_Result result = smtp.sendingResult.getItem(i);
-      time_t ts = (time_t)result.timestamp;
-      localtime_r(&ts, &dt);
-
-      ESP_MAIL_PRINTF("Message No: %d\n", i + 1);
-      ESP_MAIL_PRINTF("Status: %s\n", result.completed ? "success" : "failed");
-      ESP_MAIL_PRINTF("Date/Time: %d/%d/%d %d:%d:%d\n", dt.tm_year + 1900, dt.tm_mon + 1, dt.tm_mday, dt.tm_hour, dt.tm_min, dt.tm_sec);
-      ESP_MAIL_PRINTF("Recipient: %s\n", result.recipients);
-      ESP_MAIL_PRINTF("Subject: %s\n", result.subject);
-    }
-    Serial.println("----------------\n");
-
-    //You need to clear sending result as the memory usage will grow up as it keeps the status, timstamp and
-    //pointer to const char of recipients and subject that user assigned to the SMTP_Message object.
-    //Because of pointer to const char that stores instead of dynamic string, the subject and recipients value can be
-    //a garbage string (pointer points to undefind location) as SMTP_Message was declared as local variable or the value changed.
-    //smtp.sendingResult.clear();
+    addFileAttachment(msg, PHOTO_NAME[i].c_str(), "image/jpg", PHOTO_NAME[i].c_str(), fileCb, "/" + (String)PHOTO_NAME[i].c_str(), "base64");
   }
+  smtp.send(msg);
 }

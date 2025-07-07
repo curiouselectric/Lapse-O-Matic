@@ -112,4 +112,7 @@
 #define CAM_PIN_HREF    23
 #define CAM_PIN_PCLK    22
 
+
+
+
 #endif
