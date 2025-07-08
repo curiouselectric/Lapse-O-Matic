@@ -249,7 +249,6 @@ void setup()
   slot_config.clk =  SD_CLK;
   slot_config.cmd =  SD_CMD;
   slot_config.d0 =   SD_DATA0;
-  sdmmc_host_init_slot(SDMMC_HOST_SLOT_1, &slot_config);
 
   gpio_reset_pin(SD_CLK);
   gpio_reset_pin(SD_CMD);
@@ -263,6 +262,7 @@ void setup()
   gpio_pulldown_dis(SD_CMD);
   gpio_pullup_en(SD_DATA0);
   gpio_pulldown_dis(SD_DATA0);
+  
   gpio_pullup_en(GPIO_NUM_4);
   gpio_pulldown_dis(GPIO_NUM_4);
   gpio_pullup_en(GPIO_NUM_12);
@@ -270,10 +270,13 @@ void setup()
   gpio_pullup_en(GPIO_NUM_13);
   gpio_pulldown_dis(GPIO_NUM_13);
 
+  sdmmc_host_init_slot(SDMMC_HOST_SLOT_1, &slot_config);
+
   esp_vfs_fat_sdmmc_mount_config_t mount_config = {
     .format_if_mount_failed = true,
     .max_files = 5,
   };
+  
   esp_err_t ret = esp_vfs_fat_sdmmc_mount("/root", &host, &slot_config, &mount_config, &card);
   ESP_ERROR_CHECK(ret);
 
@@ -514,6 +517,7 @@ void loop()
     }
   }
   SD_MMC.end();
+  
   WiFi.disconnect();
   // This checks the mode the unit is in and then goes to sleep accordingly
   check_mode_then_sleep();
@@ -523,7 +527,9 @@ void enable_sleep()
 {
   switch_off_flash_LED();
   delay(10);
+  gpio_pullup_dis(SD_DATA0);  // This disables the pull up on GPIO 2 before sleeping
   rtc_gpio_hold_en(LED_FLASH_PIN);
+  
   //   Now go to sleep:
   esp_sleep_enable_timer_wakeup(settings_config.TIME_TO_SLEEP * uS_TO_S_FACTOR);
   Serial.println("Setup ESP32 to sleep for " + String(settings_config.TIME_TO_SLEEP) + " Seconds");
@@ -537,8 +543,9 @@ void enable_trigger()
 {
   switch_off_flash_LED();
   delay(10);
-
+  gpio_pullup_dis(SD_DATA0);  // This disables the pull up on GPIO 2 before sleeping
   rtc_gpio_hold_en(LED_FLASH_PIN);
+  
   //   Now go to sleep:
   esp_sleep_enable_ext0_wakeup(GPIO_PIN_WAKEUP, 0);
 
