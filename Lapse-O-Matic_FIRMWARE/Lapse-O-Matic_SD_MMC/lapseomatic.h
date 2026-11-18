@@ -4,6 +4,8 @@
 #include <esp_camera.h>
 #include "config.h"
 
+extern settings settings_config; 
+
 // This holds the various subroutines for the wifie camera to use
 // This makes main code easier to read.
 

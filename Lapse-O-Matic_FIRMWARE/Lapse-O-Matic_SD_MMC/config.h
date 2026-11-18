@@ -17,6 +17,7 @@
 
 //#define   IMAGE_QUALITY       10    // Set via SD card
 #define   IMAGE_SIZE          FRAMESIZE_UXGA
+//#define   IMAGE_SIZE          FRAMESIZE_SVGA
     // The following resolutions are available:
     // 96x96 (96x96)
     // QQVGA (160x120)
